@@ -1,0 +1,69 @@
+@prefix vb: <http://vb#>.
+@prefix mim: <http://bp4mc2.org/def/mim#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+vb:Vervoersmiddel a mim:Objecttype;
+  mim:naam "Vervoersmiddel";
+  mim:definitie "Een vervoersmiddel";
+  mim:herkomstDefinitie "Voorbeeld";
+  mim:herkomst "Voorbeeld";
+  mim:indicatieAbstractObject false ;
+  mim:datumOpname "2022-01-23"^^xsd:date;
+.
+vb:Persoon a mim:Objecttype;
+  mim:naam "Persoon";
+  mim:definitie "Een persoon";
+  mim:herkomstDefinitie "Voorbeeld";
+  mim:herkomst "Voorbeeld";
+  mim:indicatieAbstractObject false ;
+  mim:datumOpname "2022-01-23"^^xsd:date;
+.
+vb:Bedrijf a mim:Objecttype;
+  mim:naam "Bedrijf";
+  mim:definitie "Een bedrijf";
+  mim:herkomstDefinitie "Voorbeeld";
+  mim:herkomst "Voorbeeld";
+  mim:indicatieAbstractObject false;
+  mim:datumOpname "2022-01-23"^^xsd:date;
+.
+vb:eigenaar a mim:Relatiesoort;
+  mim:naam "eigenaar";
+  mim:bron vb:Vervoersmiddel;
+  mim:doel vb:PersoonOfBedrijf;
+  mim:kardinaliteit "1";
+  mim:unidirectioneel true ;
+  mim:definitie "De eigenaar";
+  mim:herkomstDefinitie "Voorbeeld";
+  mim:herkomst "Voorbeeld";
+  mim:aggregatietype mim:Geen;
+  mim:authentiek mim:OverigeAuthenticiteit;
+  mim:relatierol vb:eigenaarrol;
+  mim:mogelijkGeenWaarde false;
+  mim:indicatieMaterieleHistorie false;
+  mim:indicatieFormeleHistorie false;
+  mim:datumOpname "2022-01-23"^^xsd:date;
+  mim:indicatieAfleidbaar false;
+.
+
+vb:eigenaarrol a mim:RelatierolDoel;
+  mim:kardinaliteit "1";
+  #Waarom moeten de metadata-eigenschappen hieronder? Als dit bij de relatiesoort al is opgegeven??
+  mim:doel vb:PersoonOfBedrijf;
+  mim:naam "eigenaar";
+  mim:indicatieMaterieleHistorie false;
+  mim:indicatieFormeleHistorie false;
+  mim:mogelijkGeenWaarde false;
+  mim:authentiek mim:OverigeAuthenticiteit;
+  mim:datumOpname "2022-01-23"^^xsd:date;
+  mim:herkomst "Voorbeeld";
+  mim:herkomstDefinitie "Voorbeeld";
+.
+
+vb:PersoonOfBedrijf a mim:Keuze;
+  mim:naam "Persoon of Bedrijf";
+  mim:doel vb:Persoon;
+  mim:doel vb:Bedrijf;
+  mim:definitie "Een persoon of een bedrijf";
+  mim:datumOpname "2022-01-23"^^xsd:date;
+  mim:herkomst "Voorbeeld";
+.
