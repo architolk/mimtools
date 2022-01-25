@@ -58,7 +58,7 @@ shape:Attribuutsoort a sh:NodeShape;
   sh:property shape:formeelPatroon;
   sh:property shape:indicatieMaterieleHistorie;
   sh:property shape:indicatieFormeleHistorie;
-  sh:property shape:kardinaliteit;
+  sh:property shape:kardinaliteit_attribuut;
   sh:property shape:authentiek;
   sh:property shape:toelichting;
   sh:property shape:indicatieAfleidbaar;
@@ -120,7 +120,9 @@ shape:Relatiesoort a sh:NodeShape;
   sh:property shape:doel;
   sh:property shape:aggregatietype;
   # Metagegevens
+  sh:property shape:identificerend;
   sh:property shape:kardinaliteit;
+  sh:property shape:kardinaliteitRelatieBron;
   sh:property shape:herkomst;
   sh:property shape:definitie;
   sh:property shape:toelichting;
@@ -145,6 +147,7 @@ shape:Relatierol a sh:NodeShape;
   sh:property shape:begripsterm;
   sh:property shape:definitie_optioneel;
   # Aanvullend in geval van alternatief 2
+  sh:property shape:identificerend;
   sh:property shape:kardinaliteit;
   sh:property shape:herkomst;
   sh:property shape:toelichting;
@@ -173,6 +176,7 @@ shape:Relatieklasse a sh:NodeShape;
   sh:property shape:begrip;
   sh:property shape:begripsterm;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:constraint;
   sh:property shape:datumOpname;
 .
@@ -180,11 +184,21 @@ shape:ExterneKoppeling a sh:NodeShape;
   sh:targetClass mim:ExterneKoppeling;
   sh:name "mim:ExterneKoppeling";
   dct:source mimdoc:sectie2.3.2.2-ExterneKoppeling;
-  sh:property shape:naam_optioneel;
+  sh:property shape:naam;
   sh:property shape:alias;
   sh:property shape:begrip;
   sh:property shape:begripsterm;
+  sh:property shape:kardinaliteit;
+  sh:property shape:herkomst;
+  sh:property shape:definitie;
+  sh:property shape:toelichting;
+  sh:property shape:herkomstDefinitie;
   sh:property shape:datumOpname;
+  sh:property shape:indicatieMaterieleHistorie;
+  sh:property shape:indicatieFormeleHistorie;
+  sh:property shape:authentiek;
+  sh:property shape:indicatieAfleidbaar;
+  sh:property shape:mogelijkGeenWaarde;
   # Eigenschappen alleen in de specificatietabel
   sh:property shape:bron;
   sh:property shape:aggregatietype;
@@ -256,6 +270,7 @@ shape:PrimitiefDatatype a sh:NodeShape;
   sh:property shape:begrip;
   sh:property shape:begripsterm;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:lengte;
   sh:property shape:patroon;
   sh:property shape:formeelPatroon;
@@ -273,6 +288,7 @@ shape:GestructureerdDatatype a sh:NodeShape;
   sh:property shape:begripsterm;
   sh:property shape:herkomst;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:patroon;
   sh:property shape:formeelPatroon;
   sh:property shape:datumOpname;
@@ -288,6 +304,7 @@ shape:DataElement a sh:NodeShape;
   sh:property shape:begrip;
   sh:property shape:begripsterm;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:type;
   sh:property shape:lengte;
   sh:property shape:patroon;
@@ -305,6 +322,7 @@ shape:Keuze a sh:NodeShape;
   sh:property shape:begripsterm;
   sh:property shape:herkomst;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:datumOpname;
 .
 shape:ISAKeuze a sh:PropertyShape;
@@ -337,6 +355,7 @@ shape:KeuzeConstraint a sh:NodeShape;
   sh:property shape:begripsterm;
   sh:property shape:herkomst;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:datumOpname;
   sh:property shape:modelelement;
 .
@@ -375,6 +394,7 @@ shape:Extern a sh:NodeShape;
   # ISSUE: bij Extern geen alias? sh:property shape:alias;
   sh:property shape:locatie;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:herkomst;
   sh:property shape:datumOpname;
 .
@@ -387,6 +407,7 @@ shape:View a sh:NodeShape;
   # ISSUE: bij View geen alias? sh:property shape:alias;
   sh:property shape:locatie;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:herkomst;
   sh:property shape:datumOpname;
 .
@@ -398,6 +419,7 @@ shape:Enumeratie a sh:NodeShape;
   sh:property shape:naam;
   # ISSUE: bij Enumeratie geen alias? sh:property shape:alias;
   sh:property shape:definitie;
+  sh:property shape:toelichting;
   sh:property shape:waarde;
   sh:property shape:datumOpname;
 .
@@ -406,6 +428,7 @@ shape:Enumeratiewaarde a sh:NodeShape;
   sh:name "mim:Enumeratiewaarde";
   sh:property shape:naam;
   sh:property shape:definitie_optioneel;
+  sh:property shape:toelichting;
   sh:property shape:code;
   sh:property shape:begrip;
   sh:property shape:begripsterm;
@@ -421,10 +444,6 @@ shape:Constraint a sh:NodeShape;
 .
 
 # De volgende shapes zijn niet expliciet aangegeven, maar bestaan wel
-shape:PrimitiefDatatype a sh:NodeShape;
-  sh:targetClass mim:PrimitiefDatatype;
-  sh:name "mim:PrimitiefDatatype";
-.
 shape:RelatierolBron a sh:NodeShape;
   sh:targetClass mim:RelatierolBron;
   sh:name "mim:RelatierolBron";
@@ -677,6 +696,7 @@ shape:indicatieMaterieleHistorie a sh:PropertyShape;
   sh:minCount 1;
   sh:maxCount 1;
   sh:datatype xsd:boolean;
+  sh:defaultValue false;
 .
 shape:indicatieFormeleHistorie a sh:PropertyShape;
   sh:path mim:indicatieFormeleHistorie;
@@ -685,6 +705,7 @@ shape:indicatieFormeleHistorie a sh:PropertyShape;
   sh:minCount 1;
   sh:maxCount 1;
   sh:datatype xsd:boolean;
+  sh:defaultValue false;
 .
 shape:locatie a sh:PropertyShape;
   sh:path mim:locatie;
@@ -706,6 +727,22 @@ shape:kardinaliteit a sh:PropertyShape;
   sh:name "mim:kardinaliteit";
   sh:order 19;
   sh:minCount 1;
+  sh:maxCount 1;
+  sh:datatype xsd:string;
+.
+shape:kardinaliteit_attribuut a sh:PropertyShape;
+  sh:path mim:kardinaliteit;
+  sh:name "mim:kardinaliteit";
+  sh:order 19;
+  sh:minCount 1;
+  sh:maxCount 1;
+  sh:datatype xsd:string;
+  sh:defaultValue "1..1";
+.
+shape:kardinaliteitRelatieBron a sh:PropertyShape;
+  sh:path mim:kardinaliteitRelatieBron;
+  sh:name "mim:kardinaliteitRelatieBron";
+  sh:order 19;
   sh:maxCount 1;
   sh:datatype xsd:string;
 .
@@ -731,6 +768,7 @@ shape:indicatieAfleidbaar a sh:PropertyShape;
   sh:minCount 1;
   sh:maxCount 1;
   sh:datatype xsd:boolean;
+  sh:defaultValue false;
 .
 shape:indicatieClassificerend a sh:PropertyShape;
   sh:path mim:indicatieClassificerend;
@@ -739,6 +777,7 @@ shape:indicatieClassificerend a sh:PropertyShape;
   sh:minCount 1;
   sh:maxCount 1;
   sh:datatype xsd:boolean;
+  sh:defaultValue false;
 .
 shape:mogelijkGeenWaarde a sh:PropertyShape;
   sh:path mim:mogelijkGeenWaarde;
@@ -754,6 +793,7 @@ shape:identificerend a sh:PropertyShape;
   sh:order 24;
   sh:maxCount 1;
   sh:datatype xsd:boolean;
+  sh:defaultValue false;
 .
 shape:gegevensgroeptype a sh:PropertyShape;
   sh:path mim:gegevensgroeptype;
@@ -826,6 +866,7 @@ shape:aggregatietype a sh:PropertyShape;
   sh:minCount 1;
   sh:maxCount 1;
   sh:node shape:Aggregatietypen;
+  sh:defaultValue mim:Geen;
 .
 shape:Aggregatietypen a sh:NodeShape;
   sh:name "Aggregatietypen";
