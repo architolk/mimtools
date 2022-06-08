@@ -1,0 +1,101 @@
+@prefix schema: <http://schema.org/>.
+@prefix mim: <http://bp4mc2.org/def/mim#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+schema:Product a mim:Objecttype;
+  mim:naam "Product";
+  mim:attribuut [
+    a mim:Attribuutsoort;
+    mim:naam "name";
+    mim:type schema:Text;
+    mim:kardinaliteit "1";
+  ];
+  mim:attribuut [
+    a mim:Attribuutsoort;
+    mim:naam "description";
+    mim:type schema:Text;
+    mim:kardinaliteit "0..1";
+  ];
+  mim:attribuut [
+    a mim:Attribuutsoort;
+    mim:naam "weight";
+    mim:type schema:QuantitativeValue;
+    mim:kardinaliteit "0..1";
+  ];
+.
+schema:Offer a mim:Objecttype;
+  mim:naam "Offer";
+  mim:attribuut [
+    a mim:Attribuutsoort;
+    mim:naam "price";
+    mim:type schema:Number;
+    mim:kardinaliteit "1";
+  ];
+  mim:attribuut [
+    a mim:Attribuutsoort;
+    mim:naam "availability";
+    mim:type schema:ItemAvailability;
+    mim:kardinaliteit "0..1";
+  ];
+.
+schema:Brand a mim:Objecttype;
+  mim:naam "Brand";
+  mim:attribuut [
+    a mim:Attribuutsoort;
+    mim:naam "name";
+    mim:type schema:Text;
+    mim:kardinaliteit "1";
+  ];
+.
+schema:IsMadeBy a mim:Relatiesoort;
+  mim:naam "is made by";
+  mim:bron schema:Product;
+  mim:doel schema:Brand;
+  mim:relatierol [
+    a mim:RelatierolBron;
+    mim:naam "product";
+    mim:kardinaliteit "0..*";
+  ];
+  mim:relatierol [
+    a mim:RelatierolDoel;
+    mim:naam "brand";
+    mim:kardinaliteit "1";
+  ];
+.
+schema:Offers a mim:Relatiesoort;
+  mim:naam "offers";
+  mim:bron schema:Product;
+  mim:doel schema:Offer;
+  mim:kardinaliteit "1";
+.
+schema:ItemAvailability a mim:Enumeratie;
+  mim:naam "ItemAvailability";
+  mim:waarde schema:InStock, schema:OutOfStock;
+.
+schema:InStock a mim:Enumeratiewaarde; mim:naam "InStock".
+schema:OutOfStock a mim:Enumeratiewaarde; mim:naam "OutOfStock".
+
+schema:QuantitativeValue a mim:GestructureerdDatatype;
+  mim:naam "QuantitativeValue";
+  mim:dataElement [
+    a mim:DataElement;
+    mim:naam "unitText";
+    mim:type schema:Text;
+    mim:kardinaliteit "1";
+  ];
+  mim:dataElement [
+    a mim:DataElement;
+    mim:naam "value";
+    mim:kardinaliteit "1";
+  ];
+.
+
+schema:Text a mim:PrimitiefDatatype;
+  mim:naam "Text";
+  owl:sameAs xsd:string;
+.
+schema:Number a mim:PrimitiefDatatype;
+  mim:naam "Number";
+  owl:sameAs xsd:decimal;
+.

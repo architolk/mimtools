@@ -1,0 +1,157 @@
+@prefix schema: <http://schema.org/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+schema:Brand a owl:Class, sh:NodeShape;
+    sh:property schema:Brand.name;
+    sh:property schema:Brand.product;
+    sh:targetClass schema:Brand;
+    rdfs:label "Brand";
+    skos:notation "Brand"
+.
+schema:Brand.name a sh:PropertyShape;
+    sh:datatype xsd:string;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "name";
+    sh:path schema:name
+.
+schema:Brand.product a sh:PropertyShape;
+    sh:class schema:Product;
+    sh:name "product";
+    sh:path schema:product
+.
+schema:InStock a schema:ItemAvailability;
+    rdfs:label "InStock"
+.
+schema:ItemAvailability a owl:Class, sh:NodeShape;
+    sh:targetClass schema:ItemAvailability;
+    rdfs:label "ItemAvailability";
+    rdfs:subClassOf skos:Concept
+.
+schema:Number a rdf:Datatype;
+    rdfs:label "Number"
+.
+schema:Offer a owl:Class, sh:NodeShape;
+    sh:property schema:Offer.availability;
+    sh:property schema:Offer.price;
+    sh:targetClass schema:Offer;
+    rdfs:label "Offer";
+    skos:notation "Offer"
+.
+schema:Offer.availability a sh:PropertyShape;
+    sh:class schema:ItemAvailability;
+    sh:maxCount 1;
+    sh:name "availability";
+    sh:path schema:availability
+.
+schema:Offer.price a sh:PropertyShape;
+    sh:datatype xsd:decimal;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "price";
+    sh:path schema:price
+.
+schema:OutOfStock a schema:ItemAvailability;
+    rdfs:label "OutOfStock"
+.
+schema:Product a owl:Class, sh:NodeShape;
+    sh:property schema:Product.brand;
+    sh:property schema:Product.description;
+    sh:property schema:Product.name;
+    sh:property schema:Product.offers;
+    sh:property schema:Product.weight;
+    sh:targetClass schema:Product;
+    rdfs:label "Product";
+    skos:notation "Product"
+.
+schema:Product.brand a sh:PropertyShape;
+    sh:class schema:Brand;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "brand";
+    sh:path schema:brand
+.
+schema:Product.description a sh:PropertyShape;
+    sh:datatype xsd:string;
+    sh:maxCount 1;
+    sh:name "description";
+    sh:path schema:description
+.
+schema:Product.name a sh:PropertyShape;
+    sh:datatype xsd:string;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "name";
+    sh:path schema:name
+.
+schema:Product.offers a sh:PropertyShape;
+    sh:class schema:Offer;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "offers";
+    sh:path schema:offers
+.
+schema:Product.weight a sh:PropertyShape;
+    sh:class schema:QuantitativeValue;
+    sh:maxCount 1;
+    sh:name "weight";
+    sh:nodeKind sh:BlankNode;
+    sh:path schema:weight
+.
+schema:QuantitativeValue a owl:Class, sh:NodeShape;
+    sh:property schema:QuantitativeValue.unitText;
+    sh:property schema:QuantitativeValue.value;
+    sh:targetClass schema:QuantitativeValue;
+    rdfs:label "QuantitativeValue"
+.
+schema:QuantitativeValue.unitText a sh:PropertyShape;
+    sh:datatype xsd:string;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "unitText";
+    sh:path schema:unitText
+.
+schema:QuantitativeValue.value a sh:PropertyShape;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "value";
+    sh:path schema:value
+.
+schema:Text a rdf:Datatype;
+    rdfs:label "Text"
+.
+schema:availability a owl:ObjectProperty;
+    rdfs:label "availability"
+.
+schema:brand a owl:ObjectProperty;
+    rdfs:label "brand"
+.
+schema:description a owl:DatatypeProperty;
+    rdfs:label "description"
+.
+schema:name a owl:DatatypeProperty;
+    rdfs:label "name"
+.
+schema:offers a owl:ObjectProperty;
+    rdfs:label "offers"
+.
+schema:price a owl:DatatypeProperty;
+    rdfs:label "price"
+.
+schema:product a owl:ObjectProperty;
+    rdfs:label "product"
+.
+schema:unitText a owl:DatatypeProperty;
+    rdfs:label "unitText"
+.
+schema:value a owl:DatatypeProperty;
+    rdfs:label "value"
+.
+schema:weight a owl:ObjectProperty;
+    rdfs:label "weight"
+.

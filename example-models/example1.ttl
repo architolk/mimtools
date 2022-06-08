@@ -17,6 +17,7 @@ vb:Persoon a mim:Objecttype;
   mim:herkomst "Voorbeeld";
   mim:indicatieAbstractObject false ;
   mim:datumOpname "2022-01-23"^^xsd:date;
+  mim:attribuut vb:Persoon.naam;
 .
 vb:Bedrijf a mim:Objecttype;
   mim:naam "Bedrijf";
@@ -26,8 +27,14 @@ vb:Bedrijf a mim:Objecttype;
   mim:indicatieAbstractObject false;
   mim:datumOpname "2022-01-23"^^xsd:date;
 .
+vb:Persoon.naam a mim:Attribuutsoort;
+  mim:naam "naam";
+  mim:type mim:CharacterString;
+  mim:kardinaliteit "1";
+.
+
 vb:eigenaar a mim:Relatiesoort;
-  mim:naam "eigenaar";
+  mim:naam "is in bezit van";
   mim:bron vb:Vervoersmiddel;
   mim:doel vb:PersoonOfBedrijf;
   mim:kardinaliteit "1";
@@ -38,13 +45,18 @@ vb:eigenaar a mim:Relatiesoort;
   mim:aggregatietype mim:Geen;
   mim:authentiek mim:OverigeAuthenticiteit;
   mim:relatierol vb:eigenaarrol;
+  mim:relatierol vb:eigendomrol;
   mim:mogelijkGeenWaarde false;
   mim:indicatieMaterieleHistorie false;
   mim:indicatieFormeleHistorie false;
   mim:datumOpname "2022-01-23"^^xsd:date;
   mim:indicatieAfleidbaar false;
 .
-
+vb:eigendomrol a mim:RelatierolBron;
+  mim:kardinaliteit "0..*";
+  mim:naam "eigendom";
+  mim:bron vb:Voertuig;
+.
 vb:eigenaarrol a mim:RelatierolDoel;
   mim:kardinaliteit "1";
   #Waarom moeten de metadata-eigenschappen hieronder? Als dit bij de relatiesoort al is opgegeven??

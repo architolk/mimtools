@@ -1,0 +1,174 @@
+@base          <http://dotwebstack.org/validator> .
+@prefix dash:    <http://datashapes.org/dash#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix graphql: <http://datashapes.org/graphql#> .
+@prefix mim:     <http://bp4mc2.org/def/mim#> .
+@prefix mimdoc:  <http://bp4mc2.org/def/mimdoc#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix shape:   <http://bp4mc2.org/def/mim-shapes#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix swa:     <http://topbraid.org/swa#> .
+@prefix tosh:    <http://topbraid.org/tosh#> .
+@prefix vb:      <http://vb#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+[ rdf:type     sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:herkomst ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:herkomst
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:herkomst ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:herkomst
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:authentiek ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:authentiek
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:mogelijkGeenWaarde ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:mogelijkGeenWaarde
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon ;
+                 sh:resultMessage              "Value does not have shape _:6332cbe7150fbaaea64355e9d85864a8" ;
+                 sh:resultPath                 mim:attribuut ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:NodeConstraintComponent ;
+                 sh:sourceShape                shape:attribuut ;
+                 sh:value                      vb:Persoon.naam
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:herkomstDefinitie ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:herkomstDefinitie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:indicatieFormeleHistorie ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:indicatieFormeleHistorie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:herkomstDefinitie ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:herkomstDefinitie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:mogelijkGeenWaarde ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:mogelijkGeenWaarde
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:indicatieMaterieleHistorie ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:indicatieMaterieleHistorie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:indicatieClassificerend ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:indicatieClassificerend
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:datumOpname ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:datumOpname
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:indicatieAfleidbaar ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:indicatieAfleidbaar
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:datumOpname ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:datumOpname
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Value does not have shape _:c61f8676b2cc849667ab2aba438258e2" ;
+                 sh:resultPath                 mim:bron ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:NodeConstraintComponent ;
+                 sh:sourceShape                shape:bron ;
+                 sh:value                      vb:Voertuig
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:authentiek ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:authentiek
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:indicatieMaterieleHistorie ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:indicatieMaterieleHistorie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:eigendomrol ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:indicatieFormeleHistorie ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:indicatieFormeleHistorie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  vb:Persoon.naam ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 mim:definitie ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                shape:definitie
+               ]
+] .

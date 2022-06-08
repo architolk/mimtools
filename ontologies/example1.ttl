@@ -1,0 +1,92 @@
+@prefix mim: <http://bp4mc2.org/def/mim#> .
+@prefix vb:  <http://vb#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://schema.org/eigendom>
+        a       <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "eigendom" .
+
+<http://schema.org/Bedrijf>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#comment>
+                "Een bedrijf" ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Bedrijf" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Bedrijf" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Bedrijf> .
+
+<http://schema.org/Vervoersmiddel.eigenaar>
+        a       <http://www.w3.org/ns/shacl#PropertyShape> ;
+        <http://www.w3.org/ns/shacl#class>
+                <http://schema.org/Persoon_of_Bedrijf> ;
+        <http://www.w3.org/ns/shacl#maxCount>
+                1 ;
+        <http://www.w3.org/ns/shacl#minCount>
+                1 ;
+        <http://www.w3.org/ns/shacl#name>
+                "eigenaar" ;
+        <http://www.w3.org/ns/shacl#path>
+                <http://schema.org/eigenaar> .
+
+<http://schema.org/Persoon>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#comment>
+                "Een persoon" ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Persoon" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Persoon" ;
+        <http://www.w3.org/ns/shacl#property>
+                <http://schema.org/Persoon.naam> ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Persoon> .
+
+<http://schema.org/Vervoersmiddel>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#comment>
+                "Een vervoersmiddel" ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Vervoersmiddel" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Vervoersmiddel" ;
+        <http://www.w3.org/ns/shacl#property>
+                <http://schema.org/Vervoersmiddel.eigenaar> ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Vervoersmiddel> .
+
+<http://schema.org/Persoon_of_Bedrijf.eigendom>
+        a       <http://www.w3.org/ns/shacl#PropertyShape> ;
+        <http://www.w3.org/ns/shacl#class>
+                <http://schema.org/Vervoersmiddel> ;
+        <http://www.w3.org/ns/shacl#name>
+                "eigendom" ;
+        <http://www.w3.org/ns/shacl#path>
+                <http://schema.org/eigendom> .
+
+<http://schema.org/eigenaar>
+        a       <http://www.w3.org/2002/07/owl#ObjectProperty> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "eigenaar" .
+
+<http://schema.org/Persoon_of_Bedrijf>
+        <http://www.w3.org/ns/shacl#property>
+                <http://schema.org/Persoon_of_Bedrijf.eigendom> .
+
+<http://schema.org/Persoon.naam>
+        a       <http://www.w3.org/ns/shacl#PropertyShape> ;
+        <http://www.w3.org/ns/shacl#maxCount>
+                1 ;
+        <http://www.w3.org/ns/shacl#minCount>
+                1 ;
+        <http://www.w3.org/ns/shacl#name>
+                "naam" ;
+        <http://www.w3.org/ns/shacl#path>
+                <http://schema.org/naam> .
+
+<http://schema.org/naam>
+        a       <http://www.w3.org/2002/07/owl#DatatypeProperty> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "naam" .

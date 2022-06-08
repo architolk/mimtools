@@ -1,0 +1,67 @@
+@prefix schema: <http://schema.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+<https://www.bol.com/#9200000118424281> a schema:Product;
+    schema:aggregateRating [
+        rdf:type schema:AggregateRating;
+        schema:bestRating "5"^^xsd:string;
+        schema:ratingValue "4.2"^^xsd:string;
+        schema:reviewCount "22"^^xsd:string;
+        schema:worstRating "1"^^xsd:string
+    ];
+    schema:brand [
+        rdf:type schema:Brand;
+        schema:name "Powerplus Gereedschap"^^xsd:string
+    ];
+    schema:depth [
+        rdf:type schema:QuantitativeValue;
+        schema:unitText "CMT"^^xsd:string;
+        schema:value "26"^^xsd:string
+    ];
+    schema:description "Met deze compacte Powerplus-klopboormachine pak je zonder problemen alle kleinere boorklussen aan.Waarvoor is de klopboormachine geschikt?Ze is ideaal voor de klusser die boren met een klik van de schakelaar verandert in klopboren, om met nog meer kracht door harde materialen te boren. De POWC10100 boort tot een diameter van 6mm in staal, 10mm in beton en 13mm in hout.Voordelen:+ Het toerental is instelbaar van 0 tot 3.000min-1 en stem je perfect af op de klus.+ Kies je daarbij ook voor de klopboorfunctie? Dan krijg je er nog eens 41.000 extra slagen per minuut bij.+ Met de dieptestop boor je de gaten nooit meer te diep.+ Met de hulphandgreep werk je nog comfortabeler en veiliger.+ Je plaatst moeiteloos boren tot 13mm.+ De vergrendelknop zorgt ervoor dat je je kan focussen op de job.Specificaties:- Spanning: 230-240V- Vermogen: 500W- Boorhoudercapaciteit: Max. 13mm- Toerental onbelast: 0 – 3000min-1- Capaciteit in beton: 10mm- Capaciteit in staal: 6mm- Capaciteit in hout: 13mmWat zit er in de verpakking?1 x klopboormachine1 x diepteaanslag1 x hulphandgreep1 x boorkopsleutel1 x gebruiksaanwijzingHoeveel jaar garantie?Je krijg 2 jaar garantie op dit Powerplus-toestel."^^xsd:string;
+    schema:gtin13 "5400338082788"^^xsd:string;
+    schema:height [
+        rdf:type schema:QuantitativeValue;
+        schema:unitText "CMT"^^xsd:string;
+        schema:value "23"^^xsd:string
+    ];
+    schema:image [
+        rdf:type schema:ImageObject;
+        schema:url <https://media.s-bol.com/BLmvqZyy7QRJ/168x98.jpg>
+    ];
+    schema:model [
+        rdf:type schema:ProductModel;
+        schema:name "Powerplus Grijs (C, E en EG)"^^xsd:string;
+        schema:url <https://www.bol.com/nl/nl/serie/powerplus-grijs/9200000097437627/>
+    ];
+    schema:name "Powerplus POWC10100 Elektrische klopboormachine - 500W - Variabele snelheid - Incl. diepte aanslag en additionele handgreep - Boormachine voor beton, hout en staal"^^xsd:string;
+    schema:offers [
+        rdf:type schema:Offer;
+        schema:availability "InStock"^^xsd:string;
+        schema:itemCondition "http://schema.org/NewCondition"^^xsd:string;
+        schema:price "21,99"^^xsd:string;
+        schema:priceCurrency "EUR"^^xsd:string;
+        schema:seller [
+            rdf:type schema:Organization;
+            schema:name "bol.com"^^xsd:string
+        ]
+    ];
+    schema:productID "9200000118424281"^^xsd:string;
+    schema:target [
+        rdf:type schema:EntryPoint;
+        schema:actionPlatform "http://schema.org/MobileWebPlatform"^^xsd:string;
+        schema:actionPlatform "http://schema.org/DesktopWebPlatform"^^xsd:string;
+        schema:urlTemplate "https://www.bol.com/nl/order/basket/addItems.html?productId=9200000118424281&amp;offerId=0&amp;quantity=1"^^xsd:string
+    ];
+    schema:weight [
+        rdf:type schema:QuantitativeValue;
+        schema:unitText "KGM"^^xsd:string;
+        schema:value "1.78"^^xsd:string
+    ];
+    schema:width [
+        rdf:type schema:QuantitativeValue;
+        schema:unitText "CMT"^^xsd:string;
+        schema:value "7"^^xsd:string
+    ]
+.
