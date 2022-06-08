@@ -1,0 +1,19 @@
+@prefix ex: <http://example.org/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+
+ex:Schip a owl:Class, sh:NodeShape;
+    sh:property ex:Schip.label;
+    rdfs:label "Schip";
+    skos:notation "Schip"
+.
+ex:Schip.label a sh:PropertyShape;
+    sh:datatype xsd:string;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "label";
+    sh:path rdfs:label
+.

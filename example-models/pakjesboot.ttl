@@ -1,0 +1,20 @@
+@prefix exmim: <http://example.org/mim/>.
+@prefix mim: <http://bp4mc2.org/def/mim#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+exmim:Schip a mim:Objecttype;
+  mim:naam "Schip";
+  mim:attribuut exmim:label
+.
+
+exmim:label a mim:Attribuutsoort;
+  mim:naam "label";
+  mim:type exmim:Tekst;
+  mim:kardinaliteit "1";
+.
+
+exmim:Tekst a mim:PrimitiefDatatype;
+  mim:naam "Tekst";
+  owl:sameAs xsd:string;
+.
