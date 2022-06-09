@@ -1,0 +1,6 @@
+@prefix schema: <http://schema.org/>.
+@prefix ex: <http://example.org/>.
+
+ex:Paul schema:worksFor ex:Geonovum.
+ex:Paul a schema:Person.
+ex:Geonovum a schema:Organization.

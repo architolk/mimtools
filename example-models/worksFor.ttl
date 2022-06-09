@@ -1,0 +1,19 @@
+@prefix schema: <http://schema.org/>.
+@prefix mim: <http://bp4mc2.org/def/mim#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+schema:Person a mim:Objecttype;
+  mim:naam "Person";
+.
+
+schema:Organization a mim:Objecttype;
+  mim:naam "Organization";
+.
+
+schema:worksFor a mim:Relatiesoort;
+  mim:naam "worksFor";
+  mim:bron schema:Person;
+  mim:doel schema:Organization;
+  mim:kardinaliteit "0..*";
+.
