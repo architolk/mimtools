@@ -6,6 +6,50 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#>.
 
+schema:Product a owl:Class, sh:NodeShape;
+    sh:property schema:Product.brand;
+    sh:property schema:Product.description;
+    sh:property schema:Product.name;
+    sh:property schema:Product.offers;
+    sh:property schema:Product.weight;
+    sh:targetClass schema:Product;
+    rdfs:label "Product";
+    skos:notation "Product"
+.
+schema:Product.brand a sh:PropertyShape;
+    sh:class schema:Brand;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "brand";
+    sh:path schema:brand
+.
+schema:Product.description a sh:PropertyShape;
+    sh:datatype xsd:string;
+    sh:maxCount 1;
+    sh:name "description";
+    sh:path schema:description
+.
+schema:Product.name a sh:PropertyShape;
+    sh:datatype xsd:string;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "name";
+    sh:path schema:name
+.
+schema:Product.offers a sh:PropertyShape;
+    sh:class schema:Offer;
+    sh:maxCount 1;
+    sh:minCount 1;
+    sh:name "offers";
+    sh:path schema:offers
+.
+schema:Product.weight a sh:PropertyShape;
+    sh:class schema:QuantitativeValue;
+    sh:maxCount 1;
+    sh:name "weight";
+    sh:nodeKind sh:BlankNode;
+    sh:path schema:weight
+.
 schema:Brand a owl:Class, sh:NodeShape;
     sh:property schema:Brand.name;
     sh:property schema:Brand.product;
@@ -58,50 +102,6 @@ schema:Offer.price a sh:PropertyShape;
 .
 schema:OutOfStock a schema:ItemAvailability;
     rdfs:label "OutOfStock"
-.
-schema:Product a owl:Class, sh:NodeShape;
-    sh:property schema:Product.brand;
-    sh:property schema:Product.description;
-    sh:property schema:Product.name;
-    sh:property schema:Product.offers;
-    sh:property schema:Product.weight;
-    sh:targetClass schema:Product;
-    rdfs:label "Product";
-    skos:notation "Product"
-.
-schema:Product.brand a sh:PropertyShape;
-    sh:class schema:Brand;
-    sh:maxCount 1;
-    sh:minCount 1;
-    sh:name "brand";
-    sh:path schema:brand
-.
-schema:Product.description a sh:PropertyShape;
-    sh:datatype xsd:string;
-    sh:maxCount 1;
-    sh:name "description";
-    sh:path schema:description
-.
-schema:Product.name a sh:PropertyShape;
-    sh:datatype xsd:string;
-    sh:maxCount 1;
-    sh:minCount 1;
-    sh:name "name";
-    sh:path schema:name
-.
-schema:Product.offers a sh:PropertyShape;
-    sh:class schema:Offer;
-    sh:maxCount 1;
-    sh:minCount 1;
-    sh:name "offers";
-    sh:path schema:offers
-.
-schema:Product.weight a sh:PropertyShape;
-    sh:class schema:QuantitativeValue;
-    sh:maxCount 1;
-    sh:name "weight";
-    sh:nodeKind sh:BlankNode;
-    sh:path schema:weight
 .
 schema:QuantitativeValue a owl:Class, sh:NodeShape;
     sh:property schema:QuantitativeValue.unitText;
