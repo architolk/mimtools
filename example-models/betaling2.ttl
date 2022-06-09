@@ -1,0 +1,29 @@
+@prefix ex: <http://example.org/>.
+@prefix mim: <http://bp4mc2.org/def/mim#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+ex:Persoon a mim:Objecttype;
+  mim:naam "Persoon";
+.
+ex:Winkel a mim:Objecttype;
+  mim:naam "Winkel";
+.
+
+ex:Betaling a mim:Relatieklasse;
+  mim:bron ex:Persoon;
+  mim:doel ex:Winkel;
+  mim:naam "Betaling";
+  mim:kardinaliteit "0..*";
+  mim:attribuut [
+    a mim:Attribuutsoort;
+    mim:naam "bedrag";
+    mim:kardinaliteit "1";
+    mim:type ex:Bedrag;
+  ]
+.
+
+ex:Bedrag a mim:PrimitiefDatatype;
+  mim:naam "Bedrag";
+  owl:sameAs xsd:Decimal;
+.
