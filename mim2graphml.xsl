@@ -77,7 +77,9 @@
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Enumeratie']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#GestructureerdDatatype']" mode="node"/>
+  <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatiesoort']" mode="edge"/>
+  <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse']" mode="edge"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze']" mode="edge"/>
 </xsl:template>
 
@@ -130,72 +132,120 @@
       <xsl:variable name="object-uri" select="@rdf:resource"/>
       <xsl:variable name="subject-geo" select="key('node-geo',$subject-uri)"/>
       <xsl:if test="not($params='follow') or exists($subject-geo/graphml:data)">
-        <!-- Associations -->
-        <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
-        <xsl:variable name="property-uri"><xsl:value-of select="@rdf:about|@rdf:nodeID"/></xsl:variable>
-        <xsl:variable name="statement-uri">urn:md5:<xsl:value-of select="concat($subject-uri,$property-uri,$object-uri)"/></xsl:variable>
-        <xsl:variable name="statement-geo" select="key('edge-geo',$statement-uri)"/>
-        <xsl:if test="not($params='follow') or exists($object-geo/graphml:data)">
-          <edge source="{$subject-uri}" target="{$object-uri}">
-            <data key="d7"><xsl:value-of select="$statement-uri"/></data>
-            <data key="d8"><xsl:value-of select="$property-uri"/></data>
-      			<data key="d10">
-      				<y:PolyLineEdge>
-                <xsl:copy-of select="$statement-geo/graphml:data/y:PolyLineEdge/y:Path"/>
-      					<y:LineStyle color="#000000" type="line" width="1.0"/>
-      					<y:Arrows source="none" target="plain"/>
-                <xsl:if test="../rdf:type/@rdf:resource!='http://bp4mc2.org/def/mim#Keuze'">
-                  <xsl:call-template name="edge-label">
-                    <xsl:with-param name="label"><xsl:apply-templates select=".." mode="label"/></xsl:with-param>
-                    <xsl:with-param name="ratio">0.5</xsl:with-param>
-                    <xsl:with-param name="position">left</xsl:with-param>
-                  </xsl:call-template>
-                </xsl:if>
-                <xsl:call-template name="edge-label">
-                  <xsl:with-param name="label">«<xsl:apply-templates select="../rdf:type" mode="label"/>»</xsl:with-param>
-                  <xsl:with-param name="ratio">0.5</xsl:with-param>
-                  <xsl:with-param name="position">right</xsl:with-param>
-                </xsl:call-template>
-                <xsl:if test="../mim:kardinaliteit!='' and not(key('items',../mim:relatierol/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']/mim:kardinaliteit!='')">
-                  <xsl:call-template name="edge-label">
-                    <xsl:with-param name="label"><xsl:value-of select="../mim:kardinaliteit"/></xsl:with-param>
-                    <xsl:with-param name="ratio">1.0</xsl:with-param>
-                    <xsl:with-param name="position">left</xsl:with-param>
-                  </xsl:call-template>
-                </xsl:if>
-                <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolBron']">
-                  <xsl:call-template name="edge-label">
-                    <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
-                    <xsl:with-param name="ratio">0.0</xsl:with-param>
-                    <xsl:with-param name="position">left</xsl:with-param>
-                  </xsl:call-template>
-                  <xsl:if test="mim:kardinaliteit!=''">
+        <!-- Asssociation with Association class -->
+        <xsl:choose>
+          <xsl:when test="../rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse'">
+            <node id="{../@rdf:about}_HELPER">
+              <data key="d6">
+                <y:ShapeNode>
+                  <y:Geometry height="5.0" width="5.0" x="645.0" y="241.5"/>
+                  <y:Fill color="#000000" transparent="false"/>
+                  <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+                  <y:Shape type="ellipse"/>
+                </y:ShapeNode>
+              </data>
+            </node>
+            <edge source="{../@rdf:about}_HELPER" target="{../@rdf:about}">
+        			<data key="d10">
+        				<y:PolyLineEdge>
+                  <y:LineStyle color="#000000" type="line" width="1.0"/>
+        					<y:Arrows source="none" target="none"/>
+                </y:PolyLineEdge>
+              </data>
+            </edge>
+            <edge source="{$subject-uri}" target="{../@rdf:about}_HELPER">
+        			<data key="d10">
+        				<y:PolyLineEdge>
+                  <y:LineStyle color="#000000" type="line" width="1.0"/>
+        					<y:Arrows source="none" target="none"/>
+                </y:PolyLineEdge>
+              </data>
+            </edge>
+            <edge source="{../@rdf:about}_HELPER" target="{$object-uri}">
+              <data key="d10">
+        				<y:PolyLineEdge>
+                  <y:LineStyle color="#000000" type="line" width="1.0"/>
+        					<y:Arrows source="none" target="plain"/>
+                  <xsl:if test="../mim:kardinaliteit!='' and not(key('items',../mim:relatierol/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']/mim:kardinaliteit!='')">
                     <xsl:call-template name="edge-label">
-                      <xsl:with-param name="label"><xsl:value-of select="mim:kardinaliteit"/></xsl:with-param>
-                      <xsl:with-param name="ratio">0.0</xsl:with-param>
-                      <xsl:with-param name="position">right</xsl:with-param>
-                    </xsl:call-template>
-                  </xsl:if>
-                </xsl:for-each>
-                <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']">
-                  <xsl:call-template name="edge-label">
-                    <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
-                    <xsl:with-param name="ratio">1.0</xsl:with-param>
-                    <xsl:with-param name="position">left</xsl:with-param>
-                  </xsl:call-template>
-                  <xsl:if test="mim:kardinaliteit!=''">
-                    <xsl:call-template name="edge-label">
-                      <xsl:with-param name="label"><xsl:value-of select="mim:kardinaliteit"/></xsl:with-param>
+                      <xsl:with-param name="label"><xsl:value-of select="../mim:kardinaliteit"/></xsl:with-param>
                       <xsl:with-param name="ratio">1.0</xsl:with-param>
-                      <xsl:with-param name="position">right</xsl:with-param>
+                      <xsl:with-param name="position">left</xsl:with-param>
                     </xsl:call-template>
                   </xsl:if>
-                </xsl:for-each>
-      					<y:BendStyle smoothed="false"/>
-      				</y:PolyLineEdge>
-      			</data>
-      		</edge>
-        </xsl:if>
+                </y:PolyLineEdge>
+              </data>
+            </edge>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- Associations -->
+            <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
+            <xsl:variable name="property-uri"><xsl:value-of select="@rdf:about|@rdf:nodeID"/></xsl:variable>
+            <xsl:variable name="statement-uri">urn:md5:<xsl:value-of select="concat($subject-uri,$property-uri,$object-uri)"/></xsl:variable>
+            <xsl:variable name="statement-geo" select="key('edge-geo',$statement-uri)"/>
+            <xsl:if test="not($params='follow') or exists($object-geo/graphml:data)">
+              <edge source="{$subject-uri}" target="{$object-uri}">
+                <data key="d7"><xsl:value-of select="$statement-uri"/></data>
+                <data key="d8"><xsl:value-of select="$property-uri"/></data>
+          			<data key="d10">
+          				<y:PolyLineEdge>
+                    <xsl:copy-of select="$statement-geo/graphml:data/y:PolyLineEdge/y:Path"/>
+          					<y:LineStyle color="#000000" type="line" width="1.0"/>
+          					<y:Arrows source="none" target="plain"/>
+                    <xsl:if test="../rdf:type/@rdf:resource!='http://bp4mc2.org/def/mim#Keuze'">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:apply-templates select=".." mode="label"/></xsl:with-param>
+                        <xsl:with-param name="ratio">0.5</xsl:with-param>
+                        <xsl:with-param name="position">left</xsl:with-param>
+                      </xsl:call-template>
+                    </xsl:if>
+                    <xsl:call-template name="edge-label">
+                      <xsl:with-param name="label">«<xsl:apply-templates select="../rdf:type" mode="label"/>»</xsl:with-param>
+                      <xsl:with-param name="ratio">0.5</xsl:with-param>
+                      <xsl:with-param name="position">right</xsl:with-param>
+                    </xsl:call-template>
+                    <xsl:if test="../mim:kardinaliteit!='' and not(key('items',../mim:relatierol/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']/mim:kardinaliteit!='')">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:value-of select="../mim:kardinaliteit"/></xsl:with-param>
+                        <xsl:with-param name="ratio">1.0</xsl:with-param>
+                        <xsl:with-param name="position">left</xsl:with-param>
+                      </xsl:call-template>
+                    </xsl:if>
+                    <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolBron']">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
+                        <xsl:with-param name="ratio">0.0</xsl:with-param>
+                        <xsl:with-param name="position">left</xsl:with-param>
+                      </xsl:call-template>
+                      <xsl:if test="mim:kardinaliteit!=''">
+                        <xsl:call-template name="edge-label">
+                          <xsl:with-param name="label"><xsl:value-of select="mim:kardinaliteit"/></xsl:with-param>
+                          <xsl:with-param name="ratio">0.0</xsl:with-param>
+                          <xsl:with-param name="position">right</xsl:with-param>
+                        </xsl:call-template>
+                      </xsl:if>
+                    </xsl:for-each>
+                    <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
+                        <xsl:with-param name="ratio">1.0</xsl:with-param>
+                        <xsl:with-param name="position">left</xsl:with-param>
+                      </xsl:call-template>
+                      <xsl:if test="mim:kardinaliteit!=''">
+                        <xsl:call-template name="edge-label">
+                          <xsl:with-param name="label"><xsl:value-of select="mim:kardinaliteit"/></xsl:with-param>
+                          <xsl:with-param name="ratio">1.0</xsl:with-param>
+                          <xsl:with-param name="position">right</xsl:with-param>
+                        </xsl:call-template>
+                      </xsl:if>
+                    </xsl:for-each>
+          					<y:BendStyle smoothed="false"/>
+          				</y:PolyLineEdge>
+          			</data>
+          		</edge>
+            </xsl:if>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:if>
     </xsl:for-each>
   </xsl:if>
