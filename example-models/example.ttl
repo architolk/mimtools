@@ -1,0 +1,48 @@
+@prefix ea:   <http://www.sparxsystems.eu/def/ea#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<urn:uuid:83C3B3C4-5AAA-4dfd-9074-C286D5A87EA5>
+        a       <http://bp4mc2.org/def/mim#Objecttype> ;
+        <http://bp4mc2.org/def/mim#naam>
+                "Wine" .
+
+<urn:uuid:302AB1C9-DE94-464b-BE2A-244B300D2EB7>
+        a       <http://bp4mc2.org/def/mim#Generalisatie> ;
+        <http://bp4mc2.org/def/mim#subtype>
+                <urn:uuid:8A85CFF0-1427-46ce-BF1E-A653039C1014> ;
+        <http://bp4mc2.org/def/mim#supertype>
+                <urn:uuid:83C3B3C4-5AAA-4dfd-9074-C286D5A87EA5> .
+
+<urn:uuid:4B288D2D-CE1C-4b5f-ABA8-414BF02AD7D8>
+        a       <http://bp4mc2.org/def/mim#Objecttype> ;
+        <http://bp4mc2.org/def/mim#naam>
+                "White wine" .
+
+<urn:uuid:D85CE0F2-0527-49ff-A9A7-6ED8EEDD9D5C>
+        a       <http://bp4mc2.org/def/mim#Generalisatie> ;
+        <http://bp4mc2.org/def/mim#subtype>
+                <urn:uuid:4B288D2D-CE1C-4b5f-ABA8-414BF02AD7D8> ;
+        <http://bp4mc2.org/def/mim#supertype>
+                <urn:uuid:83C3B3C4-5AAA-4dfd-9074-C286D5A87EA5> .
+
+<urn:uuid:B962B019-4855-48fc-B84E-48C59851625A>
+        a       <http://bp4mc2.org/def/mim#Objecttype> ;
+        <http://bp4mc2.org/def/mim#naam>
+                "Grape" .
+
+<urn:uuid:8A85CFF0-1427-46ce-BF1E-A653039C1014>
+        a       <http://bp4mc2.org/def/mim#Objecttype> ;
+        <http://bp4mc2.org/def/mim#naam>
+                "Red wine" .
+
+<urn:uuid:3277A6F5-6CC0-4e62-91F4-0F71709B56ED>
+        a       <http://bp4mc2.org/def/mim#Generalisatie> ;
+        <http://bp4mc2.org/def/mim#subtype>
+                <urn:uuid:724D4C0C-395E-4e7f-9D6A-A78F3BCBE81E> ;
+        <http://bp4mc2.org/def/mim#supertype>
+                <urn:uuid:83C3B3C4-5AAA-4dfd-9074-C286D5A87EA5> .
+
+<urn:uuid:724D4C0C-395E-4e7f-9D6A-A78F3BCBE81E>
+        a       <http://bp4mc2.org/def/mim#Objecttype> ;
+        <http://bp4mc2.org/def/mim#naam>
+                "Rose" .

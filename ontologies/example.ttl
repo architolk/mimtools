@@ -1,0 +1,45 @@
+@prefix ea:   <http://www.sparxsystems.eu/def/ea#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://schema.org/Rose>
+        a                <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        rdfs:label       "Rose" ;
+        rdfs:subClassOf  <http://schema.org/Wine> ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Rose" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Rose> .
+
+<http://schema.org/Wine>
+        a           <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        rdfs:label  "Wine" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Wine" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Wine> .
+
+<http://schema.org/Red_wine>
+        a                <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        rdfs:label       "Red wine" ;
+        rdfs:subClassOf  <http://schema.org/Wine> ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Red_wine" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Red_wine> .
+
+<http://schema.org/Grape>
+        a           <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        rdfs:label  "Grape" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Grape" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Grape> .
+
+<http://schema.org/White_wine>
+        a                <http://www.w3.org/ns/shacl#NodeShape> , <http://www.w3.org/2002/07/owl#Class> ;
+        rdfs:label       "White wine" ;
+        rdfs:subClassOf  <http://schema.org/Wine> ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "White_wine" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/White_wine> .
