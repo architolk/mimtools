@@ -1,0 +1,56 @@
+@prefix ex:  <http://example.org/> .
+@prefix mim: <http://bp4mc2.org/def/mim#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://schema.org/Winkel>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , owl:Class ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Winkel" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Winkel" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Winkel> .
+
+<http://schema.org/Persoon>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , owl:Class ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Persoon" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Persoon" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Persoon> .
+
+<http://schema.org/bedrag>
+        a       owl:DatatypeProperty ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "bedrag" .
+
+<http://schema.org/Betaling>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , owl:Class ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Betaling" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Betaling" ;
+        <http://www.w3.org/ns/shacl#property>
+                <http://schema.org/Betaling.bedrag> ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Betaling> .
+
+<http://schema.org/Bedrag>
+        a       <http://www.w3.org/1999/02/22-rdf-syntax-ns#Datatype> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Bedrag" .
+
+<http://schema.org/Betaling.bedrag>
+        a       <http://www.w3.org/ns/shacl#PropertyShape> ;
+        <http://www.w3.org/ns/shacl#datatype>
+                xsd:Decimal ;
+        <http://www.w3.org/ns/shacl#maxCount>
+                1 ;
+        <http://www.w3.org/ns/shacl#minCount>
+                1 ;
+        <http://www.w3.org/ns/shacl#name>
+                "bedrag" ;
+        <http://www.w3.org/ns/shacl#path>
+                <http://schema.org/bedrag> .

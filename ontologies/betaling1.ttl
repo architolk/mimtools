@@ -1,0 +1,43 @@
+@prefix ex:  <http://example.org/> .
+@prefix mim: <http://bp4mc2.org/def/mim#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://schema.org/Winkel>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , owl:Class ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Winkel" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Winkel" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Winkel> .
+
+<http://schema.org/Persoon>
+        a       <http://www.w3.org/ns/shacl#NodeShape> , owl:Class ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Persoon" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Persoon" ;
+        <http://www.w3.org/ns/shacl#property>
+                <http://schema.org/Persoon.Betaling> ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                <http://schema.org/Persoon> .
+
+<http://schema.org/Betaling>
+        a       owl:ObjectProperty ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Betaling" .
+
+<http://schema.org/Bedrag>
+        a       <http://www.w3.org/1999/02/22-rdf-syntax-ns#Datatype> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Bedrag" .
+
+<http://schema.org/Persoon.Betaling>
+        a       <http://www.w3.org/ns/shacl#PropertyShape> ;
+        <http://www.w3.org/ns/shacl#class>
+                <http://schema.org/Winkel> ;
+        <http://www.w3.org/ns/shacl#name>
+                "Betaling" ;
+        <http://www.w3.org/ns/shacl#path>
+                <http://schema.org/Betaling> .

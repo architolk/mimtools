@@ -1,0 +1,35 @@
+@prefix mim:    <http://bp4mc2.org/def/mim#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+schema:Person  a  <http://www.w3.org/ns/shacl#NodeShape> , owl:Class ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Person" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Person" ;
+        <http://www.w3.org/ns/shacl#property>
+                schema:Person.worksFor ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                schema:Person .
+
+schema:Organization  a  <http://www.w3.org/ns/shacl#NodeShape> , owl:Class ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Organization" ;
+        <http://www.w3.org/2004/02/skos/core#notation>
+                "Organization" ;
+        <http://www.w3.org/ns/shacl#targetClass>
+                schema:Organization .
+
+schema:worksFor  a  owl:ObjectProperty ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "worksFor" .
+
+schema:Person.worksFor
+        a       <http://www.w3.org/ns/shacl#PropertyShape> ;
+        <http://www.w3.org/ns/shacl#class>
+                schema:Organization ;
+        <http://www.w3.org/ns/shacl#name>
+                "worksFor" ;
+        <http://www.w3.org/ns/shacl#path>
+                schema:worksFor .
