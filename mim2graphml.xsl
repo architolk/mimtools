@@ -80,6 +80,7 @@
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatiesoort']" mode="edge"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse']" mode="edge"/>
+  <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Generalisatie']" mode="edge-gen"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze']" mode="edge"/>
 </xsl:template>
 
@@ -117,6 +118,36 @@
         </y:UMLClassNode>
   		</data>
   	</node>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="rdf:Description" mode="edge-gen">
+  <xsl:variable name="subject-uri" select="mim:subtype/@rdf:resource"/>
+  <xsl:if test="exists(key('items',$subject-uri))">
+    <xsl:for-each select="mim:supertype[exists(key('items',@rdf:resource))]">
+      <xsl:variable name="object-uri" select="@rdf:resource"/>
+      <xsl:variable name="subject-geo" select="key('node-geo',$subject-uri)"/>
+      <xsl:if test="not($params='follow') or exists($subject-geo/graphml:data)">
+        <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
+        <xsl:variable name="property-uri"><xsl:value-of select="@rdf:about|@rdf:nodeID"/></xsl:variable>
+        <xsl:variable name="statement-uri">urn:md5:<xsl:value-of select="concat($subject-uri,$property-uri,$object-uri)"/></xsl:variable>
+        <xsl:variable name="statement-geo" select="key('edge-geo',$statement-uri)"/>
+        <xsl:if test="not($params='follow') or exists($object-geo/graphml:data)">
+          <edge source="{$subject-uri}" target="{$object-uri}">
+            <data key="d7"><xsl:value-of select="$statement-uri"/></data>
+            <data key="d8"><xsl:value-of select="$property-uri"/></data>
+            <data key="d10">
+              <y:PolyLineEdge>
+                <xsl:copy-of select="$statement-geo/graphml:data/y:PolyLineEdge/y:Path"/>
+                <y:LineStyle color="#000000" type="line" width="1.0"/>
+                <y:Arrows source="none" target="white_delta"/>
+                <y:BendStyle smoothed="false"/>
+              </y:PolyLineEdge>
+            </data>
+          </edge>
+        </xsl:if>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:if>
 </xsl:template>
 
