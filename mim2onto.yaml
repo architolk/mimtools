@@ -1,5 +1,12 @@
 title: MIM conversie
 version: 0.1
+prefixes:
+  owl: http://www.w3.org/2002/07/owl#
+  skos: http://www.w3.org/2004/02/skos/core#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  sh: http://www.w3.org/ns/shacl#
+  mim-item-ns: http://ontology.mim-namespace.org/def/modelname#
+  mim-model-ns: http://ontology.mim-namespace.org/
 queries:
   - title: create technical names
     query: >
@@ -14,6 +21,32 @@ queries:
         GRAPH <urn:input> {
           ?item mim:naam ?naam
           BIND (replace(?naam,"[^a-zA-Z0-9_-]","_") as ?codefixed)
+        }
+      }
+  - title: convert mim:Package (and subclasses of mim:Package)
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?ontology a owl:Ontology.
+          ?ontology rdfs:label ?naam.
+          ?ontology skos:notation ?code.
+          ?ontology rdfs:seeAlso ?package.
+        }
+      }
+      WHERE {
+        SELECT (iri(concat("http://ontology.mim-namespace.org/",?code)) as ?ontology) ?code ?naam ?package
+        WHERE {
+          GRAPH <urn:input> {
+            ?package a ?packagetype.
+            ?package mim:naam ?naam.
+            ?package skos:notation ?code.
+            FILTER (?packagetype=mim:Informatiemodel || ?packagetype=mim:Domein)
+          }
         }
       }
   - title: convert mim:Objecttype
@@ -33,7 +66,7 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?class) ?code ?naam ?objecttype
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?class) ?code ?naam ?objecttype
         WHERE {
           GRAPH <urn:input> {
             ?objecttype a mim:Objecttype.
@@ -59,7 +92,7 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?class) ?code ?naam ?gegevensgroeptype
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?class) ?code ?naam ?gegevensgroeptype
         WHERE {
           GRAPH <urn:input> {
             ?gegevensgroeptype a mim:Gegevensgroeptype.
@@ -85,7 +118,7 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?class) ?code ?naam ?relatieklasse
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?class) ?code ?naam ?relatieklasse
         WHERE {
           GRAPH <urn:input> {
             ?relatieklasse a mim:Relatieklasse.
@@ -114,9 +147,9 @@ queries:
         }
       }
       WHERE {
-        SELECT  (iri(concat("http://schema.org/",?code)) as ?property)
-                (iri(concat("http://schema.org/",?ownercode,".",?code)) as ?predicate)
-                (iri(concat("http://schema.org/",?ownercode)) as ?ownershape)
+        SELECT  (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?property)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode,".",?code)) as ?predicate)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode)) as ?ownershape)
                 ?code ?naam ?attribuutsoort
         WHERE {
           GRAPH <urn:input> {
@@ -152,10 +185,10 @@ queries:
         }
       }
       WHERE {
-        SELECT  (iri(concat("http://schema.org/",?code)) as ?property)
-                (iri(concat("http://schema.org/",?ownercode,".",?code)) as ?predicate)
-                (iri(concat("http://schema.org/",?ownercode)) as ?owner)
-                (iri(concat("http://schema.org/",?classcode)) as ?class)
+        SELECT  (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?property)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode,".",?code)) as ?predicate)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode)) as ?owner)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?classcode)) as ?class)
                 ?code ?naam ?relatiesoort
         WHERE {
           GRAPH <urn:input> {
@@ -195,10 +228,10 @@ queries:
         }
       }
       WHERE {
-        SELECT  (iri(concat("http://schema.org/",?code)) as ?property)
-                (iri(concat("http://schema.org/",?ownercode,".",?code)) as ?predicate)
-                (iri(concat("http://schema.org/",?ownercode)) as ?owner)
-                (iri(concat("http://schema.org/",?classcode)) as ?class)
+        SELECT  (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?property)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode,".",?code)) as ?predicate)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode)) as ?owner)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?classcode)) as ?class)
                 ?code ?naam ?externekoppeling
         WHERE {
           GRAPH <urn:input> {
@@ -228,7 +261,7 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?datatype) ?naam ?type
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?datatype) ?naam ?type
         WHERE {
           GRAPH <urn:input> {
             ?type a mim:PrimitiefDatatype.
@@ -255,7 +288,7 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?datatype) ?naam ?type
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?datatype) ?naam ?type
         WHERE {
           GRAPH <urn:input> {
             ?type a mim:GestructureerdDatatype.
@@ -283,7 +316,7 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?enumeratie) ?naam ?type
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?enumeratie) ?naam ?type
         WHERE {
           GRAPH <urn:input> {
             ?type a mim:Enumeratie.
@@ -308,7 +341,7 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?enum)) as ?type) (iri(concat("http://schema.org/",?code)) as ?item) ?naam ?waarde
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?enum)) as ?type) (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?item) ?naam ?waarde
         WHERE {
           GRAPH <urn:input> {
             ?enumeratie mim:waarde ?waarde.
@@ -340,10 +373,10 @@ queries:
         }
       }
       WHERE {
-        SELECT  (iri(concat("http://schema.org/",?code)) as ?property)
-                (iri(concat("http://schema.org/",?ownercode,".",?code)) as ?predicate)
-                (iri(concat("http://schema.org/",?ownercode)) as ?owner)
-                (iri(concat("http://schema.org/",?classcode)) as ?class)
+        SELECT  (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?property)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode,".",?code)) as ?predicate)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode)) as ?owner)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?classcode)) as ?class)
                 ?code ?naam ?relatierolbron
         WHERE {
           GRAPH <urn:input> {
@@ -379,10 +412,10 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?property)
-                (iri(concat("http://schema.org/",?ownercode,".",?code)) as ?predicate)
-                (iri(concat("http://schema.org/",?ownercode)) as ?owner)
-                (iri(concat("http://schema.org/",?classcode)) as ?class)
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?property)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode,".",?code)) as ?predicate)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode)) as ?owner)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?classcode)) as ?class)
                 ?code ?naam ?relatieroldoel
         WHERE {
           GRAPH <urn:input> {
@@ -425,13 +458,13 @@ queries:
         }
       }
       WHERE {
-        SELECT  (iri(concat("http://schema.org/",?code)) as ?statement)
-                (iri(concat("http://schema.org/",?objectcode)) as ?object)
-                (iri(concat("http://schema.org/",?subjectcode)) as ?subject)
-                (iri(concat("http://schema.org/",?predicatecode)) as ?predicate)
-                (iri(concat("http://schema.org/",?code,".object")) as ?objectps)
-                (iri(concat("http://schema.org/",?code,".subject")) as ?subjectps)
-                (iri(concat("http://schema.org/",?code,".predicate")) as ?predicateps)
+        SELECT  (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?statement)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?objectcode)) as ?object)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?subjectcode)) as ?subject)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?predicatecode)) as ?predicate)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code,".object")) as ?objectps)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code,".subject")) as ?subjectps)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code,".predicate")) as ?predicateps)
                 ?code ?naam ?relatieroldoel
         WHERE {
           GRAPH <urn:input> {
@@ -469,10 +502,10 @@ queries:
         }
       }
       WHERE {
-        SELECT  (iri(concat("http://schema.org/",?code)) as ?property)
-                (iri(concat("http://schema.org/",?ownercode,".",?code)) as ?predicate)
-                (iri(concat("http://schema.org/",?ownercode)) as ?ownershape)
-                (iri(concat("http://schema.org/",?typecode)) as ?class)
+        SELECT  (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?property)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode,".",?code)) as ?predicate)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode)) as ?ownershape)
+                (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?typecode)) as ?class)
                 ?code ?naam ?gegevensgroep
         WHERE {
           GRAPH <urn:input> {
@@ -504,12 +537,38 @@ queries:
         }
       }
       WHERE {
-        SELECT (iri(concat("http://schema.org/",?code)) as ?class) ?code ?naam ?referentielijst
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?class) ?code ?naam ?referentielijst
         WHERE {
           GRAPH <urn:input> {
             ?referentielijst a mim:Referentielijst.
             ?referentielijst mim:naam ?naam.
             ?referentielijst skos:notation ?code.
+          }
+        }
+      }
+  - title: convert mim:Codelijst
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?class a owl:Class, sh:NodeShape.
+          ?class sh:targetClass ?class.
+          ?class rdfs:label ?naam.
+          ?class skos:notation ?code.
+          ?class rdfs:seeAlso ?codelijst.
+        }
+      }
+      WHERE {
+        SELECT (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?code)) as ?class) ?code ?naam ?codelijst
+        WHERE {
+          GRAPH <urn:input> {
+            ?codelijst a mim:Codelijst.
+            ?codelijst mim:naam ?naam.
+            ?codelijst skos:notation ?code.
           }
         }
       }
@@ -670,6 +729,27 @@ queries:
           ?refclass rdfs:seeAlso ?type.
         }
       }
+  - title: convert mim:type (mim:Codelijst)
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?pshape sh:class ?refclass
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?item mim:type ?type.
+          ?type a mim:Codelijst.
+        }
+        GRAPH <urn:output> {
+          ?pshape a sh:PropertyShape.
+          ?pshape rdfs:seeAlso ?item.
+          ?refclass rdfs:seeAlso ?type.
+        }
+      }
   - title: change owl:DatatypeProperty to owl:ObjectProperty for non-primitive datatypes
     query: >
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -751,6 +831,53 @@ queries:
           }
         }
         FILTER (?maxcount>0)
+      }
+  - title: convert mim:bevatModelelement for mim:Packages
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?ontology owl:imports ?import
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?parent mim:bevatModelelement ?item.
+        }
+        GRAPH <urn:output> {
+          ?ontology a owl:Ontology.
+          ?import a owl:Ontology.
+          ?ontology rdfs:seeAlso ?parent.
+          ?import rdfs:seeAlso ?item.
+        }
+      }
+  - title: convert mim:bevatModelelement for other modelelements
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element rdfs:isDefinedBy ?ontology
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?parent mim:bevatModelelement ?item.
+        }
+        GRAPH <urn:output> {
+          ?ontology a owl:Ontology.
+          ?ontology rdfs:seeAlso ?parent.
+          ?element rdfs:seeAlso ?item.
+          ?element a ?elementtype
+          FILTER (?elementtype=owl:Class || ?elementtype=owl:DatatypeProperty || ?elementtype=owl:ObjectProperty)
+        }
       }
   - title: remove rdfs:seeAlso
     query: >

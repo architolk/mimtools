@@ -1,5 +1,7 @@
 title: MIM conversie
 version: 0.3
+prefixes:
+  mim: http://bp4mc2.org/def/mim#
 queries:
   - title: Fix interface naar Primitief datatype
     query: >
@@ -18,6 +20,56 @@ queries:
         GRAPH <urn:input> {
           ?dt ea:type "DataType".
           ?dt ea:stereotype "interface"
+        }
+      }
+  - title: get Informatiemodellen
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?informatiemodel a mim:Informatiemodel.
+          ?informatiemodel mim:naam ?label.
+        }
+        GRAPH <urn:input> {
+          ?informatiemodel rdfs:seeAlso ?s
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?guid)) as ?informatiemodel) ?s ?label
+          WHERE {
+            ?s a ea:Object.
+            ?s ea:guid ?guid.
+            ?s ea:stereotype "Informatiemodel".
+            ?s rdfs:label ?label
+          }
+        }
+      }
+  - title: get Domeinen
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?domein a mim:Domein.
+          ?domein mim:naam ?label.
+        }
+        GRAPH <urn:input> {
+          ?domein rdfs:seeAlso ?s
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?guid)) as ?domein) ?s ?label
+          WHERE {
+            ?s a ea:Object.
+            ?s ea:guid ?guid.
+            ?s ea:stereotype "Domein".
+            ?s rdfs:label ?label
+          }
         }
       }
   - title: get Objecttypes
@@ -191,6 +243,56 @@ queries:
             ?s a ea:Object.
             ?s ea:guid ?guid.
             ?s ea:stereotype "Referentielijst".
+            ?s rdfs:label ?label
+          }
+        }
+      }
+  - title: get Enumeratie
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?enumeratie a mim:Enumeratie.
+          ?enumeratie mim:naam ?label.
+        }
+        GRAPH <urn:input> {
+          ?enumeratie rdfs:seeAlso ?s
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?guid)) as ?enumeratie) ?s ?label
+          WHERE {
+            ?s a ea:Object.
+            ?s ea:guid ?guid.
+            ?s ea:stereotype "Enumeratie".
+            ?s rdfs:label ?label
+          }
+        }
+      }
+  - title: get Codelijst
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?codelijst a mim:Codelijst.
+          ?codelijst mim:naam ?label.
+        }
+        GRAPH <urn:input> {
+          ?codelijst rdfs:seeAlso ?s
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?guid)) as ?codelijst) ?s ?label
+          WHERE {
+            ?s a ea:Object.
+            ?s ea:guid ?guid.
+            ?s ea:stereotype "Codelijst".
             ?s rdfs:label ?label
           }
         }
@@ -402,6 +504,53 @@ queries:
             ?s ea:stereotype "Referentie element".
             ?s ea:object ?o.
             ?o ea:guid ?reflijst.
+          }
+        }
+      }
+  - title: get Enumeratiewaarde
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?enumeratiewaarde a mim:Enumeratiewaarde.
+          ?enumeratiewaarde mim:naam ?label.
+        }
+        GRAPH <urn:input> {
+          ?enumeratiewaarde rdfs:seeAlso ?s
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?guid)) as ?enumeratiewaarde) ?s ?label
+          WHERE {
+            ?s a ea:Attribute.
+            ?s ea:guid ?guid.
+            ?s ea:stereotype "Enumeratiewaarde".
+            ?s rdfs:label ?label.
+          }
+        }
+      }
+  - title: link Enumeratiewaarde to Enumeratie
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?enumeratie mim:waarde ?enumeratiewaarde
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?elem)) as ?enumeratiewaarde) (iri(concat('urn:uuid:',?enum)) as ?enumeratie)
+          WHERE {
+            ?s a ea:Attribute.
+            ?s ea:guid ?elem.
+            ?s ea:stereotype "Enumeratiewaarde".
+            ?s ea:object ?o.
+            ?o ea:guid ?enum.
           }
         }
       }
@@ -676,6 +825,25 @@ queries:
           }
         }
       }
+  - title: add mim:bevatModelelement
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?package mim:bevatModelelement ?element
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?item ea:package ?eapackage.
+          ?eapackage ea:guid ?guid.
+          ?eaobject ea:guid ?guid.
+          ?package rdfs:seeAlso ?eaobject.
+        }
+      }
   - title: add mim:definitie
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -749,6 +917,10 @@ queries:
             ?item ea:upperBound ?upper.
             ?element rdfs:seeAlso ?item
           }
+          GRAPH <urn:output> {
+            ?element a ?elementtype
+            FILTER (?elementtype = mim:Attribuutsoort)
+          }
         }
       }
   - title: add mim:kardinaliteit (Relatiesoort)
@@ -768,6 +940,198 @@ queries:
             ?item ea:destCard ?card.
             ?element rdfs:seeAlso ?item
           }
+        }
+      }
+  - title: add mim:alias
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:alias ?alias
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?item ea:alias ?alias
+        }
+      }
+  - title: add mim:toelichting
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:toelichting ?toelichting
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Toelichting".
+          ?tag ea:notes ?toelichting
+        }
+      }
+  - title: add mim:herkomst
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:herkomst ?herkomst
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Herkomst".
+          ?tag ea:value ?herkomst
+        }
+      }
+  - title: add mim:herkomstDefinitie
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:herkomstDefinitie ?herkomstdefinitie
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Herkomst definitie".
+          ?tag ea:value ?herkomstdefinitie
+        }
+      }
+  - title: add mim:datumOpname
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:datumOpname ?datumopname
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Datum opname".
+          ?tag ea:value ?datumopname
+        }
+      }
+  - title: add mim:populatie
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:populatie ?populatie
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Populatie".
+          ?tag ea:notes ?populatie
+        }
+      }
+  - title: add mim:patroon
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:patroon ?patroon
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Patroon".
+          ?tag ea:notes ?patroon
+        }
+      }
+  - title: add mim:formeelPatroon
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:formeelPatroon ?formeelpatroon
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Formeel patroon".
+          ?tag ea:value ?formeelpatroon
+        }
+      }
+  - title: add authenticiteiten
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:input> {
+          mim:OverigeAuthenticiteit rdfs:label "Overig".
+          mim:Authentiek rdfs:label "Authentiek".
+          mim:Basisgegeven rdfs:label "Basisgegeven".
+          mim:WettelijkGegeven rdfs:label "Wettelijk gegeven".
+          mim:LandelijkKerngegeven rdfs:label "Landelijk kerngegeven".
+        }
+      }
+      WHERE {}
+  - title: add mim:authentiek
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:authentiek ?authentiek
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Authentiek".
+          ?tag ea:value ?authentieklabel.
+          ?authentiek rdfs:label ?authentieklabel
+        }
+      }
+  - title: add mim:indicatieAbstractObject
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:indicatieAbstractObject ?abstract
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?item ea:abstract ?abstract
         }
       }
   - title: Verwijder Kadaster-specifiek gebruik van opmaak in definities
