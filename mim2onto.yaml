@@ -5,6 +5,7 @@ prefixes:
   skos: http://www.w3.org/2004/02/skos/core#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   sh: http://www.w3.org/ns/shacl#
+  dct: http://purl.org/dc/terms/
   mim-item-ns: http://ontology.mim-namespace.org/def/modelname#
   mim-model-ns: http://ontology.mim-namespace.org/
 queries:
@@ -180,6 +181,7 @@ queries:
           ?predicate a sh:PropertyShape.
           ?predicate sh:name ?code.
           ?predicate sh:path ?property.
+          ?predicate sh:nodeKind sh:IRI.
           ?predicate sh:class ?class.
           ?predicate rdfs:seeAlso ?relatiesoort
         }
@@ -223,6 +225,7 @@ queries:
           ?predicate a sh:PropertyShape.
           ?predicate sh:name ?code.
           ?predicate sh:path ?property.
+          ?predicate sh:nodeKind sh:IRI.
           ?predicate sh:class ?class.
           ?predicate rdfs:seeAlso ?externekoppeling
         }
@@ -368,6 +371,7 @@ queries:
           ?predicate a sh:PropertyShape.
           ?predicate sh:name ?code.
           ?predicate sh:path ?property.
+          ?predicate sh:nodeKind sh:IRI.
           ?predicate sh:class ?class.
           ?predicate rdfs:seeAlso ?relatierolbron
         }
@@ -407,8 +411,10 @@ queries:
           ?predicate a sh:PropertyShape.
           ?predicate sh:name ?code.
           ?predicate sh:path ?property.
+          ?predicate sh:nodeKind sh:IRI.
           ?predicate sh:class ?class.
           ?predicate rdfs:seeAlso ?relatieroldoel.
+          ?predicate mim:equivalent ?relatiesoort.
         }
       }
       WHERE {
@@ -416,7 +422,7 @@ queries:
                 (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode,".",?code)) as ?predicate)
                 (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?ownercode)) as ?owner)
                 (iri(concat("http://ontology.mim-namespace.org/def/modelname#",?classcode)) as ?class)
-                ?code ?naam ?relatieroldoel
+                ?code ?naam ?relatieroldoel ?relatiesoort
         WHERE {
           GRAPH <urn:input> {
             ?relatieroldoel a mim:RelatierolDoel.
@@ -451,9 +457,11 @@ queries:
           ?predicateps sh:maxCount 1 .
           ?subjectps a sh:PropertyShape.
           ?subjectps sh:path rdf:subject.
+          ?subjectps sh:nodeKind sh:IRI.
           ?subjectps sh:class ?subject.
           ?objectps a sh:PropertyShape.
           ?objectps sh:path rdf:object.
+          ?objectps sh:nodeKind sh:IRI.
           ?objectps sh:class ?object.
         }
       }
@@ -628,6 +636,24 @@ queries:
           ?element rdfs:seeAlso ?item
         }
       }
+  - title: convert mim:formeelPatroon
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element sh:pattern ?patroon
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?item mim:formeelPatroon ?patroon
+        }
+        GRAPH <urn:output> {
+          ?element rdfs:seeAlso ?item
+        }
+      }
   - title: convert mim:type (mim:PrimitiefDatatype)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -636,7 +662,8 @@ queries:
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       INSERT {
         GRAPH <urn:output> {
-          ?pshape sh:datatype ?datatype
+          ?pshape sh:datatype ?datatype.
+          ?pshape sh:nodeKind sh:Literal.
         }
       }
       WHERE {
@@ -772,6 +799,58 @@ queries:
           ?pshape sh:path ?property.
         }
       }
+  - title: convert mim:lengte (minimum)
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?pshape sh:minLength ?minlength.
+        }
+      }
+      WHERE {
+        {
+          SELECT ?pshape (strdt(strbefore(concat(?lengte,".."),".."), xsd:integer) as ?minlength)
+          WHERE {
+            GRAPH <urn:input> {
+              ?element mim:lengte ?lengte
+            }
+            GRAPH <urn:output> {
+              ?pshape a sh:PropertyShape.
+              ?pshape rdfs:seeAlso ?element
+            }
+          }
+        }
+        FILTER (?minlength>0)
+      }
+  - title: convert mim:lengte (maximum)
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?pshape sh:maxLength ?maxlength.
+        }
+      }
+      WHERE {
+        {
+          SELECT ?pshape (strdt(strafter(?lengte,".."), xsd:integer) as ?maxlength)
+          WHERE {
+            GRAPH <urn:input> {
+              ?element mim:lengte ?lengte
+            }
+            GRAPH <urn:output> {
+              ?pshape a sh:PropertyShape.
+              ?pshape rdfs:seeAlso ?element
+            }
+          }
+        }
+        FILTER (?maxlength>0)
+      }
   - title: convert mim:kardinaliteit (minimum)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -879,12 +958,18 @@ queries:
           FILTER (?elementtype=owl:Class || ?elementtype=owl:DatatypeProperty || ?elementtype=owl:ObjectProperty)
         }
       }
-  - title: remove rdfs:seeAlso
+  - title: remove rdfs:seeAlso / Add mim:equivalent
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
       DELETE {
         GRAPH <urn:output> {
           ?s rdfs:seeAlso ?o
+        }
+      }
+      INSERT {
+        GRAPH <urn:output> {
+          ?s mim:equivalent ?o
         }
       }
       WHERE {
