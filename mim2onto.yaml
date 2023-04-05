@@ -630,7 +630,6 @@ queries:
       WHERE {
         GRAPH <urn:input> {
           ?item mim:definitie ?definitie
-          FILTER NOT EXISTS {?item mim:begrip ?begrip}
         }
         GRAPH <urn:output> {
           ?element rdfs:seeAlso ?item
