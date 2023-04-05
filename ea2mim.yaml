@@ -1119,13 +1119,14 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       INSERT {
         GRAPH <urn:input> {
-          mim:OverigeAuthenticiteit rdfs:label "Overig".
-          mim:Authentiek rdfs:label "Authentiek".
-          mim:Basisgegeven rdfs:label "Basisgegeven".
-          mim:WettelijkGegeven rdfs:label "Wettelijk gegeven".
-          mim:LandelijkKerngegeven rdfs:label "Landelijk kerngegeven".
+          mim:OverigeAuthenticiteit rdfs:label "Overig"; skos:inScheme mim:Authenticiteit.
+          mim:Authentiek rdfs:label "Authentiek"; skos:inScheme mim:Authenticiteit.
+          mim:Basisgegeven rdfs:label "Basisgegeven"; skos:inScheme mim:Authenticiteit.
+          mim:WettelijkGegeven rdfs:label "Wettelijk gegeven"; skos:inScheme mim:Authenticiteit.
+          mim:LandelijkKerngegeven rdfs:label "Landelijk kerngegeven"; skos:inScheme mim:Authenticiteit.
         }
       }
       WHERE {}
@@ -1134,6 +1135,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:authentiek ?authentiek
@@ -1145,6 +1147,7 @@ queries:
           ?tag ea:element ?item.
           ?tag ea:property "Authentiek".
           ?tag ea:value ?authentieklabel.
+          ?authentiek skos:inScheme mim:Authenticiteit.
           ?authentiek rdfs:label ?authentieklabel
         }
       }
@@ -1204,6 +1207,58 @@ queries:
           ?tag ea:value ?lengte.
         }
       }
+  - title: add mim:locatie
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:locatie ?locatie
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Locatie".
+          ?tag ea:value ?locatie.
+        }
+      }
+  - title: add relatiemodelleringstypen
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      INSERT {
+        GRAPH <urn:input> {
+          mim:RelatierolLeidend rdfs:label "Relatierol leidend"; skos:inScheme mim:relatiemodelleringstypen.
+          mim:RelatiesoortLeidend rdfs:label "Relatiesoort leidend"; skos:inScheme mim:relatiemodelleringstypen.
+        }
+      }
+      WHERE {}
+  - title: add mim:relatiemodelleringstype
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:relatiemodelleringstype ?relatiemodelleringstype
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?item.
+          ?tag ea:element ?item.
+          ?tag ea:property "Relatiemodelleringstype".
+          ?tag ea:value ?relatiemodelleringstypelabel.
+          ?relatiemodelleringstype skos:inScheme mim:relatiemodelleringstypen.
+          ?relatiemodelleringstype rdfs:label ?relatiemodelleringstypelabel.
+        }
+      }
   - title: add mim:indicatieAbstractObject
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -1220,14 +1275,14 @@ queries:
           ?item ea:abstract ?abstract
         }
       }
-  - title: add mim:identificerend
+  - title: add mim:identificerend (alleen bij 'true', conform specificatie)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX mim: <http://bp4mc2.org/def/mim#>
       INSERT {
         GRAPH <urn:output> {
-          ?element mim:identificerend ?isid
+          ?element mim:identificerend true
         }
       }
       WHERE {
@@ -1235,7 +1290,7 @@ queries:
           ?element rdfs:seeAlso ?item.
           ?item ea:guid ?guid.
           ?xref ea:client ?guid.
-          ?xref ea:isID ?isid.
+          ?xref ea:isID true.
         }
       }
   - title: Verwijder Kadaster-specifiek gebruik van opmaak in definities
