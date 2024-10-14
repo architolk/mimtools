@@ -200,7 +200,13 @@
               <data key="d10">
         				<y:PolyLineEdge>
                   <y:LineStyle color="#000000" type="line" width="1.0"/>
-        					<y:Arrows source="none" target="plain"/>
+                  <xsl:variable name="target-arrow">
+                    <xsl:choose>
+                      <xsl:when test="../mim:unidirectioneel='true'">plain</xsl:when>
+                      <xsl:otherwise>none</xsl:otherwise>
+                    </xsl:choose>
+                  </xsl:variable>
+        					<y:Arrows source="none" target="{$target-arrow}"/>
                   <xsl:if test="../mim:kardinaliteit!='' and not(key('items',../mim:relatierol/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']/mim:kardinaliteit!='')">
                     <xsl:call-template name="edge-label">
                       <xsl:with-param name="label"><xsl:value-of select="../mim:kardinaliteit"/></xsl:with-param>
@@ -232,7 +238,13 @@
                         <xsl:otherwise>none</xsl:otherwise>
                       </xsl:choose>
                     </xsl:variable>
-          					<y:Arrows source="{$source-arrow}" target="plain"/>
+                    <xsl:variable name="target-arrow">
+                      <xsl:choose>
+                        <xsl:when test="../mim:unidirectioneel='true'">plain</xsl:when>
+                        <xsl:otherwise>none</xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:variable>
+          					<y:Arrows source="{$source-arrow}" target="{$target-arrow}"/>
                     <xsl:if test="../rdf:type/@rdf:resource!='http://bp4mc2.org/def/mim#Keuze'">
                       <xsl:call-template name="edge-label">
                         <xsl:with-param name="label"><xsl:apply-templates select=".." mode="label"/></xsl:with-param>
