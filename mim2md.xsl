@@ -17,6 +17,11 @@
 
 <xsl:variable name="mim">http://bp4mc2.org/def/mim#</xsl:variable>
 <xsl:variable name="mim-objecttype"><xsl:value-of select="$mim"/>Objecttype</xsl:variable>
+<xsl:variable name="mim-relatiesoort"><xsl:value-of select="$mim"/>Relatiesoort</xsl:variable>
+<xsl:variable name="mim-informatiemodel"><xsl:value-of select="$mim"/>Informatiemodel</xsl:variable>
+<xsl:variable name="mim-relatierolbron"><xsl:value-of select="$mim"/>RelatierolBron</xsl:variable>
+<xsl:variable name="mim-relatieroldoel"><xsl:value-of select="$mim"/>RelatierolDoel</xsl:variable>
+<xsl:variable name="mim-enumeratie"><xsl:value-of select="$mim"/>Enumeratie</xsl:variable>
 
 <xsl:variable name="params" select="/ROOT/@params"/>
 <xsl:variable name="lang">
@@ -26,67 +31,32 @@
   </xsl:choose>
 </xsl:variable>
 
-<xsl:key name="gen" match="/ROOT/rdf:RDF/rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Generalisatie']" use="mim:subtype/@rdf:resource"/>
+<xsl:key name="gen-sub" match="/ROOT/rdf:RDF/rdf:Description" use="mim:subtype/@rdf:resource"/>
+<xsl:key name="gen-super" match="/ROOT/rdf:RDF/rdf:Description" use="mim:supertype/@rdf:resource"/>
+<xsl:key name="ot" match="/ROOT/rdf:RDF/rdf:Description" use="mim:attribuut/@rdf:resource"/>
+<xsl:key name="rs-bron" match="/ROOT/rdf:RDF/rdf:Description[rdf:type/@rdf:resource=$mim-relatiesoort]" use="mim:bron/@rdf:resource"/>
+<xsl:key name="rs-doel" match="/ROOT/rdf:RDF/rdf:Description[rdf:type/@rdf:resource=$mim-relatiesoort]" use="mim:doel/@rdf:resource"/>
 
 <xsl:key name="resource" match="/ROOT/rdf:RDF/rdf:Description" use="@rdf:about|@rdf:nodeID"/>
-<xsl:key name="blank" match="/ROOT/rdf:RDF/rdf:Description" use="@rdf:nodeID"/>
-<xsl:key name="nshape" match="/ROOT/rdf:RDF/rdf:Description" use="sh:targetClass/@rdf:resource"/>
 <xsl:key name="pshape" match="/ROOT/rdf:RDF/rdf:Description" use="sh:path/@rdf:resource"/>
-<xsl:key name="nshapep" match="/ROOT/rdf:RDF/rdf:Description" use="sh:property/(@rdf:resource|@rdf:nodeID)"/>
-<xsl:key name="concepts" match="/ROOT/rdf:RDF/rdf:Description" use="skos:inScheme/@rdf:resource"/>
 
-<xsl:variable name="namespace">
-  <xsl:value-of select="key('resource',/ROOT/rdf:RDF/rdf:Description/sh:declare/@rdf:nodeID)/sh:namespace[1]"/>
+<xsl:variable name="terms">
+  <xsl:for-each select="/ROOT/rdf:RDF/rdf:Description[rdf:type/@rdf:resource=$mim-objecttype]">
+    <term id="{mim:identifier}" label="{rdfs:label}"/>
+  </xsl:for-each>
 </xsl:variable>
 
-<!-- Deze nog integreren met degene hieronder -->
-<xsl:template match="@*" mode="reflabel">
-  <xsl:variable name="pshapelabel"><xsl:apply-templates select="key('nshape',.)[1]" mode="label"/></xsl:variable>
-  <xsl:variable name="nshapelabel"><xsl:apply-templates select="key('pshape',.)[1]" mode="label"/></xsl:variable>
-  <xsl:variable name="definedlabel"><xsl:apply-templates select="key('resource',.)" mode="label"/></xsl:variable>
-  <xsl:choose>
-    <xsl:when test="$definedlabel!=''"><xsl:value-of select="$definedlabel"/></xsl:when>
-    <xsl:when test="$nshapelabel!=''"><xsl:value-of select="$nshapelabel"/></xsl:when>
-    <xsl:when test="$pshapelabel!=''"><xsl:value-of select="$pshapelabel"/></xsl:when>
-    <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
 <xsl:template match="*" mode="label">
-  <xsl:variable name="pshapelabel"><xsl:apply-templates select="key('nshape',@rdf:about)[1]" mode="label"/></xsl:variable>
-  <xsl:variable name="nshapelabel"><xsl:apply-templates select="key('pshape',@rdf:about)[1]" mode="label"/></xsl:variable>
   <xsl:choose>
-    <xsl:when test="exists(sh:name)"><xsl:value-of select="sh:name"/></xsl:when>
-    <xsl:when test="$nshapelabel!=''"><xsl:value-of select="$nshapelabel"/></xsl:when>
-    <xsl:when test="$pshapelabel!=''"><xsl:value-of select="$pshapelabel"/></xsl:when>
     <xsl:when test="rdfs:label[@xml:lang=$lang]!=''"><xsl:value-of select="rdfs:label[@xml:lang=$lang]"/></xsl:when>
     <xsl:otherwise><xsl:value-of select="rdfs:label[1]"/></xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="@*" mode="link">
-  <xsl:choose>
-    <xsl:when test="starts-with(.,$namespace) and ends-with($namespace,'#')">#<xsl:value-of select="substring-after(.,$namespace)"/></xsl:when>
-    <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
 <xsl:template match="*" mode="labelledlink">
   <xsl:text>[</xsl:text><xsl:apply-templates select="." mode="label"/><xsl:text>](</xsl:text>
-  <xsl:if test="mim:identifier!=''"><xsl:text>#</xsl:text><xsl:value-of select="mim:identifier"/></xsl:if>
+  <xsl:if test="mim:identifier!=''"><xsl:text>#</xsl:text><xsl:value-of select="replace(mim:identifier,'\.','')"/></xsl:if>
   <xsl:text>)</xsl:text>
-</xsl:template>
-
-<xsl:template match="@*" mode="anchor">
-  <xsl:text>[</xsl:text><xsl:apply-templates select="." mode="reflabel"/><xsl:text>](</xsl:text><xsl:apply-templates select="." mode="link"/><xsl:text>)</xsl:text>
-</xsl:template>
-
-<xsl:template match="text()|*" mode="image">
-  <xsl:text>![](</xsl:text><xsl:value-of select="."/><xsl:text>)&#xa;</xsl:text>
-</xsl:template>
-
-<xsl:template match="text()|*" mode="header1">
-  <xsl:text># </xsl:text><xsl:value-of select="."/><xsl:text>&#xa;</xsl:text>
 </xsl:template>
 
 <xsl:template match="text()" mode="header2">
@@ -95,7 +65,7 @@
 <xsl:template match="*" mode="header2">
   <xsl:variable name="label">
     <xsl:apply-templates select="." mode="label"/>
-    <xsl:if test="mim:identifier!=''"> {#<xsl:value-of select="mim:identifier"/>}</xsl:if>
+    <xsl:if test="mim:identifier!=''"> {#<xsl:value-of select="replace(mim:identifier,'\.','')"/>}</xsl:if>
   </xsl:variable>
   <xsl:apply-templates select="$label" mode="header2"/>
 </xsl:template>
@@ -106,7 +76,7 @@
 <xsl:template match="*" mode="header3">
   <xsl:variable name="label">
     <xsl:apply-templates select="." mode="label"/>
-    <xsl:if test="starts-with(@rdf:about,$namespace) and ends-with($namespace,'#')"> {#<xsl:value-of select="substring-after(@rdf:about,$namespace)"/>}</xsl:if>
+    <xsl:if test="mim:identifier!=''"> {#<xsl:value-of select="replace(mim:identifier,'\.','')"/>}</xsl:if>
   </xsl:variable>
   <xsl:apply-templates select="$label" mode="header3"/>
 </xsl:template>
@@ -116,10 +86,10 @@
   <xsl:text>|-|-|&#xa;</xsl:text>
 </xsl:template>
 
-<xsl:template match="*" mode="meta-specialisatie">
-  <xsl:if test="exists(key('gen',@rdf:about))">
-    <xsl:text>|Specialisatie van|</xsl:text>
-    <xsl:for-each select="key('gen',@rdf:about)/mim:supertype/@rdf:resource">
+<xsl:template match="*" mode="meta-supertype">
+  <xsl:if test="exists(key('gen-sub',@rdf:about))">
+    <xsl:text>|Supertype|</xsl:text>
+    <xsl:for-each select="key('gen-sub',@rdf:about)/mim:supertype/@rdf:resource">
       <xsl:if test="position()!=1"><xsl:text>, </xsl:text></xsl:if>
       <xsl:apply-templates select="key('resource',.)" mode="labelledlink"/>
     </xsl:for-each>
@@ -127,20 +97,49 @@
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="*" mode="meta-propspecialisatie">
-  <xsl:if test="exists(rdfs:subPropertyOf)">
-    <xsl:text>|Specialisatie van|</xsl:text>
-    <xsl:for-each select="key('resource',rdfs:subPropertyOf/@rdf:resource)">
+<xsl:template match="*" mode="meta-subtype">
+  <xsl:if test="exists(key('gen-super',@rdf:about))">
+    <xsl:text>|Subtype(s)|</xsl:text>
+    <xsl:for-each select="key('gen-super',@rdf:about)/mim:subtype/@rdf:resource">
       <xsl:if test="position()!=1"><xsl:text>, </xsl:text></xsl:if>
-      <xsl:text>[</xsl:text><xsl:apply-templates select="." mode="label"/><xsl:text>](</xsl:text><xsl:value-of select="@rdf:about"/><xsl:text>)</xsl:text>
+      <xsl:apply-templates select="key('resource',.)" mode="labelledlink"/>
     </xsl:for-each>
     <xsl:text>|&#xa;</xsl:text>
   </xsl:if>
 </xsl:template>
 
+<xsl:template match="*" mode="parse-definitie">
+  <xsl:for-each select="tokenize(.,'\[')">
+    <xsl:variable name="token"><xsl:value-of select="substring-before(.,']')"/></xsl:variable>
+    <xsl:choose>
+      <xsl:when test="position()=1"><xsl:value-of select="."/></xsl:when>
+      <xsl:when test="$token!=''">
+        <xsl:text>[</xsl:text>
+        <xsl:value-of select="$token"/>
+        <xsl:text>](</xsl:text>
+        <xsl:if test="exists($terms/term[@label=$token])"><xsl:text>#</xsl:text><xsl:value-of select="$terms/term[@label=$token][1]/@id"/></xsl:if>
+        <xsl:text>)</xsl:text>
+        <xsl:value-of select="substring-after(.,']')"/>
+    </xsl:when>
+      <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:template>
+
 <xsl:template match="*" mode="meta-definitie">
   <xsl:if test="exists(mim:definitie)">
-    <xsl:text>|Definitie|</xsl:text><xsl:value-of select="mim:definitie"/><xsl:text>|&#xa;</xsl:text>
+    <xsl:text>|Definitie|</xsl:text><xsl:apply-templates select="mim:definitie" mode="parse-definitie"/><xsl:text>|&#xa;</xsl:text>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="*" mode="meta-begrip">
+  <xsl:if test="exists(mim:begrip)">
+    <xsl:text>|Begrip|</xsl:text>
+    <xsl:for-each select="key('resource',mim:begrip/@rdf:resource)">
+      <xsl:if test="position()!=1"><xsl:text>, </xsl:text></xsl:if>
+      <xsl:text>[</xsl:text><xsl:value-of select="rdfs:label"/><xsl:text>](#</xsl:text><xsl:value-of select="replace(replace(lower-case(rdfs:label),':',''),' ','-')"/><xsl:text>)</xsl:text>
+    </xsl:for-each>
+    <xsl:text>|&#xa;</xsl:text>
   </xsl:if>
 </xsl:template>
 
@@ -155,13 +154,34 @@
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="*" mode="meta-eigenschappen">
+<xsl:template match="*" mode="meta-eigenschappen-kenmerken">
   <xsl:if test="exists(mim:attribuut)">
-    <xsl:text>|Eigenschappen|</xsl:text>
+    <xsl:text>|Kenmerken|</xsl:text>
     <xsl:for-each select="key('resource',mim:attribuut/(@rdf:resource|@rdf:nodeID))"><xsl:sort select="rdfs:label"/>
       <xsl:if test="position()!=1"><xsl:text>, </xsl:text></xsl:if>
       <xsl:apply-templates select="." mode="labelledlink"/>
-      <!-- <xsl:text>[</xsl:text><xsl:apply-templates select="." mode="label"/><xsl:text>](</xsl:text><xsl:apply-templates select="sh:path/@rdf:resource" mode="link"/><xsl:text>)</xsl:text> -->
+    </xsl:for-each>
+    <xsl:text>|&#xa;</xsl:text>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="*" mode="meta-eigenschappen-rollen">
+  <xsl:if test="exists(key('rs-bron',@rdf:about))">
+    <xsl:text>|Rollen|</xsl:text>
+    <xsl:for-each select="key('rs-bron',@rdf:about)"><xsl:sort select="rdfs:label"/>
+      <xsl:if test="position()!=1"><xsl:text>, </xsl:text></xsl:if>
+      <xsl:apply-templates select="." mode="labelledlink"/>
+    </xsl:for-each>
+    <xsl:text>|&#xa;</xsl:text>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="*" mode="meta-eigenschappen-relaties">
+  <xsl:if test="exists(key('rs-doel',@rdf:about))">
+    <xsl:text>|Relatie met|</xsl:text>
+    <xsl:for-each select="key('rs-doel',@rdf:about)"><xsl:sort select="rdfs:label"/>
+      <xsl:if test="position()!=1"><xsl:text>, </xsl:text></xsl:if>
+      <xsl:apply-templates select="." mode="labelledlink"/>
     </xsl:for-each>
     <xsl:text>|&#xa;</xsl:text>
   </xsl:if>
@@ -197,42 +217,49 @@
 
 <xsl:template match="*" mode="meta-eigenaar">
   <xsl:text>|Eigenschap van|</xsl:text>
-  <xsl:for-each select=".|key('resource',rdfs:subPropertyOf/@rdf:resource)"> <!-- Niet alleen de eigen property, maar ook superproperties -->
-    <xsl:for-each select="key('pshape',@rdf:about)">
-        <xsl:for-each select="key('resource',key('nshapep',@rdf:about|@rdf:nodeID)/sh:targetClass/@rdf:resource)">
-          <xsl:apply-templates select="." mode="labelledlink"/>
-        </xsl:for-each>
-    </xsl:for-each>
+  <xsl:for-each select="key('ot',@rdf:about)">
+      <xsl:apply-templates select="." mode="labelledlink"/>
   </xsl:for-each>
   <xsl:text>|&#xa;</xsl:text>
 </xsl:template>
 
-<xsl:template match="*" mode="meta-relatie">
-  <xsl:if test="exists(key('pshape',@rdf:about)/sh:class)">
-    <xsl:text>|Gerelateerde klasse|</xsl:text>
-    <xsl:for-each select="key('resource',key('pshape',@rdf:about)/sh:class/@rdf:resource)">
-      <xsl:text>[</xsl:text><xsl:apply-templates select="." mode="label"/><xsl:text>](</xsl:text><xsl:value-of select="@rdf:about"/><xsl:text>)</xsl:text>
-    </xsl:for-each>
-    <xsl:text>|&#xa;</xsl:text>
-  </xsl:if>
+<xsl:template match="*" mode="meta-rolbron">
+  <xsl:text>|Rol van|</xsl:text>
+  <xsl:value-of select="key('resource',mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource=$mim-relatierolbron]/mim:kardinaliteit"/>
+  <xsl:text> </xsl:text>
+  <xsl:apply-templates select="key('resource',mim:bron/@rdf:resource)" mode="labelledlink"/>
+  <xsl:text>|&#xa;</xsl:text>
+</xsl:template>
+
+<xsl:template match="*" mode="meta-roldoel">
+  <xsl:text>|Met|</xsl:text>
+  <xsl:value-of select="key('resource',mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource=$mim-relatieroldoel]/mim:kardinaliteit"/>
+  <xsl:text> </xsl:text>
+  <xsl:for-each select="key('resource',mim:doel/@rdf:resource)">
+      <xsl:apply-templates select="." mode="labelledlink"/>
+  </xsl:for-each>
+  <xsl:text>|&#xa;</xsl:text>
+</xsl:template>
+
+<xsl:template match="*" mode="meta-waardetype">
+  <xsl:text>|Type|</xsl:text>
+  <xsl:apply-templates select="key('resource',mim:type/@rdf:resource)" mode="labelledlink"/>
+  <xsl:text>|&#xa;</xsl:text>
 </xsl:template>
 
 <xsl:template match="*" mode="meta-waarden">
   <xsl:variable name="waardelijst">
-    <xsl:for-each select="key('pshape',@rdf:about)"> <!-- Propertyshape of the property -->
-      <xsl:for-each select="key('resource',sh:node/@rdf:resource)"> <!--Nodeshape -->
-        <xsl:for-each select="key('blank',sh:property/@rdf:nodeID)"> <!--Properyshape in nodeshape -->
-          <xsl:for-each select="key('resource',sh:hasValue/@rdf:resource)"> <!--ConceptScheme -->
-            <xsl:value-of select="@rdf:about"/>
-          </xsl:for-each>
-        </xsl:for-each>
+    <xsl:for-each select="key('resource',mim:type/@rdf:resource)">
+      <xsl:for-each select="key('resource',mim:waarde/@rdf:nodeID)">
+        <waarde><xsl:value-of select="rdfs:label"/></waarde>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:variable>
-  <xsl:if test="$waardelijst!=''">
+  <xsl:if test="exists($waardelijst/waarde)">
     <xsl:text>|Mogelijke waarden|</xsl:text>
-    <xsl:for-each select="key('concepts',$waardelijst)">
-      <xsl:text>[</xsl:text><xsl:value-of select="rdfs:label"/><xsl:text>](</xsl:text><xsl:value-of select="@rdf:about"/><xsl:text>)</xsl:text>
+    <xsl:for-each select="$waardelijst/waarde">
+      <xsl:if test="position()!=1"><xsl:text>; </xsl:text></xsl:if>
+      <xsl:value-of select="."/>
     </xsl:for-each>
     <xsl:text>|&#xa;</xsl:text>
   </xsl:if>
@@ -242,35 +269,75 @@
   <xsl:variable name="label"><xsl:apply-templates select="." mode="label"/></xsl:variable>
   <xsl:apply-templates select="." mode="header2"/>
   <xsl:apply-templates select="." mode="table-def-header"/>
-  <xsl:apply-templates select="." mode="meta-specialisatie"/>
+  <xsl:apply-templates select="." mode="meta-begrip"/>
+  <xsl:apply-templates select="." mode="meta-supertype"/>
+  <xsl:apply-templates select="." mode="meta-subtype"/>
   <xsl:apply-templates select="." mode="meta-definitie"/>
   <xsl:apply-templates select="." mode="meta-bron"/>
-  <xsl:apply-templates select="." mode="meta-eigenschappen"/>
+  <xsl:apply-templates select="." mode="meta-eigenschappen-kenmerken"/>
+  <xsl:apply-templates select="." mode="meta-eigenschappen-rollen"/>
+  <xsl:apply-templates select="." mode="meta-eigenschappen-relaties"/>
   <xsl:apply-templates select="key('resource',mim:attribuut/@rdf:resource)" mode="attribuutsoorten"/>
+  <xsl:apply-templates select="key('rs-bron',@rdf:about)" mode="relatiesoorten"/>
 </xsl:template>
 
 <xsl:template match="*" mode="attribuutsoorten">
   <xsl:variable name="label"><xsl:apply-templates select="." mode="label"/></xsl:variable>
   <xsl:apply-templates select="." mode="header3"/>
   <xsl:apply-templates select="." mode="table-def-header"/>
-  <xsl:apply-templates select="." mode="meta-propspecialisatie"/>
+  <xsl:apply-templates select="." mode="meta-begrip"/>
   <xsl:apply-templates select="." mode="meta-definitie"/>
   <xsl:apply-templates select="." mode="meta-bron"/>
   <xsl:apply-templates select="." mode="meta-eigenaar"/>
-  <xsl:apply-templates select="." mode="meta-relatie"/>
+  <xsl:apply-templates select="." mode="meta-waardetype"/>
   <xsl:apply-templates select="." mode="meta-waarden"/>
 </xsl:template>
 
+<xsl:template match="*" mode="relatiesoorten">
+  <xsl:variable name="label"><xsl:apply-templates select="." mode="label"/></xsl:variable>
+  <xsl:apply-templates select="." mode="header3"/>
+  <xsl:apply-templates select="." mode="table-def-header"/>
+  <xsl:apply-templates select="." mode="meta-begrip"/>
+  <xsl:apply-templates select="." mode="meta-definitie"/>
+  <xsl:apply-templates select="." mode="meta-bron"/>
+  <xsl:apply-templates select="." mode="meta-rolbron"/>
+  <xsl:apply-templates select="." mode="meta-roldoel"/>
+</xsl:template>
+
+<xsl:template match="*" mode="enumeraties">
+  <xsl:variable name="label"><xsl:apply-templates select="." mode="label"/></xsl:variable>
+  <xsl:apply-templates select="." mode="header3"/>
+  <xsl:text>De volgende waarden zijn mogelijk:&#x0a;</xsl:text>
+  <xsl:for-each select="key('resource',mim:waarde/@rdf:nodeID)"><xsl:sort select="rdfs:label"/>
+    <xsl:text>- </xsl:text>
+    <xsl:choose>
+      <xsl:when test="mim:begrip/@rdf:resource!=''">
+        <xsl:text>[</xsl:text><xsl:value-of select="rdfs:label"/><xsl:text>]</xsl:text>
+        <xsl:variable name="term"><xsl:value-of select="key('resource',mim:begrip/@rdf:resource)/rdfs:label"/></xsl:variable>
+        <xsl:choose>
+          <!-- When info of begrip in this file, use it -->
+          <xsl:when test="$term!=''"><xsl:text>(#</xsl:text><xsl:value-of select="replace(replace(lower-case($term),':',''),' ','-')"/><xsl:text>)</xsl:text></xsl:when>
+          <!-- Otherwise: expect begrip in different document, use URI -->
+          <xsl:otherwise><xsl:text>(</xsl:text><xsl:value-of select="mim:begrip/@rdf:resource"/><xsl:text>)</xsl:text></xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise><xsl:value-of select="rdfs:label"/></xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>&#x0a;</xsl:text>
+  </xsl:for-each>
+</xsl:template>
+
+<!--
 <xsl:template match="*" mode="datatypeproperties">
   <xsl:variable name="label"><xsl:apply-templates select="." mode="label"/></xsl:variable>
   <xsl:apply-templates select="." mode="header3"/>
   <xsl:apply-templates select="." mode="table-def-header"/>
-  <xsl:apply-templates select="." mode="meta-propspecialisatie"/>
   <xsl:apply-templates select="." mode="meta-definitie"/>
   <xsl:apply-templates select="." mode="meta-bron"/>
   <xsl:apply-templates select="." mode="meta-datatype"/>
   <xsl:apply-templates select="." mode="meta-eigenaar"/>
 </xsl:template>
+-->
 
 <xsl:template match="rdf:Description" mode="class-hierarchy-leaf">
   <xsl:param name="spaces"/>
@@ -278,26 +345,37 @@
   <xsl:apply-templates select="." mode="labelledlink"/>
   <xsl:text>&#xa;</xsl:text>
   <xsl:variable name="uri" select="@rdf:about"/>
-  <xsl:for-each select="../rdf:Description[rdf:type/@rdf:resource=$mim-objecttype and key('gen',@rdf:about)/mim:supertype/@rdf:resource=$uri]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
+  <xsl:for-each select="../rdf:Description[rdf:type/@rdf:resource=$mim-objecttype and key('gen-sub',@rdf:about)/mim:supertype/@rdf:resource=$uri]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
     <xsl:apply-templates select="." mode="class-hierarchy-leaf"><xsl:with-param name="spaces"><xsl:value-of select="concat($spaces,'  ')"/></xsl:with-param></xsl:apply-templates>
   </xsl:for-each>
 </xsl:template>
 
 <xsl:template match="rdf:RDF" mode="class-hierarchy">
-  <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-objecttype and not(exists(key('gen',@rdf:about)))]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
+  <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-objecttype and not(exists(key('gen-sub',@rdf:about)))]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
     <xsl:apply-templates select="." mode="class-hierarchy-leaf"><xsl:with-param name="spaces"></xsl:with-param></xsl:apply-templates>
   </xsl:for-each>
 </xsl:template>
 
+<xsl:template match="rdf:Description" mode="informatiemodel">
+  <xsl:text># CIM </xsl:text>
+  <xsl:value-of select="rdfs:label"/>
+  <xsl:text>&#x0a;&#x0a;</xsl:text>
+  <xsl:text>![](</xsl:text>
+  <xsl:value-of select="replace(rdfs:label,' ','')"/>
+  <xsl:text>.svg "Conceptueel informatiemodel </xsl:text>
+  <xsl:value-of select="rdfs:label"/>
+  <xsl:text>")&#xa;&#xa;</xsl:text>
+</xsl:template>
+
 <xsl:template match="/ROOT/rdf:RDF">
-  <xsl:variable name="model">Model</xsl:variable>
-  <xsl:variable name="diagram">model.svg</xsl:variable>
-  <xsl:variable name="objecttypen">Objecttypen</xsl:variable>
-  <xsl:apply-templates select="$model" mode="header1"/>
-  <xsl:apply-templates select="$diagram" mode="image"/>
+  <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource=$mim-informatiemodel]" mode="informatiemodel"/>
   <xsl:apply-templates select="." mode="class-hierarchy"/>
   <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-objecttype]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
     <xsl:apply-templates select="." mode="objecttypen"/>
+  </xsl:for-each>
+  <xsl:text>&#x0a;## Waardetypering en referentielijsten&#x0a;</xsl:text>
+  <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-enumeratie]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
+    <xsl:apply-templates select="." mode="enumeraties"/>
   </xsl:for-each>
 </xsl:template>
 
