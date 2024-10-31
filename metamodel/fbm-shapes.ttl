@@ -1,0 +1,211 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix shape: <http://bp4mc2.org/def/fbm-shapes#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+shape:Mandatory-name a sh:PropertyShape;
+  sh:path fbm:name;
+  rdfs:label "name";
+  sh:datatype xsd:string;
+  sh:minCount 1;
+  sh:maxCount 1;
+.
+shape:Optional-name a sh:PropertyShape;
+  sh:path fbm:name;
+  rdfs:label "name";
+  sh:datatype xsd:string;
+  sh:maxCount 1;
+.
+
+shape:Objecttype a sh:NodeShape;
+  sh:targetClass fbm:Objecttype;
+  rdfs:label "Objecttype";
+  sh:property shape:Objecttype.constraint;
+  sh:property shape:Objecttype.subtype;
+.
+shape:Objecttype.constraint a sh:PropertyShape;
+  sh:path fbm:constraint;
+  sh:name "constraint";
+  sh:class fbm:Constraint;
+.
+shape:Objecttype.subtype a sh:PropertyShape;
+  sh:path fbm:subtype;
+  sh:name "subtype";
+  sh:class fbm:Objecttype;
+.
+
+shape:Entitytype a sh:NodeShape;
+  sh:targetClass fbm:Entitytype;
+  rdfs:label "Entitytype";
+  sh:property shape:Mandatory-name;
+  sh:property shape:Entitytype.referenceScheme;
+.
+shape:Entitytype.referenceScheme a sh:PropertyShape;
+  sh:path fbm:referenceScheme;
+  sh:name "referenceScheme";
+  sh:class fbm:Facttype;
+  sh:minCount 1;
+.
+
+shape:Valuetype a sh:NodeShape;
+  sh:targetClass fbm:Valuetype;
+  rdfs:label "Valuetype";
+  sh:property shape:Mandatory-name;
+  sh:property shape:Valuetype.datatype;
+.
+shape:Valuetype.datatype a sh:PropertyShape;
+  sh:path fbm:datatype;
+  sh:name "datatype";
+  sh:class fbm:Datatype;
+  sh:maxCount 1;
+.
+
+shape:Facttype a sh:NodeShape;
+  sh:targetClass fbm:Facttype;
+  rdfs:label "Facttype";
+  sh:property shape:Facttype.role;
+  sh:property shape:Facttype.predicate;
+  sh:property shape:Optional-name;
+.
+shape:Facttype.role a sh:PropertyShape;
+  sh:path fbm:role;
+  sh:name "role";
+  sh:class fbm:Role;
+  sh:minCount 1
+.
+shape:Facttype.predicate a sh:PropertyShape;
+  sh:path fbm:predicate;
+  sh:name "predicate";
+  sh:class fbm:Predicate;
+  sh:minCount 1
+.
+
+shape:Role a sh:NodeShape;
+  sh:targetClass fbm:Role;
+  rdfs:label "Role";
+  sh:property shape:Role.playedBy;
+  sh:property shape:Optional-name;
+.
+shape:Role.playedBy a sh:PropertyShape;
+  sh:path fbm:playedBy;
+  sh:name "playedBy";
+  sh:class fbm:Objecttype;
+.
+
+shape:Predicate a sh:NodeShape;
+  sh:targetClass fbm:Predicate;
+  rdfs:label "Predicate";
+  sh:property shape:Predicate.ordersRole;
+  sh:property shape:Predicate.reading;
+.
+shape:Predicate.ordersRole a sh:PropertyShape;
+  sh:path fbm:ordersRole;
+  sh:name "ordersRole";
+  sh:node shape:PredicateRole;
+  sh:nodeKind sh:BlankNode;
+.
+shape:PredicateRole a sh:NodeShape;
+  sh:property shape:PredicateRole.role;
+  sh:property shape:PredicateRole.atPosition;
+.
+shape:PredicateRole.role a sh:PropertyShape;
+  sh:path fbm:role;
+  sh:name "role";
+  sh:class fbm:Role;
+  sh:minCount 1;
+  sh:maxCount 1;
+.
+shape:PredicateRole.atPosition a sh:PropertyShape;
+  sh:path fbm:atPosition;
+  sh:name "atPosition";
+  sh:datatype xsd:integer;
+  sh:minCount 1;
+  sh:maxCount 1;
+.
+shape:Predicate.reading a sh:PropertyShape;
+  sh:path fbm:reading;
+  sh:name "reading";
+  sh:class fbm:Reading;
+  sh:minCount 1;
+  sh:nodeKind sh:BlankNode;
+.
+
+shape:Reading a sh:NodeShape;
+  sh:targetClass fbm:Reading;
+  rdfs:label "Reading";
+  sh:property shape:Reading.text;
+  sh:property shape:Reading.parts;
+.
+shape:Reading.text a sh:PropertyShape;
+  sh:path fbm:text;
+  sh:name "text";
+  sh:datatype xsd:string;
+  sh:minCount 1;
+  sh:maxCount 1;
+.
+shape:Reading.parts a sh:PropertyShape;
+  # Parts are an ordered list of text elements OR roles
+  # Normally, a binary fact type has three parts: the subject role, the predicate, the object role
+  sh:path fbm:parts;
+  sh:name "parts";
+  sh:class rdf:List;
+  sh:minCount 1;
+  sh:maxCount 1;
+.
+
+shape:Datatype a sh:NodeShape;
+  sh:targetClass fbm:Datatype;
+  rdfs:label "Datatype";
+  sh:property shape:Mandatory-name;
+.
+
+shape:Constraint a sh:NodeShape;
+  sh:targetClass fbm:Constraint;
+  rdfs:label "Constraint";
+  sh:property shape:Constraint.restricts;
+.
+
+shape:RoleConstraint a sh:NodeShape;
+  sh:targetClass fbm:RoleConstraint;
+  rdfs:label "RoleConstraint";
+  sh:property shape:RoleConstraint.restricts;
+.
+shape:RoleConstraint.restricts a sh:PropertyShape;
+  sh:path fbm:restricts;
+  sh:name "restricts";
+  sh:class fbm:Role;
+  sh:minCount 1;
+.
+
+shape:UniquenessConstraint a sh:NodeShape;
+  sh:targetClass fbm:UniquenessConstraint;
+  rdfs:label "UniquenessConstraint";
+.
+
+shape:MandatoryConstraint a sh:NodeShape;
+  sh:targetClass fbm:MandatoryConstraint;
+  rdfs:label "MandatoryConstraint";
+.
+
+shape:ValueConstraint a sh:NodeShape;
+  # More types of value constraints are possible, we only use this one...
+  sh:targetClass fbm:ValueConstraint;
+  rdfs:label "ValueConstraint";
+  sh:property shape:ValueConstraint.restricts;
+  sh:property shape:ValueConstraint.allowedValue;
+.
+shape:ValueConstraint.restricts a sh:PropertyShape;
+  sh:path fbm:restricts;
+  sh:name "restricts";
+  sh:class fbm:Valuetype;
+  sh:minCount 1;
+  sh:maxCount 1;
+.
+shape:ValueConstraint.allowedValue a sh:PropertyShape;
+  sh:path fbm:allowedValue;
+  sh:name "allowedValue";
+.

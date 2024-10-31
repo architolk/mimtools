@@ -1,0 +1,174 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+fbm:Objecttype a owl:Class;
+  rdfs:label "Object type";
+.
+fbm:Entitytype a owl:Class;
+  # Entitytypes are simply called Objecttypes in FCO-IM and are always also Facttypes
+  rdfs:label "Entity type";
+  rdfs:subClassOf fbm:Objecttype;
+.
+fbm:Valuetype a owl:Class;
+  rdfs:label "Value type";
+  rdfs:subClassOf fbm:Objecttype;
+.
+fbm:Facttype a owl:Class;
+  rdfs:label "Fact type";
+  rdfs:subClassOf fbm:Objecttype;
+.
+
+fbm:Role a owl:Class;
+  rdfs:label "Role";
+.
+
+fbm:Predicate a owl:Class;
+  rdfs:label "Predicate";
+.
+
+fbm:PredicateRole a owl:Class;
+  rdfs:label "Predicate role";
+  rdfs:comment "A predicate role is the position of a role within a predicate. It has no other identity that the combination of predicate and role";
+.
+
+fbm:Reading a owl:Class;
+  rdfs:label "Reading";
+.
+
+fbm:Datatype a owl:Class;
+  rdfs:label "Datatype";
+.
+
+fbm:Constraint a owl:Class;
+  rdfs:label "Constraint";
+.
+fbm:RoleConstraint a owl:Class;
+  rdfs:label "Role constraint";
+  rdfs:subClassOf fbm:Constraint;
+.
+fbm:UniquenessConstraint a owl:Class;
+  rdfs:label "Uniqueness constraint";
+  rdfs:subClassOf fbm:RoleConstraint;
+.
+fbm:MandatoryConstraint a owl:Class;
+  # Mandatory constraints are called Totality constraints in FCO-IM
+  rdfs:label "Mandatory constraint";
+  rdfs:subClassOf fbm:RoleConstraint;
+.
+fbm:ValueConstraint a owl:Class;
+  rdfs:label "Value constraint";
+  rdfs:subClassOf fbm:Constraint;
+.
+
+fbm:name a owl:DatatypeProperty;
+  rdfs:label "name";
+  rdfs:range xsd:string;
+.
+
+fbm:datatype a owl:DatatypeProperty;
+  rdfs:label "datatype";
+  rdfs:domain fbm:Valuetype;
+  rdfs:range fbm:Datatype;
+.
+
+fbm:reading a owl:ObjectProperty;
+  rdfs:label "reading";
+  rdfs:domain fbm:Predicate;
+  rdfs:range fbm:Reading;
+.
+
+fbm:text a owl:DatatypeProperty;
+  rdfs:label "text";
+  rdfs:domain fbm:Reading;
+  rdfs:range xsd:string;
+.
+
+fbm:parts a owl:ObjectProperty;
+  rdfs:label "parts";
+  rdfs:domain fbm:Reading;
+  rdfs:range rdf:List;
+.
+
+fbm:isPlayedBy a owl:ObjectProperty;
+  rdfs:label "is played by";
+  rdfs:domain fbm:Role;
+  rdfs:range [
+    a owl:Class;
+    owl:unionOf (fbm:Entitytype fbm:Valuetype)
+  ];
+.
+
+fbm:referenceScheme a owl:ObjectProperty;
+  rdfs:label "reference scheme";
+  rdfs:domain fbm:Entitytype;
+  rdfs:range fbm:Facttype;
+.
+
+fbm:role a owl:ObjectProperty;
+  rdfs:label "role";
+  rdfs:domain [
+    a owl:Class;
+    owl:unionOf (fbm:Facttype fbm:PredicateRole);
+  ];
+  rdfs:range fbm:Role;
+.
+fbm:partOf a owl:ObjectProperty;
+  rdfs:label "is part of";
+  rdfs:domain fbm:Role;
+  rdfs:range fbm:Facttype;
+  owl:inverseOf fbm:partOf;
+.
+
+fbm:predicate a owl:ObjectProperty;
+  rdfs:label "predicate";
+  rdfs:domain fbm:Facttype;
+  rdfs:range fbm:Predicate;
+.
+
+fbm:ordersRole a owl:ObjectProperty;
+  rdfs:label "order role";
+  rdfs:domain fbm:Predicate;
+  rdfs:range fbm:PredicateRole;
+.
+fbm:atPosition a owl:DatatypeProperty;
+  rdfs:label "at position";
+  rdfs:domain fbm:PredicateRole;
+  rdfs:range xsd:integer;
+.
+
+fbm:subtype a owl:ObjectProperty;
+  rdfs:label "subtype";
+  rdfs:domain fbm:Objecttype;
+  rdfs:range fbm:Objecttype;
+.
+fbm:supertype a owl:ObjectProperty;
+  rdfs:label "supertype";
+  rdfs:domain fbm:Objecttype;
+  rdfs:range fbm:Objecttype;
+  owl:inverseOf fbm:subtype;
+.
+
+fbm:constraint a owl:ObjectProperty;
+  rdfs:label "constraint";
+  rdfs:domain fbm:Objecttype;
+  rdfs:range fbm:Constraint;
+.
+
+fbm:restricts a owl:ObjectProperty;
+  rdfs:label "restricts";
+  rdfs:domain fbm:Constraint;
+  rdfs:range [
+    a owl:Class;
+    owl:unionOf (fbm:Role fbm:Valuetype) # As of now, might be more...
+  ]
+.
+
+fbm:allowedValue a owl:DatatypeProperty;
+  rdfs:label "allowedValue";
+  rdfs:domain fbm:ValueConstraint;
+.
