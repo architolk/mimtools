@@ -1,10 +1,10 @@
 # Fact based modeling naar MIM
 
-Dit document beschrijft een mapping tussen Fact Based Modeling (FBM) en MIM.
+This document descript a mapping between Fact Based Modeling (FBM) and MIM (Metamodel voor Informatiemodelleren)
 
-Om een dergelijke mapping uit te kunnen voeren, is het van belang om een metamodel (vocabulaire) te hebben waarmee een FBM model uitgedrukt kan worden. Vanuit een dergelijk metamodel kan dan een mapping worden gemaakt naar het MIM metamodel.
+To perform such a mapping, it is necessary to have a metamodel (vocabulary) to express a FBM model. From this metamodel, we can describe the mapping to the metamodel of MIM.
 
-Fact based modeling kent verschillende varianten en verschijningsvormen, zoals FCO-IM, CogNIAM en ORM. Ook zijn er in verschillende metamodellen voor FBM voorgesteld, zonder dat er ooit expliciet eentje is vastgesteld. In dit document zullen we ons met name laten leiden door de notatievorm voor FBM zoals deze oorspronkelijk is ontwikkeld voor ORM en ook wordt gebruikt in FCO-IM.
+Fact Based Modeling has many different dialects, among others: FCO-IM, CogNIAM and ORM. Multiple metamodels have been proposed for FBM, but no actual metamodel has been explicitly defined as *the* metamodel for FBM. This document uses a metamodel that is derived from the original notation for FBM as used by the ORM dialect and also used by the FCO-IM dialect.
 
 ## Metamodel voor Fact Based Modeling
 
@@ -12,34 +12,38 @@ Fact based modeling kent verschillende varianten en verschijningsvormen, zoals F
 
 Objecttypes can be Facttypes, Entitytypes or Valuetypes. Entitytypes refer to classes of real-world objects (Persons, things, places, events). Valuetypes refer to classes of values (like numbers, strings, dates). Facttypes refer to classes of facts about these real-world objects: properties or relations between them.
 
-The refer to a specific real-world object, we need a reference scheme. As such, every Entitytype has one fact type as preferred reference scheme.
+As they refer to a specific real-world object, we need a reference scheme. As such, every Entitytype has one fact type as preferred reference scheme.
 
 A Valuetype has values that are of a specific datatype, like string or number. These Valuestypes might be constraint by a ValueConstraint. In the current metamodel, only ValueConstraints of the kind "allowed values" are included.
 
 Facttypes can be unary, binary of n-ary. This refers to the roles that are associated to the fact type. Most facttypes are binary. Roles can be played by Entitytypes or Valuetypes. A facttype doesn't have to have a name, but should include at least one Predicate and for that Predicate a PredicateReading.
 
-The concept of Facttype and Predicate is a bit hard, so we'll introduce an example:
+Predicates are used to state facts from fact types. For each predicate, we can have one or more readings: a sentence in normal language that states the fact, so it is easy to read by non-modellers.
 
+## Example
 
-> We introduce an Entitytype with the name "Person" and an Entitytype with the name "Organization"
->
-> We introduce a Facttype with the name "Employement" with two roles
->
-> One role has name "employee" and is played by the Entitytype "Person"
->
-> The other role has name "employer" and is played by the Entitytype "Organization"
+Let's look at the example below, a very simple fact based model with two entity types and one facttype:
+
+![](example.svg)
+
+- We introduce an Entitytype with the name "Person" and an Entitytype with the name "Organization"
+- We introduce a Facttype with the name "Employement" with two roles
+  - One role has name "employee" and is played by the Entitytype "Person"
+  - The other role has name "employer" and is played by the Entitytype "Organization"
 
 Let's now introduce the predicates. We will have two predicates:
 
-> The first predicate places the roles in the order {employee, employer} and has the predicate reading text: ".. works for .."
->
-> The second predicate places the roles in the order {employer, employee} and has the predicate reading text: ".. gives work to .."
+- The first predicate places the roles in the order {employee, employer}, this predicate has two readings:
+  - The reading ".. works for .." (abbreviated to "works for" as in binary fact types an infix predicate reading is expected)
+  - The reading ".. has employee .." (abbreviated to "has employee")
+- The second predicate places the roles in the order {employer, employee}, this predicate has one reading:
+  - The reading ".. has employee .." (abbreviated to "has employee")
 
 Predicates are used to verbalise the knowledge specified by the facttype. At least one predicate should be present. Names of fact types or roles are not actually needed, but can be useful to denote specific terms used in the domain.
 
-Uniqueness constraints are role constraints that are used to specify which combinations of roles will create a unique fact or refer to a unique entity. Mandatory constraints are used to specify that every single fact or enity should play that particular role. For that reason, mandatory constraints are also known as totality constraints.
+Uniqueness constraints are role constraints that are used to specify which combinations of roles will create a unique fact or refer to a unique entity. A uniqueness constraint is depicted as a line above the role. Mandatory constraints are used to specify that every single fact or enity should play that particular role. For that reason, mandatory constraints are also known as totality constraints. Mandatory constraints are deplicted as a dot at the end of the line that depicts which objecttype playes the role.
 
-Facttypes can be objectified. As such, a facttype can also play roles in other fact types. An objectified facttype always has a name.
+Facttypes can be objectified. As such, a facttype can also play roles in other fact types. An objectified facttype always has a name. In the example above the entity type "Person" and "Organization" are actually drawn as objectified facttypes: the only difference is semantically: entity types refer to real-world things, whereas facttypes (only) refer to facts.
 
 ## Mapping of FBM to MIM
 
