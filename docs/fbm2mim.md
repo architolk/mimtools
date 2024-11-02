@@ -47,13 +47,16 @@ Facttypes can be objectified. As such, a facttype can also play roles in other f
 
 ## Mapping of FBM to MIM
 
-(In the mapping below we will refer to an fbm:Objecttype as an objectified fbm:Facttype or simply a fbm:Entitytype).
-(As such, this excludes simple fbm:Facttypes and fbm:Valuetypes)
+In the mapping below, we consider an fbm:Objecttype an objectified fbm:Facttype or a fbm:Entitytype with its reference scheme, so:
+- An objectified facttype can *have* roles and can *play* roles;
+- An entitytype can *have* roles via its reference scheme and can *play* roles.
 
-### fbm:Entitytype and objectified fbm:Facttype to mim:Objecttype
+Valuetypes can only *play* roles and can never *have* roles. Only valuetypes are mapped to a datatypes.
+
+### fbm:Objecttype to mim:Objecttype
 
 - All fbm:Objecttypes are translated to mim:Objecttypes.
-- The fbm:name of the fbm:Entittype or objectified fbm:Facttype will be used as mim:name.
+- The fbm:name of the fbm:Objecttype will be used as mim:name.
 
 ### fbm:subtype to mim:Generalisatie
 

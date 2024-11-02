@@ -1,0 +1,71 @@
+title: FBM to MIM
+version: 0.1
+prefixes:
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  xsd:  http://www.w3.org/2001/XMLSchema#
+  mim: http://bp4mc2.org/def/mim#
+queries:
+  - title: fbm:FactBasedModel naar mim:Informatiemodel
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?im a mim:Informatiemodel.
+          ?im rdfs:label ?label
+        }
+      }
+      where {
+        graph <urn:input> {
+          ?im a fbm:FactBasedModel.
+          ?im rdfs:label ?label
+        }
+      }
+  - title: fbm:Objecttype naar mim:Objecttype
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?ot a mim:Objecttype.
+          ?ot mim:identifier ?id.
+          ?ot rdfs:label ?label
+        }
+      }
+      where {
+        select ?ot ?label (concat("OT:",replace(replace(?label,'[^0-9a-zA-Z]','-'),'[-]+','-')) as ?id)
+        where {
+          graph <urn:input> {
+            ?ot a fbm:Objecttype.
+            ?ot rdfs:label ?label
+          }
+        }
+      }
+  - title: mim:Attribuutsoort direct vanuit valuetype rol met fbm:Objecttype
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?attr a mim:Attribuutsoort.
+          ?attr rdfs:label ?label.
+          ?attr mim:identifier ?id.
+          ?ot mim:attribuut ?attr.
+        }
+      }
+      where {
+        select ?attr ?label ?ot ?vt (concat("AT:",replace(replace(?otlabel,'[^0-9a-zA-Z]','-'),'[-]+','-'),".",replace(replace(?label,'[^0-9a-zA-Z]','-'),'[-]+','-')) as ?id)
+        where {
+          graph <urn:input> {
+            ?ot a fbm:Objecttype.
+            ?ot rdfs:label ?otlabel.
+            ?ot fbm:role ?attr.
+            ?attr fbm:playedBy ?vt.
+            ?vt a fbm:Valuetype.
+            ?vt rdfs:label ?label.
+          }
+        }
+      }

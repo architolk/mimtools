@@ -1,0 +1,66 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:persoon> a fbm:Objecttype;
+  rdfs:label "persoon";
+  fbm:role [
+    fbm:playedBy <urn:pname>;
+  ]
+.
+
+<urn:pname> a fbm:Valuetype;
+  rdfs:label "person's name";
+.
+
+<urn:organisation> a fbm:Objecttype;
+  rdfs:label "organisation";
+  fbm:role [
+    fbm:playedBy <urn:oname>;
+  ]
+.
+
+<urn:oname> a fbm:Valuetype;
+  rdfs:label "organisation's name";
+.
+
+<urn:employment> a fbm:Facttype;
+  rdfs:label "employment";
+  fbm:role <urn:employee>;
+  fbm:role <urn:employer>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:employer>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:employer>, <urn:employee>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:employee>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:employer>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "works for";
+      fbm:parts (<urn:employee> "works for" <urn:employer>);
+    ];
+    fbm:reading [
+      fbm:text "has employer";
+      fbm:parts (<urn:employee> "has employer" <urn:employer>);
+    ]
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:employer>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:employee>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "has employee";
+      fbm:parts (<urn:employer> "has employee" <urn:employee>)
+    ]
+  ]
+.
+<urn:employer> a fbm:Role;
+  rdfs:label "employer";
+  fbm:playedBy <urn:organisation>
+.
+<urn:employee> a fbm:Role;
+  rdfs:label "employee";
+  fbm:playedBy <urn:persoon>
+.

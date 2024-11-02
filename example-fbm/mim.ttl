@@ -1,0 +1,20 @@
+@prefix fbm:  <http://bp4mc2.org/def/fbm#> .
+@prefix mim:  <http://bp4mc2.org/def/mim#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:organisation>  a   mim:Objecttype ;
+        rdfs:label      "organisation" ;
+        mim:attribuut   [ a               mim:Attribuutsoort ;
+                          rdfs:label      "organisation's name" ;
+                          mim:identifier  "AT:organisation.organisation-s-name"
+                        ] ;
+        mim:identifier  "OT:organisation" .
+
+<urn:persoon>  a        mim:Objecttype ;
+        rdfs:label      "persoon" ;
+        mim:attribuut   [ a               mim:Attribuutsoort ;
+                          rdfs:label      "person's name" ;
+                          mim:identifier  "AT:persoon.person-s-name"
+                        ] ;
+        mim:identifier  "OT:persoon" .
