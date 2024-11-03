@@ -41,6 +41,10 @@ Let's now introduce the predicates. We will have two predicates:
 
 Predicates are used to verbalise the knowledge specified by the facttype. At least one predicate should be present. Names of fact types or roles are not actually needed, but can be useful to denote specific terms used in the domain.
 
+Predicate readings can be abbreviated, but the full reading is also allowed. This means that the notation below depicts exactly the same facttype:
+
+![](example2.svg)
+
 Uniqueness constraints are role constraints that are used to specify which combinations of roles will create a unique fact or refer to a unique entity. A uniqueness constraint is depicted as a line above the role. Mandatory constraints are used to specify that every single fact or enity should play that particular role. For that reason, mandatory constraints are also known as totality constraints. Mandatory constraints are deplicted as a dot at the end of the line that depicts which objecttype playes the role.
 
 Facttypes can be objectified. As such, a facttype can also play roles in other fact types. An objectified facttype always has a name. In the example above the entity type "Person" and "Organization" are actually drawn as objectified facttypes: the only difference is semantically: entity types refer to real-world things, whereas facttypes (only) refer to facts.

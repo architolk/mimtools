@@ -51,7 +51,8 @@
     fbm:ordersRole [fbm:role <urn:employer>; fbm:atPosition 1];
     fbm:ordersRole [fbm:role <urn:employee>; fbm:atPosition 2];
     fbm:reading [
-      fbm:text "has employee";
+      rdfs:label "has employee";
+      fbm:text "[Person] has employee [Organization]";
       fbm:parts (<urn:employer> "has employee" <urn:employee>)
     ]
   ]
