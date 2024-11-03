@@ -25,16 +25,16 @@ shape:Objecttype a sh:NodeShape;
   sh:targetClass fbm:Objecttype;
   rdfs:label "Objecttype";
   sh:property shape:Objecttype.constraint;
-  sh:property shape:Objecttype.subtype;
+  sh:property shape:Objecttype.subtypeOf;
 .
 shape:Objecttype.constraint a sh:PropertyShape;
   sh:path fbm:constraint;
   sh:name "constraint";
   sh:class fbm:Constraint;
 .
-shape:Objecttype.subtype a sh:PropertyShape;
-  sh:path fbm:subtype;
-  sh:name "subtype";
+shape:Objecttype.subtypeOf a sh:PropertyShape;
+  sh:path fbm:subtypeOf;
+  sh:name "subtypeOf";
   sh:class fbm:Objecttype;
 .
 

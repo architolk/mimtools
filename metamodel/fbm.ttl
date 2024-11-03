@@ -141,6 +141,12 @@ fbm:atPosition a owl:DatatypeProperty;
   rdfs:range xsd:integer;
 .
 
+fbm:subtypeOf a owl:ObjectProperty;
+  owl:equivalentClass fbm:subtype;
+  rdfs:label "subtypeOf";
+  rdfs:domain fbm:Objecttype;
+  rdfs:range fbm:Objecttype;
+.
 fbm:subtype a owl:ObjectProperty;
   rdfs:label "subtype";
   rdfs:domain fbm:Objecttype;

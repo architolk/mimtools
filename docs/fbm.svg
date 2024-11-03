@@ -455,17 +455,17 @@
       </a>
     </g>
     <g id="y.edge.0">
-      <a target="_blank" xlink:type="simple" xlink:href="http://bp4mc2.org/def/fbm-shapes#Objecttype.subtype http://bp4mc2.org/def/fbm#subtype" xlink:show="new">
+      <a target="_blank" xlink:type="simple" xlink:href="http://bp4mc2.org/def/fbm-shapes#Objecttype.subtypeOf http://bp4mc2.org/def/fbm#subtypeOf" xlink:show="new">
         <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,309,511)" stroke-linecap="butt">
-          <path fill="none" d="M479.1217 -167.9798 L479.1217 -195.4849 L576.4828 -195.4849 L576.4828 -123 L509.1398 -123"/>
+          <path fill="none" d="M482.2966 -168.0007 L482.2966 -191.2518 L558.4922 -191.2518 L558.4922 -123 L509.1043 -123"/>
         </g>
         <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,309,511)" stroke-linecap="butt">
-          <path d="M501.1398 -123 L513.1398 -118 L510.1398 -123 L513.1398 -128 Z" stroke="none"/>
+          <path d="M501.1043 -123 L513.1044 -118 L510.1043 -123 L513.1044 -128 Z" stroke="none"/>
         </g>
         <g>
           <g stroke-linecap="butt" transform="matrix(1,0,0,1,309,511)" fill="white" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" stroke="white" stroke-miterlimit="1.45">
-            <rect x="506.2094" width="80.5469" height="18.1328" y="-204.5513" stroke="none"/>
-            <text fill="black" x="508.2094" xml:space="preserve" y="-190.9498" font-family="sans-serif" stroke="none">subtype [0,n]</text>
+            <rect x="511.3516" width="94.2812" height="18.1328" y="-200.3182" stroke="none"/>
+            <text fill="black" x="513.3516" xml:space="preserve" y="-186.7167" font-family="sans-serif" stroke="none">subtypeOf [0,n]</text>
           </g>
         </g>
       </a>
