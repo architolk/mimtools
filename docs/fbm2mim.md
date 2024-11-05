@@ -49,6 +49,14 @@ Uniqueness constraints are role constraints that are used to specify which combi
 
 Facttypes can be objectified. As such, a facttype can also play roles in other fact types. An objectified facttype always has a name. In the example above the entity type "Person" and "Organization" are actually drawn as objectified facttypes: the only difference is semantically: entity types refer to real-world things, whereas facttypes (only) refer to facts.
 
+At least one predicate reading should exists for any facttype, but role names and facttype names are optional, as is made clear by the following example:
+
+![](example3.svg)
+
+It doesn't make sense to talk about the name of the facttype ("the fact that a person lives somewhere" isn't a named fact!) and although you might speak about a "resident" as the role that is played by a person, this isn't a *proper* property of an address. We could even leave out the name of the role that is played by an address ("home address"), as the predicate reading is enough. And even if we don't want the predicate reading "lives at", we can always create a predicate reading using the role name: "[Person] has home address [Address]". When we use the shorthand notation for the predicate reading, it looks very elegant:
+
+![](example4.svg)
+
 ## Mapping of FBM to MIM
 
 In the mapping below, we consider an fbm:Objecttype an objectified fbm:Facttype or a fbm:Entitytype with its reference scheme, so:
