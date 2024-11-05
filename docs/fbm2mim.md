@@ -1,10 +1,10 @@
 # Fact based modeling naar MIM
 
-This document descript a mapping between Fact Based Modeling (FBM) and MIM (Metamodel voor Informatiemodelleren)
+This document describes a mapping between Fact Based Modeling (FBM) and MIM (Metamodel voor Informatiemodelleren)
 
 To perform such a mapping, it is necessary to have a metamodel (vocabulary) to express a FBM model. From this metamodel, we can describe the mapping to the metamodel of MIM.
 
-Fact Based Modeling has many different dialects, among others: FCO-IM, CogNIAM and ORM. Multiple metamodels have been proposed for FBM, but no actual metamodel has been explicitly defined as *the* metamodel for FBM. This document uses a metamodel that is derived from the original notation for FBM as used by the ORM dialect and also used by the FCO-IM dialect.
+Fact Based Modeling has many different dialects, among others: FCO-IM, CogNIAM and ORM. Multiple metamodels have been proposed for FBM, but no actual metamodel has been explicitly defined as ***the*** metamodel for FBM. This document uses a metamodel that is derived from the original notation for FBM as used by the ORM dialect and also used by the FCO-IM dialect.
 
 ## Metamodel voor Fact Based Modeling
 
@@ -12,7 +12,7 @@ Fact Based Modeling has many different dialects, among others: FCO-IM, CogNIAM a
 
 Objecttypes can be Facttypes, Entitytypes or Valuetypes. Entitytypes refer to classes of real-world objects (Persons, things, places, events). Valuetypes refer to classes of values (like numbers, strings, dates). Facttypes refer to classes of facts about these real-world objects: properties or relations between them.
 
-As they refer to a specific real-world object, we need a reference scheme. As such, every Entitytype has one fact type as preferred reference scheme.
+As Entitytypes refer to a specific real-world object, we need a reference scheme, like you reference a person by his or her full name, or maybe a social security number, or... As such, every Entitytype has one fact type as preferred reference scheme.
 
 A Valuetype has values that are of a specific datatype, like string or number. These Valuestypes might be constraint by a ValueConstraint. In the current metamodel, only ValueConstraints of the kind "allowed values" are included.
 
@@ -27,7 +27,7 @@ Let's look at the example below, a very simple fact based model with two entity 
 ![](example.svg)
 
 - We introduce an Entitytype with the name "Person" and an Entitytype with the name "Organization"
-- We introduce a Facttype with the name "Employement" with two roles
+- We introduce a Facttype with the name "Employment" with two roles
   - One role has name "employee" and is played by the Entitytype "Person"
   - The other role has name "employer" and is played by the Entitytype "Organization"
 
@@ -65,12 +65,12 @@ Valuetypes can only *play* roles and can never *have* roles. Only valuetypes are
 ### fbm:subtype to mim:Generalisatie
 
 - All fbm:subtypes are translated to mim:Generalisatie.
-- The mim:subtype will map to the subject of the fbm:subtype.
-- THe mim:supertype will map to the object of the fbm:subtype.
+- The mim:subtype will map to the subject of the fbm:subtypeOf.
+- THe mim:supertype will map to the object of the fbm:subtypeOf.
 
 ### Objectified fbm:Facttype / reference scheme with fbm:Valuetype as fbm:role to mim:Attribuutsoort
 
-- All roles in an objectified facttype or a reference scheme that are played by valuestypes are translated to mim:Attribuutsoort.
+- All roles in an objectified fbm:Facttype or a reference scheme of an fbm:Entitytype that are played by fbm:Valuetypes are translated to mim:Attribuutsoort.
 - This mim:Attribuutsoort will be the mim:attribuut of the corresponding fbm:Facttype or fbm:Entitytype.
 - The fbm:name of the fbm:Role will be used as mim:name.
 - If this name doesn't exists, the textual predicate reading part will be used, for the predicate in which the valuetype is in the second position.
