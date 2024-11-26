@@ -1,0 +1,25 @@
+title: MIM serialization
+version: 0.1
+prefixes:
+  mim: http://bp4mc2.org/def/mim#
+  schema: http://schema.org/
+queries:
+  - title: namespace rename
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mimreal: <http://modellen.mim-standaard.nl/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?snew ?pnew ?onew
+        }
+      }
+      WHERE {
+        SELECT (if(strafter(str(?s),'http://modellen.mim-standaard.nl/def/mim#')!='',iri(concat('http://bp4mc2.org/def/mim#',strafter(str(?s),'http://modellen.mim-standaard.nl/def/mim#'))),?s) as ?snew)
+               (if(strafter(str(?p),'http://modellen.mim-standaard.nl/def/mim#')!='',iri(concat('http://bp4mc2.org/def/mim#',strafter(str(?p),'http://modellen.mim-standaard.nl/def/mim#'))),?p) as ?pnew)
+               (if(strafter(str(?o),'http://modellen.mim-standaard.nl/def/mim#')!='',iri(concat('http://bp4mc2.org/def/mim#',strafter(str(?o),'http://modellen.mim-standaard.nl/def/mim#'))),?o) as ?onew)
+        WHERE {
+          GRAPH <urn:input> {
+            ?s ?p ?o
+          }
+        }
+      }

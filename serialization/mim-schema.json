@@ -1,0 +1,533 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "string"
+    },
+    "@id": {
+      "type": "string"
+    },
+    "@type": {
+      "type": "string"
+    },
+    "naam": {
+      "type": "string"
+    },
+    "modelelementen": {
+      "type": "object",
+      "properties": {
+        "objecttypen": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "naam": {
+                  "type": "string"
+                },
+                "attribuut": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "type",
+                        "kardinaliteit"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "type",
+                        "kardinaliteit"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id",
+                "naam",
+                "attribuut"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "naam": {
+                  "type": "string"
+                },
+                "attribuut": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "type",
+                        "kardinaliteit"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "type",
+                        "kardinaliteit"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "type",
+                        "kardinaliteit"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id",
+                "naam",
+                "attribuut"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "naam": {
+                  "type": "string"
+                },
+                "attribuut": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "type",
+                        "kardinaliteit"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id",
+                "naam",
+                "attribuut"
+              ]
+            }
+          ]
+        },
+        "relatiesoorten": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "naam": {
+                  "type": "string"
+                },
+                "bron": {
+                  "type": "string"
+                },
+                "doel": {
+                  "type": "string"
+                },
+                "kardinaliteit": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "@id",
+                "naam",
+                "bron",
+                "doel",
+                "kardinaliteit"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "naam": {
+                  "type": "string"
+                },
+                "relatierol": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "kardinaliteit"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "kardinaliteit"
+                      ]
+                    }
+                  ]
+                },
+                "doel": {
+                  "type": "string"
+                },
+                "bron": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "@id",
+                "naam",
+                "relatierol",
+                "doel",
+                "bron"
+              ]
+            }
+          ]
+        },
+        "gestructureerde-datatypen": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "naam": {
+                  "type": "string"
+                },
+                "dataElement": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "kardinaliteit"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "kardinaliteit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "naam",
+                        "type",
+                        "kardinaliteit"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id",
+                "naam",
+                "dataElement"
+              ]
+            }
+          ]
+        },
+        "primitieve-datatypen": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "mim:naam": {
+                  "type": "string"
+                },
+                "owl:sameAs": {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                }
+              },
+              "required": [
+                "@id",
+                "mim:naam",
+                "owl:sameAs"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "mim:naam": {
+                  "type": "string"
+                },
+                "owl:sameAs": {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                }
+              },
+              "required": [
+                "@id",
+                "mim:naam",
+                "owl:sameAs"
+              ]
+            }
+          ]
+        },
+        "enumeraties": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                },
+                "naam": {
+                  "type": "string"
+                },
+                "waarde": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@id": {
+                          "type": "string"
+                        },
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@id",
+                        "@type",
+                        "naam"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@id": {
+                          "type": "string"
+                        },
+                        "@type": {
+                          "type": "string"
+                        },
+                        "naam": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "@id",
+                        "@type",
+                        "naam"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id",
+                "naam",
+                "waarde"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "objecttypen",
+        "relatiesoorten",
+        "gestructureerde-datatypen",
+        "primitieve-datatypen",
+        "enumeraties"
+      ]
+    }
+  },
+  "required": [
+    "@context",
+    "@id",
+    "@type",
+    "naam",
+    "modelelementen"
+  ]
+}

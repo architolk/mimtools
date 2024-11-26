@@ -1,0 +1,144 @@
+{
+  "@context": "https://bp4mc2.org/context/mim.jsonld",
+  "@id": "http://schema.org/",
+  "@type": "mim:Informatiemodel",
+  "naam": "Voorbeeldmodel",
+  "modelelementen": {
+    "objecttypen": [
+      {
+        "@id": "http://schema.org/Offer",
+        "naam": "Offer",
+        "attribuut": [
+          {
+            "@type": "mim:Attribuutsoort",
+            "naam": "availability",
+            "type": "http://schema.org/ItemAvailability",
+            "kardinaliteit": "0..1"
+          },
+          {
+            "@type": "mim:Attribuutsoort",
+            "naam": "price",
+            "type": "http://schema.org/Number",
+            "kardinaliteit": "1"
+          }
+        ]
+      },
+      {
+        "@id": "http://schema.org/Product",
+        "naam": "Product",
+        "attribuut": [
+          {
+            "@type": "mim:Attribuutsoort",
+            "naam": "weight",
+            "type": "http://schema.org/QuantitativeValue",
+            "kardinaliteit": "0..1"
+          },
+          {
+            "@type": "mim:Attribuutsoort",
+            "naam": "description",
+            "type": "http://schema.org/Text",
+            "kardinaliteit": "0..1"
+          },
+          {
+            "@type": "mim:Attribuutsoort",
+            "naam": "name",
+            "type": "http://schema.org/Text",
+            "kardinaliteit": "1"
+          }
+        ]
+      },
+      {
+        "@id": "http://schema.org/Brand",
+        "naam": "Brand",
+        "attribuut": [
+          {
+            "@type": "mim:Attribuutsoort",
+            "naam": "name",
+            "type": "http://schema.org/Text",
+            "kardinaliteit": "1"
+          }
+        ]
+      }
+    ],
+    "relatiesoorten": [
+      {
+        "@id": "http://schema.org/Offers",
+        "naam": "offers",
+        "bron": "http://schema.org/Product",
+        "doel": "http://schema.org/Offer",
+        "kardinaliteit": "1"
+      },
+      {
+        "@id": "http://schema.org/IsMadeBy",
+        "naam": "is made by",
+        "relatierol": [
+          {
+            "@type": "mim:RelatierolBron",
+            "naam": "product",
+            "kardinaliteit": "0..*"
+          },
+          {
+            "@type": "mim:RelatierolDoel",
+            "naam": "brand",
+            "kardinaliteit": "1"
+          }
+        ],
+        "doel": "http://schema.org/Brand",
+        "bron": "http://schema.org/Product"
+      }
+    ],
+    "gestructureerde-datatypen": [
+      {
+        "@id": "http://schema.org/QuantitativeValue",
+        "naam": "QuantitativeValue",
+        "dataElement": [
+          {
+            "@type": "mim:DataElement",
+            "naam": "value",
+            "kardinaliteit": "1"
+          },
+          {
+            "@type": "mim:DataElement",
+            "naam": "unitText",
+            "type": "http://schema.org/Text",
+            "kardinaliteit": "1"
+          }
+        ]
+      }
+    ],
+    "primitieve-datatypen": [
+      {
+        "@id": "http://schema.org/Number",
+        "mim:naam": "Number",
+        "owl:sameAs": {
+            "@id": "xsd:decimal"
+        }
+      },
+      {
+        "@id": "http://schema.org/Text",
+        "mim:naam": "Text",
+        "owl:sameAs": {
+            "@id": "xsd:string"
+        }
+      }
+    ],
+    "enumeraties": [
+      {
+        "@id": "http://schema.org/ItemAvailability",
+        "naam": "ItemAvailability",
+        "waarde": [
+          {
+            "@id": "http://schema.org/OutOfStock",
+            "@type": "mim:Enumeratiewaarde",
+            "naam": "OutOfStock"
+          },
+          {
+            "@id": "http://schema.org/InStock",
+            "@type": "mim:Enumeratiewaarde",
+            "naam": "InStock"
+          }
+        ]
+      }
+    ]
+  }
+}

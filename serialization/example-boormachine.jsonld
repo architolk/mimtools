@@ -1,0 +1,211 @@
+{
+    "@graph": [
+        {
+            "@id": "schema:Offers",
+            "mim:kardinaliteit": "1",
+            "mim:doel": {
+                "@id": "schema:Offer"
+            },
+            "mim:bron": {
+                "@id": "schema:Product"
+            },
+            "mim:naam": "offers",
+            "@type": "mim:Relatiesoort"
+        },
+        {
+            "@id": "schema:Offer",
+            "mim:attribuut": [
+                {
+                    "@id": "_:b0"
+                },
+                {
+                    "@id": "_:b1"
+                }
+            ],
+            "mim:naam": "Offer",
+            "@type": "mim:Objecttype"
+        },
+        {
+            "@id": "schema:Product",
+            "mim:attribuut": [
+                {
+                    "@id": "_:b2"
+                },
+                {
+                    "@id": "_:b5"
+                },
+                {
+                    "@id": "_:b7"
+                }
+            ],
+            "mim:naam": "Product",
+            "@type": "mim:Objecttype"
+        },
+        {
+            "@id": "schema:InStock",
+            "mim:naam": "InStock",
+            "@type": "mim:Enumeratiewaarde"
+        },
+        {
+            "@id": "_:b0",
+            "mim:kardinaliteit": "0..1",
+            "mim:type": {
+                "@id": "schema:ItemAvailability"
+            },
+            "mim:naam": "availability",
+            "@type": "mim:Attribuutsoort"
+        },
+        {
+            "@id": "_:b1",
+            "mim:kardinaliteit": "1",
+            "mim:type": {
+                "@id": "schema:Number"
+            },
+            "mim:naam": "price",
+            "@type": "mim:Attribuutsoort"
+        },
+        {
+            "@id": "_:b2",
+            "mim:kardinaliteit": "0..1",
+            "mim:type": {
+                "@id": "schema:QuantitativeValue"
+            },
+            "mim:naam": "weight",
+            "@type": "mim:Attribuutsoort"
+        },
+        {
+            "@id": "schema:QuantitativeValue",
+            "mim:dataElement": [
+                {
+                    "@id": "_:b6"
+                },
+                {
+                    "@id": "_:b9"
+                }
+            ],
+            "mim:naam": "QuantitativeValue",
+            "@type": "mim:GestructureerdDatatype"
+        },
+        {
+            "@id": "_:b3",
+            "mim:kardinaliteit": "0..*",
+            "mim:naam": "product",
+            "@type": "mim:RelatierolBron"
+        },
+        {
+            "@id": "schema:Number",
+            "owl:sameAs": {
+                "@id": "xsd:decimal"
+            },
+            "mim:naam": "Number",
+            "@type": "mim:PrimitiefDatatype"
+        },
+        {
+            "@id": "schema:IsMadeBy",
+            "mim:relatierol": [
+                {
+                    "@id": "_:b4"
+                },
+                {
+                    "@id": "_:b3"
+                }
+            ],
+            "mim:doel": {
+                "@id": "schema:Brand"
+            },
+            "mim:bron": {
+                "@id": "schema:Product"
+            },
+            "mim:naam": "is made by",
+            "@type": "mim:Relatiesoort"
+        },
+        {
+            "@id": "_:b4",
+            "mim:kardinaliteit": "1",
+            "mim:naam": "brand",
+            "@type": "mim:RelatierolDoel"
+        },
+        {
+            "@id": "schema:Brand",
+            "mim:attribuut": {
+                "@id": "_:b8"
+            },
+            "mim:naam": "Brand",
+            "@type": "mim:Objecttype"
+        },
+        {
+            "@id": "_:b5",
+            "mim:kardinaliteit": "0..1",
+            "mim:type": {
+                "@id": "schema:Text"
+            },
+            "mim:naam": "description",
+            "@type": "mim:Attribuutsoort"
+        },
+        {
+            "@id": "schema:Text",
+            "owl:sameAs": {
+                "@id": "xsd:string"
+            },
+            "mim:naam": "Text",
+            "@type": "mim:PrimitiefDatatype"
+        },
+        {
+            "@id": "_:b6",
+            "mim:kardinaliteit": "1",
+            "mim:naam": "value",
+            "@type": "mim:DataElement"
+        },
+        {
+            "@id": "_:b7",
+            "mim:kardinaliteit": "1",
+            "mim:type": {
+                "@id": "schema:Text"
+            },
+            "mim:naam": "name",
+            "@type": "mim:Attribuutsoort"
+        },
+        {
+            "@id": "_:b8",
+            "mim:kardinaliteit": "1",
+            "mim:type": {
+                "@id": "schema:Text"
+            },
+            "mim:naam": "name",
+            "@type": "mim:Attribuutsoort"
+        },
+        {
+            "@id": "schema:ItemAvailability",
+            "mim:waarde": [
+                {
+                    "@id": "schema:OutOfStock"
+                },
+                {
+                    "@id": "schema:InStock"
+                }
+            ],
+            "mim:naam": "ItemAvailability",
+            "@type": "mim:Enumeratie"
+        },
+        {
+            "@id": "schema:OutOfStock",
+            "mim:naam": "OutOfStock",
+            "@type": "mim:Enumeratiewaarde"
+        },
+        {
+            "@id": "_:b9",
+            "mim:kardinaliteit": "1",
+            "mim:type": {
+                "@id": "schema:Text"
+            },
+            "mim:naam": "unitText",
+            "@type": "mim:DataElement"
+        }
+    ],
+    "@context": {
+        "schema": "http://schema.org/",
+        "mim": "http://bp4mc2.org/def/mim#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "owl": "http://www.w3.org/2002/07/owl#"
+    }
+}

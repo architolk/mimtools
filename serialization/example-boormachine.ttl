@@ -1,0 +1,94 @@
+@prefix mim:    <http://bp4mc2.org/def/mim#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+schema:Offers  a           mim:Relatiesoort ;
+        mim:bron           schema:Product ;
+        mim:doel           schema:Offer ;
+        mim:kardinaliteit  "1" ;
+        mim:naam           "offers" .
+
+schema:InStock  a  mim:Enumeratiewaarde ;
+        mim:naam  "InStock" .
+
+schema:Offer  a        mim:Objecttype ;
+        mim:attribuut  [ a                  mim:Attribuutsoort ;
+                         mim:kardinaliteit  "0..1" ;
+                         mim:naam           "availability" ;
+                         mim:type           schema:ItemAvailability
+                       ] ;
+        mim:attribuut  [ a                  mim:Attribuutsoort ;
+                         mim:kardinaliteit  "1" ;
+                         mim:naam           "price" ;
+                         mim:type           schema:Number
+                       ] ;
+        mim:naam       "Offer" .
+
+schema:Number  a    mim:PrimitiefDatatype ;
+        mim:naam    "Number" ;
+        owl:sameAs  xsd:decimal .
+
+schema:IsMadeBy  a      mim:Relatiesoort ;
+        mim:bron        schema:Product ;
+        mim:doel        schema:Brand ;
+        mim:naam        "is made by" ;
+        mim:relatierol  [ a                  mim:RelatierolDoel ;
+                          mim:kardinaliteit  "1" ;
+                          mim:naam           "brand"
+                        ] ;
+        mim:relatierol  [ a                  mim:RelatierolBron ;
+                          mim:kardinaliteit  "0..*" ;
+                          mim:naam           "product"
+                        ] .
+
+schema:Product  a      mim:Objecttype ;
+        mim:attribuut  [ a                  mim:Attribuutsoort ;
+                         mim:kardinaliteit  "0..1" ;
+                         mim:naam           "weight" ;
+                         mim:type           schema:QuantitativeValue
+                       ] ;
+        mim:attribuut  [ a                  mim:Attribuutsoort ;
+                         mim:kardinaliteit  "0..1" ;
+                         mim:naam           "description" ;
+                         mim:type           schema:Text
+                       ] ;
+        mim:attribuut  [ a                  mim:Attribuutsoort ;
+                         mim:kardinaliteit  "1" ;
+                         mim:naam           "name" ;
+                         mim:type           schema:Text
+                       ] ;
+        mim:naam       "Product" .
+
+schema:Brand  a        mim:Objecttype ;
+        mim:attribuut  [ a                  mim:Attribuutsoort ;
+                         mim:kardinaliteit  "1" ;
+                         mim:naam           "name" ;
+                         mim:type           schema:Text
+                       ] ;
+        mim:naam       "Brand" .
+
+schema:OutOfStock  a  mim:Enumeratiewaarde ;
+        mim:naam  "OutOfStock" .
+
+schema:Text  a      mim:PrimitiefDatatype ;
+        mim:naam    "Text" ;
+        owl:sameAs  xsd:string .
+
+schema:ItemAvailability
+        a           mim:Enumeratie ;
+        mim:naam    "ItemAvailability" ;
+        mim:waarde  schema:OutOfStock , schema:InStock .
+
+schema:QuantitativeValue
+        a                mim:GestructureerdDatatype ;
+        mim:dataElement  [ a                  mim:DataElement ;
+                           mim:kardinaliteit  "1" ;
+                           mim:naam           "value"
+                         ] ;
+        mim:dataElement  [ a                  mim:DataElement ;
+                           mim:kardinaliteit  "1" ;
+                           mim:naam           "unitText" ;
+                           mim:type           schema:Text
+                         ] ;
+        mim:naam         "QuantitativeValue" .
