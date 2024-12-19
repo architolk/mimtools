@@ -1,10 +1,23 @@
-title: FBM to MIM
+title: Aanpassen begrippen uit excel naar standaard
 version: 0.1
 prefixes:
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   xsd:  http://www.w3.org/2001/XMLSchema#
   mim: http://bp4mc2.org/def/mim#
 queries:
+  - title: Mapping of fbm datatypes to mim datatypes
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:metadata> {
+          mim:CharacterString fbm:datatype "char".
+          mim:Integer fbm:datatype "integer".
+          mim:Date fbm:datatype "datum".
+        }
+      }
+      where {}
   - title: fbm:FactBasedModel naar mim:Informatiemodel
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
@@ -35,11 +48,35 @@ queries:
         }
       }
       where {
-        select ?ot ?label (concat("OT:",replace(replace(?label,'[^0-9a-zA-Z]','-'),'[-]+','-')) as ?id)
+        select ?ot ?label (concat("T",strafter(str(?ot),"facttype:")) as ?id)
         where {
           graph <urn:input> {
             ?ot a fbm:Objecttype.
             ?ot rdfs:label ?label
+          }
+        }
+      }
+  - title: mim:Generalisatie vanuit supertyperole
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?gen a mim:Generalisatie.
+          ?gen rdfs:label ?label.
+          ?gen mim:subtype ?subtype.
+          ?gen mim:supertype ?supertype.
+        }
+      }
+      where {
+        select ?gen ?subtype ?supertype (concat(?sublabel,' is een ',?superlabel) as ?label) where {
+          graph <urn:input> {
+            ?gen a fbm:SupertypeRole.
+            ?subtype fbm:role ?gen.
+            ?gen fbm:playedBy ?supertype.
+            ?subtype rdfs:label ?sublabel.
+            ?supertype rdfs:label ?superlabel.
           }
         }
       }
@@ -53,19 +90,424 @@ queries:
           ?attr a mim:Attribuutsoort.
           ?attr rdfs:label ?label.
           ?attr mim:identifier ?id.
+          ?attr mim:kardinaliteit ?card.
+          ?attr mim:type ?datatype.
           ?ot mim:attribuut ?attr.
         }
       }
       where {
-        select ?attr ?label ?ot ?vt (concat("AT:",replace(replace(?otlabel,'[^0-9a-zA-Z]','-'),'[-]+','-'),".",replace(replace(?label,'[^0-9a-zA-Z]','-'),'[-]+','-')) as ?id)
+        select ?attr ?label ?ot ?vt (if(bound(?optional),if(?optional,"0..1","1..1"),"1..1") as ?card) (concat("T",strafter(str(?attr),"role:")) as ?id)
+               (if(bound(?dt),?dt,?vt) as ?datatype) ?dtlabel
         where {
           graph <urn:input> {
             ?ot a fbm:Objecttype.
-            ?ot rdfs:label ?otlabel.
             ?ot fbm:role ?attr.
             ?attr fbm:playedBy ?vt.
             ?vt a fbm:Valuetype.
             ?vt rdfs:label ?label.
+            OPTIONAL {?attr fbm:optional ?optional}
           }
+          OPTIONAL {
+            graph <urn:input> {?vt fbm:datatype ?dtlabel}
+            graph <urn:metadata> {?dt fbm:datatype ?dtlabel}
+          }
+        }
+      }
+  - title: mim:Attribuutsoort via facttype (alleen binair)
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?attr a mim:Attribuutsoort.
+          ?attr rdfs:label ?label.
+          ?attr mim:identifier ?id.
+          ?attr mim:kardinaliteit ?card.
+          ?attr mim:type ?vt.
+          ?ot mim:attribuut ?attr.
+        }
+      }
+      where {
+        select ?attr ?label ?ot ?vt (if(?optional,"0..1",if(bound(?tc),"1..1","0..1")) as ?card) (concat("T",strafter(str(?attr),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            ?attr a fbm:Facttype.
+            ?attr rdfs:label ?label.
+            ?attr fbm:role ?role.
+            ?role fbm:playedBy ?ot.
+            ?role fbm:optional ?optional.
+            ?ot a fbm:Objecttype.
+            ?attr fbm:role/fbm:playedBy ?vt.
+            ?vt a fbm:Valuetype.
+            OPTIONAL {
+              ?ot fbm:constraint ?tc.
+              ?tc a fbm:MandatoryConstraint.
+              ?tc fbm:restricts ?role
+            }
+            FILTER NOT EXISTS {
+              ?attr fbm:predicate/fbm:ordersRole/fbm:atPosition 3
+            }
+          }
+        }
+      }
+  - title: mim:Relatiesoort direct via objecttype rol met fbm:Objecttype
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?rel a mim:Relatiesoort.
+          ?rel rdfs:label ?label.
+          ?rel mim:identifier ?id.
+          ?rel mim:bron ?bron.
+          ?rel mim:doel ?doel.
+          ?rel mim:unidirectioneel true.
+          ?rel mim:kardinaliteit ?card.
+          ?rel mim:relatierol [
+            a mim:RelatierolBron;
+            mim:kardinaliteit ?refcard;
+            mim:bron ?bron
+          ]
+        }
+      }
+      where {
+        select ?rel (concat(?bronlabel," in relatie met ",?doellabel) as ?label) ?bron ?doel (if(?optional,"0..1","1..1") as ?card) (concat("T",strafter(str(?rel),"role:")) as ?id)
+               (concat(if(bound(?tc),"1","0"),"..",if(bound(?uc),if(bound(?refrole),"*","1"),"*")) as ?refcard)
+        where {
+          graph <urn:input> {
+            ?bron a fbm:Objecttype.
+            ?bron fbm:role ?rel.
+            ?bron rdfs:label ?bronlabel.
+            ?rel a fbm:Role.
+            ?rel fbm:playedBy ?doel.
+            ?doel a fbm:Objecttype.
+            ?doel rdfs:label ?doellabel.
+            ?rel fbm:optional ?optional.
+            OPTIONAL {
+              ?doel fbm:constraint ?tc.
+              ?tc a fbm:MandatoryConstraint.
+              ?tc fbm:restricts ?rel
+            }
+            OPTIONAL {
+              ?bron fbm:constraint ?uc.
+              ?uc a fbm:UniquenessConstraint.
+              ?uc fbm:restricts ?rel.
+              OPTIONAL {
+                ?uc fbm:restricts ?refrole.
+                FILTER (?rel!=?refrole)
+              }
+            }
+          }
+        }
+      }
+  - title: mim:Relatiesoort via facttypes (alleen binaire relaties)
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?rel a mim:Relatiesoort.
+          ?rel rdfs:label ?label.
+          ?rel mim:identifier ?id.
+          ?rel mim:bron ?bron.
+          ?rel mim:doel ?doel.
+          ?rel mim:unidirectioneel false.
+          ?rel mim:relatierol [
+            a mim:RelatierolBron;
+            rdfs:label ?bronrollabel;
+            mim:bron ?bron
+          ].
+          ?rel mim:relatierol [
+            a mim:RelatierolDoel;
+            rdfs:label ?doelrollabel;
+            mim:doel ?doel
+          ]
+        }
+      }
+      where {
+        select ?rel ?label ?bron ?doel ?bronrollabel ?doelrollabel (concat("T",strafter(str(?rel),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            ?rel a fbm:Facttype.
+            ?rel rdfs:label ?label.
+            ?rel fbm:role ?bronrol.
+            ?rel fbm:role ?doelrol.
+            ?bronrol a fbm:Role.
+            ?doelrol a fbm:Role.
+            OPTIONAL {?bronrol rdfs:label ?bronrollabel}
+            OPTIONAL {?doelrol rdfs:label ?doelrollabel}
+            ?bronrol fbm:playedBy ?bron.
+            ?doelrol fbm:playedBy ?doel.
+            ?rel fbm:predicate ?predicate.
+            ?predicate fbm:ordersRole ?bro.
+            ?bro fbm:role ?bronrol.
+            ?bro fbm:atPosition ?bronrolorder.
+            ?predicate fbm:ordersRole ?dro.
+            ?dro fbm:role ?doelrol.
+            ?dro fbm:atPosition ?doelrolorder.
+            ?bron a fbm:Objecttype.
+            ?doel a fbm:Objecttype.
+            FILTER (?bronrolorder<?doelrolorder && ?bronrol!=?doelrol)
+            FILTER NOT EXISTS {
+              ?rel fbm:role ?derderol.
+              ?derderol fbm:playedBy/rdf:type fbm:Objecttype.
+              FILTER (?derderol!=?bronrol && ?derderol!=?doelrol)
+            }
+          }
+        }
+      }
+  - title: mim:Relatiesoort met keuze (tertiair feittype met binaire expressies)
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?keuze a mim:Keuze.
+          ?keuze rdfs:label ?label.
+          ?keuze mim:identifier ?id.
+          ?rel a mim:Relatiesoort.
+          ?rel rdfs:label ?label.
+          ?rel mim:bron ?bron.
+          ?rel mim:doel ?keuze.
+          ?rel mim:unidirectioneel false.
+          ?doelrol a mim:Relatiesoort.
+          ?doelrol rdfs:label "doel".
+          ?doelrol mim:bron ?keuze.
+          ?doelrol mim:doel ?doel.
+          ?doelrol mim:unidirectioneel true.
+        }
+      }
+      where {
+        select ?rel (iri(concat(str(?rel),".keuze")) as ?keuze) ?doelrol ?label ?bron ?doel (concat("T",strafter(str(?rel),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            ?rel a fbm:Facttype.
+            ?rel rdfs:label ?label.
+            ?rel fbm:role ?bronrol.
+            ?rel fbm:role ?doelrol.
+            ?rel fbm:role ?derderol.
+            ?bronrol a fbm:Role.
+            ?doelrol a fbm:Role.
+            ?derderol a fbm:Role.
+            ?bronrol fbm:playedBy ?bron.
+            ?doelrol fbm:playedBy ?doel.
+            ?rel fbm:predicate ?predicate.
+            ?predicate fbm:ordersRole ?bro.
+            ?bro fbm:role ?bronrol.
+            ?bro fbm:atPosition ?bronrolorder.
+            ?predicate fbm:ordersRole ?dro.
+            ?dro fbm:role ?doelrol.
+            ?dro fbm:atPosition ?doelrolorder.
+            ?bronrol fbm:optional false.
+            ?doelrol fbm:optional true.
+            FILTER (?bronrol!=?doelrol)
+            ?rel fbm:expression ?expr.
+            ?expr rdf:rest*/rdf:first ?bronrol.
+            ?expr rdf:rest*/rdf:first ?doelrol.
+            FILTER NOT EXISTS {
+              ?expr rdf:first*/rdf:rest ?derderol.
+              ?derderol a fbm:Role.
+              FILTER(?derderol!=?bronrol && ?derderol!=?doelrol)
+            }
+          }
+        }
+      }
+  - title: aanmaken mim:Relatierollen voor keuze-relaties
+    query: >
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      insert {
+        graph <urn:output> {
+          ?rel mim:relatierol [
+            a mim:RelatierolBron;
+            mim:bron ?bron
+          ].
+          ?rel mim:relatierol [
+            a mim:RelatierolDoel;
+            mim:doel ?doel
+          ]
+        }
+      }
+      where {
+        graph <urn:output> {
+          ?rel a mim:Relatiesoort.
+          ?rel mim:bron ?bron.
+          ?rel mim:doel ?doel.
+          ?bron a ?brontype.
+          ?doel a ?doeltype.
+          FILTER (?brontype=mim:Keuze || ?doeltype=mim:Keuze)
+        }
+      }
+  - title: kardinaliteiten invullen
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?relrol mim:kardinaliteit ?card.
+        }
+      }
+      where {
+        select ?relrol (concat(if(bound(?tc),"1","0"),"..",if(bound(?uc),if(bound(?refrole),"*","1"),"*")) as ?card)
+        where {
+          graph <urn:output> {
+            {
+              ?rel mim:relatierol ?relrol.
+              ?relrol (mim:bron|mim:doel) ?ot.
+            }
+            UNION
+            {
+              ?rel mim:bron ?refot.
+              ?rel mim:relatierol/mim:doel ?keuze.
+              ?relrol mim:bron ?keuze.
+              ?keuze a mim:Keuze.
+              ?relrol mim:doel ?ot.
+            }
+          }
+          graph <urn:input> {
+            ?rel fbm:role ?role.
+            ?role fbm:playedBy ?ot.
+            ?rel fbm:role ?refrole.
+            ?refrole fbm:playedBy ?refot.
+            ?refot a fbm:Objecttype.
+            FILTER (?refrole!=?role)
+            OPTIONAL {
+              ?refot fbm:constraint ?tc.
+              ?tc a fbm:MandatoryConstraint.
+              ?tc fbm:restricts ?refrole
+            }
+            OPTIONAL {
+              ?bron fbm:constraint ?uc.
+              ?uc a fbm:UniquenessConstraint.
+              ?uc fbm:restricts ?rel.
+              OPTIONAL {
+                ?uc fbm:role ?refrole.
+                FILTER (?rel!=?refrole)
+              }
+            }
+          }
+        }
+      }
+  - title: Expressies overnemen naar definities
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?rel mim:toelichting ?toelichting
+        }
+      }
+      where {
+        select ?rel (group_concat(?def; separator=";\n") as ?toelichting)
+        where {
+          graph <urn:output> {
+            ?rel a ?t
+            FILTER (?t=mim:Relatiesoort || ?t=mim:Attribuutsoort || ?t=mim:Objecttype)
+          }
+          graph <urn:input> {
+            ?rel fbm:expressionText ?def
+          }
+        }
+        group by ?rel
+      }
+  - title: primitieve datatypes vanuit valuetypes
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?vt a mim:PrimitiefDatatype.
+          ?vt rdfs:label ?label.
+          ?vt mim:identifier ?id.
+        }
+      }
+      where {
+        select ?vt ?label (concat("T",strafter(str(?vt),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            ?vt a fbm:Valuetype.
+            ?vt rdfs:label ?label.
+            FILTER NOT EXISTS {
+              ?vt fbm:value ?value
+            }
+          }
+        }
+      }
+  - title: enumeraties vanuit valuetypes
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?vt a mim:Enumeratie.
+          ?vt rdfs:label ?label.
+          ?vt mim:identifier ?id.
+          ?vt mim:waarde [
+            a mim:Enumeratiewaarde;
+            rdfs:label ?value
+          ]
+        }
+      }
+      where {
+        select ?vt ?label ?value (concat("T",strafter(str(?vt),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            ?vt a fbm:Valuetype.
+            ?vt rdfs:label ?label.
+            ?vt fbm:value ?value
+          }
+        }
+      }
+  - title: verwijder ongebruikte mim:PrimitiefDatatypes
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      delete {
+        graph <urn:output> {
+          ?dt ?p ?o
+        }
+      }
+      where {
+        graph <urn:output> {
+          ?dt a mim:PrimitiefDatatype.
+          ?dt ?p ?o.
+          FILTER NOT EXISTS {
+            ?attr mim:type ?dt
+          }
+        }
+      }
+  - title: specialisatie-relatie vanuit overgebleven primitieve datatypes naar standaard datatypes
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?dtgen a mim:Generalisatie.
+          ?dtgen mim:subtype ?vt.
+          ?dtgen mim:supertype ?datatype
+        }
+      }
+      where {
+        select (iri(concat(str(?vt),".",?dtlabel)) as ?dtgen) ?vt ?datatype
+        where {
+          graph <urn:output> {
+            ?vt a mim:PrimitiefDatatype
+          }
+          graph <urn:input> {
+            ?vt a fbm:Valuetype.
+            ?vt fbm:datatype ?dtlabel
+          }
+          graph <urn:metadata> {?datatype fbm:datatype ?dtlabel}
         }
       }

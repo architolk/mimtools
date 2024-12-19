@@ -1,67 +1,117 @@
 @prefix fbm: <http://bp4mc2.org/def/fbm#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
-<urn:persoon> a fbm:Objecttype;
-  rdfs:label "persoon";
+<urn:facttype:person> a fbm:Objecttype;
+  rdfs:label "person";
   fbm:role [
-    fbm:playedBy <urn:pname>;
+    fbm:playedBy <urn:facttype:pname>;
   ]
 .
 
-<urn:pname> a fbm:Valuetype;
+<urn:facttype:pname> a fbm:Valuetype;
   rdfs:label "person's name";
 .
 
-<urn:organisation> a fbm:Objecttype;
+<urn:facttype:organisation> a fbm:Objecttype;
   rdfs:label "organisation";
   fbm:role [
-    fbm:playedBy <urn:oname>;
+    fbm:playedBy <urn:facttype:oname>;
   ]
 .
 
-<urn:oname> a fbm:Valuetype;
+<urn:facttype:oname> a fbm:Valuetype;
   rdfs:label "organisation's name";
 .
 
-<urn:employment> a fbm:Facttype;
+<urn:facttype:employment> a fbm:Facttype;
   rdfs:label "employment";
-  fbm:role <urn:employee>;
-  fbm:role <urn:employer>;
+  fbm:role <urn:role:employee>;
+  fbm:role <urn:role:employer>;
   fbm:constraint [
     a fbm:MandatoryConstraint;
-    fbm:restricts <urn:employer>
+    fbm:restricts <urn:role:employer>
   ];
   fbm:constraint [
     a fbm:UniquenessConstraint;
-    fbm:restricts <urn:employer>, <urn:employee>
+    fbm:restricts <urn:role:employer>, <urn:role:employee>
   ];
   fbm:predicate [
-    fbm:ordersRole [fbm:role <urn:employee>; fbm:atPosition 1];
-    fbm:ordersRole [fbm:role <urn:employer>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:employee>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:employer>; fbm:atPosition 2];
     fbm:reading [
-      fbm:text "works for";
-      fbm:parts (<urn:employee> "works for" <urn:employer>);
+      fbm:text "[Person] works for [Organization]";
+      fbm:parts (<urn:role:employee> "works for" <urn:role:employer>);
     ];
     fbm:reading [
-      fbm:text "has employer";
-      fbm:parts (<urn:employee> "has employer" <urn:employer>);
+      fbm:text "[Person] has employer [Organization]";
+      fbm:parts (<urn:role:employee> "has employer" <urn:role:employer>);
     ]
   ];
+#  fbm:predicate [
+#    fbm:ordersRole [fbm:role <urn:role:employer>; fbm:atPosition 1];
+#    fbm:ordersRole [fbm:role <urn:role:employee>; fbm:atPosition 2];
+#    fbm:reading [
+#      rdfs:label "has employee";
+#      fbm:text "[Organization] has employee [Person]";
+#      fbm:parts (<urn:role:employer> "has employee" <urn:role:employee>)
+#    ]
+#  ]
+.
+<urn:role:employer> a fbm:Role;
+  rdfs:label "employer";
+  fbm:playedBy <urn:facttype:organisation>
+.
+<urn:role:employee> a fbm:Role;
+  rdfs:label "employee";
+  fbm:playedBy <urn:facttype:person>
+.
+
+<urn:facttype:address> a fbm:Objecttype;
+  rdfs:label "address";
+  fbm:role [
+    fbm:playedBy <urn:facttype:streetName>;
+  ];
+  fbm:role [
+    fbm:playedBy <urn:facttype:houseNumber>;
+  ];
+  fbm:role [
+    fbm:playedBy <urn:facttype:city>;
+  ];
+.
+
+<urn:facttype:streetName> a fbm:Valuetype;
+  rdfs:label "street name";
+.
+
+<urn:facttype:houseNumber> a fbm:Valuetype;
+  rdfs:label "house number";
+.
+
+<urn:facttype:city> a fbm:Valuetype;
+  rdfs:label "city";
+.
+
+<urn:facttype:livingPlace> a fbm:Facttype;
+  rdfs:label "lives at";
+  fbm:role <urn:role:resident>;
+  fbm:role <urn:role:homeAddress>;
   fbm:predicate [
-    fbm:ordersRole [fbm:role <urn:employer>; fbm:atPosition 1];
-    fbm:ordersRole [fbm:role <urn:employee>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:resident>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:homeAddress>; fbm:atPosition 2];
     fbm:reading [
-      rdfs:label "has employee";
-      fbm:text "[Person] has employee [Organization]";
-      fbm:parts (<urn:employer> "has employee" <urn:employee>)
-    ]
+#      rdfs:label "lives at";
+      fbm:text "[Person] lives at [Address]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:resident>;
   ]
 .
-<urn:employer> a fbm:Role;
-  rdfs:label "employer";
-  fbm:playedBy <urn:organisation>
+<urn:role:resident> a fbm:Role;
+  fbm:playedBy <urn:facttype:person>;
 .
-<urn:employee> a fbm:Role;
-  rdfs:label "employee";
-  fbm:playedBy <urn:persoon>
+<urn:role:homeAddress> a fbm:Role;
+  rdfs:label "home address";
+  fbm:playedBy <urn:facttype:address>;
 .
