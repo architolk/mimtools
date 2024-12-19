@@ -50,9 +50,9 @@ jobs:
       - name: Convert EA to RDF
         run: java -jar ea2rdf.jar -e FOLDER-WITH-SOURCE-MODELS/SOURCE-MODEL-NAME > model-ea.ttl
       - name: Convert EA in RDF to MIM in RDF
-        run: java -jar rdf2rdf.jar zvg-ea.ttl model-mim.ttl ea2mim.yaml
+        run: java -jar rdf2rdf.jar model-ea.ttl model-mim.ttl ea2mim.yaml
       - name: Convert MIM in RDF to RDFS/OWL/SHACL in RDF
-        run: java -jar rdf2rdf.jar model-mim.ttl informatiemodel/rdf/zvg-ont.ttl mim2onto.yaml
+        run: java -jar rdf2rdf.jar model-mim.ttl model.ttl mim2onto.yaml
       - name: Create Model diagram from ontology
         run: java -jar rdf2xml.jar model-ont.ttl model.graphml rdf2graphml.xsl follow model-edited.graphml
       - name: Commit pipeline output
