@@ -27,14 +27,14 @@
 
 |{: .def}||
 |-|-|
-|Rol van|0..* [person](#-person)|
+|Rol van|0..1 [person](#-person)|
 |Met|0..* [address](#-address)|
 
 ### employment {#-employment}
 
 |{: .def}||
 |-|-|
-|Rol van|0..* [person](#-person)|
+|Rol van|1..* [person](#-person)|
 |Met|0..* [organisation](#-organisation)|
 
 ## Waardetypering en referentielijsten

@@ -354,7 +354,7 @@ queries:
         }
       }
       where {
-        select ?relrol (concat(if(bound(?tc),"1","0"),"..",if(bound(?uc),if(bound(?refrole),"*","1"),"*")) as ?card)
+        select ?relrol (concat(if(bound(?tc),"1","0"),"..",if(bound(?uc),if(bound(?refrole2),"*","1"),"*")) as ?card)
         where {
           graph <urn:output> {
             {
@@ -385,10 +385,10 @@ queries:
             OPTIONAL {
               ?rel fbm:constraint ?uc.
               ?uc a fbm:UniquenessConstraint.
-              ?uc fbm:restricts ?rel.
+              ?uc fbm:restricts ?role.
               OPTIONAL {
-                ?uc fbm:role ?refrole.
-                FILTER (?rel!=?refrole)
+                ?uc fbm:restricts ?refrole2.
+                FILTER (?role!=?refrole2)
               }
             }
           }

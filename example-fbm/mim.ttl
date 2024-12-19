@@ -53,7 +53,7 @@
                              ] ;
         mim:relatierol       [ a                  mim:RelatierolBron ;
                                mim:bron           <urn:facttype:person> ;
-                               mim:kardinaliteit  "0..*"
+                               mim:kardinaliteit  "0..1"
                              ] ;
         mim:unidirectioneel  false .
 
