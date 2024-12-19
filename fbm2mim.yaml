@@ -129,14 +129,14 @@ queries:
         }
       }
       where {
-        select ?attr ?label ?ot ?vt (if(?optional,"0..1",if(bound(?tc),"1..1","0..1")) as ?card) (concat("T",strafter(str(?attr),"facttype:")) as ?id)
+        select ?attr ?label ?ot ?vt (if(bound(?optional),if(?optional,"0..1",if(bound(?tc),"1..1","0..1")),if(bound(?tc),"1..1","0..1")) as ?card) (concat("T",strafter(str(?attr),"facttype:")) as ?id)
         where {
           graph <urn:input> {
             ?attr a fbm:Facttype.
             ?attr rdfs:label ?label.
             ?attr fbm:role ?role.
             ?role fbm:playedBy ?ot.
-            ?role fbm:optional ?optional.
+            OPTIONAL {?role fbm:optional ?optional}.
             ?ot a fbm:Objecttype.
             ?attr fbm:role/fbm:playedBy ?vt.
             ?vt a fbm:Valuetype.
@@ -173,7 +173,7 @@ queries:
         }
       }
       where {
-        select ?rel (concat(?bronlabel," in relatie met ",?doellabel) as ?label) ?bron ?doel (if(?optional,"0..1","1..1") as ?card) (concat("T",strafter(str(?rel),"role:")) as ?id)
+        select ?rel (concat(?bronlabel," in relatie met ",?doellabel) as ?label) ?bron ?doel (if(bound(?optional),if(?optional,"0..1","1..1"),"1..1") as ?card) (concat("T",strafter(str(?rel),"role:")) as ?id)
                (concat(if(bound(?tc),"1","0"),"..",if(bound(?uc),if(bound(?refrole),"*","1"),"*")) as ?refcard)
         where {
           graph <urn:input> {
@@ -184,7 +184,7 @@ queries:
             ?rel fbm:playedBy ?doel.
             ?doel a fbm:Objecttype.
             ?doel rdfs:label ?doellabel.
-            ?rel fbm:optional ?optional.
+            OPTIONAL {?rel fbm:optional ?optional}
             OPTIONAL {
               ?doel fbm:constraint ?tc.
               ?tc a fbm:MandatoryConstraint.
@@ -378,12 +378,12 @@ queries:
             ?refot a fbm:Objecttype.
             FILTER (?refrole!=?role)
             OPTIONAL {
-              ?refot fbm:constraint ?tc.
+              ?rel fbm:constraint ?tc.
               ?tc a fbm:MandatoryConstraint.
               ?tc fbm:restricts ?refrole
             }
             OPTIONAL {
-              ?bron fbm:constraint ?uc.
+              ?rel fbm:constraint ?uc.
               ?uc a fbm:UniquenessConstraint.
               ?uc fbm:restricts ?rel.
               OPTIONAL {

@@ -71,7 +71,7 @@
         mim:relatierol       [ a                  mim:RelatierolBron ;
                                rdfs:label         "employee" ;
                                mim:bron           <urn:facttype:person> ;
-                               mim:kardinaliteit  "0..*"
+                               mim:kardinaliteit  "1..*"
                              ] ;
         mim:unidirectioneel  false .
 
