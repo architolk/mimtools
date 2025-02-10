@@ -100,7 +100,10 @@
             <xsl:when test="exists($geo/graphml:data/*/y:Geometry)"><xsl:copy-of select="$geo/graphml:data/*/y:Geometry"/></xsl:when>
   				  <xsl:otherwise><y:Geometry height="90.0" width="80.0" x="637.0" y="277.0"/></xsl:otherwise>
           </xsl:choose>
-          <y:Fill color="#ffffc7" transparent="false"/>
+          <xsl:choose>
+            <xsl:when test="exists($geo/graphml:data/*/y:Fill)"><xsl:copy-of select="$geo/graphml:data/*/y:Fill"/></xsl:when>
+            <xsl:otherwise><y:Fill color="#ffffc7" transparent="false"/></xsl:otherwise>
+          </xsl:choose>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="node_width" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="25" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="57.9931640625" x="33.50341796875" y="0.0">
   					<xsl:apply-templates select="." mode="label"/>
