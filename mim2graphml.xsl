@@ -89,9 +89,10 @@
 </xsl:template>
 
 <xsl:template match="rdf:Description" mode="node">
-  <xsl:variable name="geo" select="key('node-geo',@rdf:about)"/>
+  <xsl:variable name="subject-uri" select="@rdf:about"/>
+  <xsl:variable name="geo" select="key('node-geo',$subject-uri)"/>
   <xsl:if test="not($params='follow') or exists($geo/graphml:data)">
-    <node id="{@rdf:about}">
+    <node id="{$subject-uri}">
   		<data key="d3"><xsl:value-of select="@rdf:about"/></data>
   		<data key="d6">
   			<y:UMLClassNode>
@@ -112,12 +113,8 @@
             <y:AttributeLabel>
               <!-- Properties -->
     					<xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement)/(@rdf:nodeID|@rdf:resource))">
-                <xsl:variable name="object-uri"><xsl:value-of select="(sh:node|sh:class)/@rdf:resource"/></xsl:variable>
-                <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
-                <xsl:if test="not(exists(key('items',$object-uri))) or ($params='follow' and not(exists($object-geo/graphml:data)))">
-                  <xsl:apply-templates select="." mode="property-label"/><xsl:text>
+                <xsl:apply-templates select="." mode="property-label"/><xsl:text>
 </xsl:text>
-                </xsl:if>
     					</xsl:for-each>
             </y:AttributeLabel>
             <y:MethodLabel />
@@ -126,6 +123,30 @@
   		</data>
   	</node>
   </xsl:if>
+  <!-- Link to DataType elements -->
+  <xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement)/(@rdf:nodeID|@rdf:resource))">
+    <xsl:for-each select="key('resources',mim:type/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Enumeratie' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#GestructureerdDatatype']">
+      <xsl:variable name="object-uri" select="@rdf:about"/>
+      <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
+      <xsl:variable name="property-uri">mim:type</xsl:variable>
+      <xsl:variable name="statement-uri">urn:md5:<xsl:value-of select="concat($subject-uri,$property-uri,$object-uri)"/></xsl:variable>
+      <xsl:variable name="statement-geo" select="key('edge-geo',$statement-uri)"/>
+      <xsl:if test="not($params='follow') or exists($object-geo/graphml:data)">
+        <edge source="{$subject-uri}" target="{$object-uri}">
+          <data key="d7"><xsl:value-of select="$statement-uri"/></data>
+          <data key="d8"><xsl:value-of select="$property-uri"/></data>
+          <data key="d10">
+            <y:PolyLineEdge>
+              <xsl:copy-of select="$statement-geo/graphml:data/y:PolyLineEdge/y:Path"/>
+              <y:LineStyle color="#000000" type="dashed" width="1.0"/>
+              <y:Arrows source="none" target="plain"/>
+              <y:BendStyle smoothed="false"/>
+            </y:PolyLineEdge>
+          </data>
+        </edge>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template match="rdf:Description" mode="edge-gen">
