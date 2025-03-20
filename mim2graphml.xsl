@@ -268,7 +268,7 @@
                       </xsl:call-template>
                     </xsl:if>
                     <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolBron']">
-                      <xsl:if test="rdfs:label!=''">
+                      <xsl:if test="mim:naam!='' or rdfs:label!=''">
                         <xsl:call-template name="edge-label">
                           <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
                           <xsl:with-param name="ratio">0.0</xsl:with-param>
@@ -284,7 +284,7 @@
                       </xsl:if>
                     </xsl:for-each>
                     <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']">
-                      <xsl:if test="rdfs:label!=''">
+                      <xsl:if test="mim:naam!='' or rdfs:label!=''">
                         <xsl:call-template name="edge-label">
                           <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
                           <xsl:with-param name="ratio">1.0</xsl:with-param>
