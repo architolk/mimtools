@@ -48,11 +48,11 @@
 </xsl:variable>
 
 <xsl:template match="*" mode="anchor">
-  <xsl:value-of select="replace(replace(.,'[^a-z0-9-]','-'),'[-]+','-')"/>
+  <xsl:value-of select="replace(replace(.,'[^A-Za-z0-9-]','-'),'[-]+','-')"/>
 </xsl:template>
 
 <xsl:template match="*" mode="lcase-anchor">
-  <xsl:value-of select="replace(replace(lower-case(.),'[^a-z0-9-]','-'),'[-]+','-')"/>
+  <xsl:value-of select="replace(replace(lower-case(.),'[^A-Za-z0-9-]','-'),'[-]+','-')"/>
 </xsl:template>
 
 <xsl:template match="*" mode="label">
