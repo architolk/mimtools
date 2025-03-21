@@ -85,6 +85,7 @@
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse']" mode="node"/>
 	<xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Gegevensgroeptype']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatiesoort']" mode="edge"/>
+  <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#ExterneKoppeling']" mode="edge"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse']" mode="edge"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Generalisatie']" mode="edge-gen"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze']" mode="edge"/>

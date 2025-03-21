@@ -625,43 +625,6 @@ queries:
           }
         }
       }
-  - title: set aggregatietype
-    query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
-      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      INSERT {
-        GRAPH <urn:output> {
-          ?relatiesoort mim:aggregatietype ?aggregatietype
-        }
-      }
-      WHERE {
-        GRAPH <urn:input> {
-          ?relatiesoort rdfs:seeAlso ?rel.
-          ?rel a ea:Connector.
-          ?rel ea:sourceIsAggregate ?at
-        }
-        GRAPH <urn:metadata> {
-          ?aggregatietype rdfs:seeAlso ?at
-        }
-      }
-  - title: set unidirectioneel
-    query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
-      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      INSERT {
-        GRAPH <urn:output> {
-          ?relatiesoort mim:unidirectioneel true
-        }
-      }
-      WHERE {
-        GRAPH <urn:input> {
-          ?relatiesoort rdfs:seeAlso ?rel.
-          ?rel a ea:Connector.
-          ?rel ea:sourceIsNavigable false
-        }
-      }
   - title: link Relatiesoort aan bron
     query: >
       PREFIX mim: <http://bp4mc2.org/def/mim#>
@@ -730,11 +693,12 @@ queries:
           WHERE {
             ?s a ea:Connector.
             ?s ea:guid ?guid.
-            ?s ea:stereotype "Relatiesoort".
+            ?s ea:stereotype ?stereotype.
             ?s ea:sourceRole ?label.
             ?s ea:start ?o.
             ?o ea:guid ?obj.
             OPTIONAL {?s ea:sourceCard ?card}
+            FILTER (?stereotype='Relatiesoort' || ?stereotype='Externe koppeling')
           }
         }
       }
@@ -762,12 +726,119 @@ queries:
           WHERE {
             ?s a ea:Connector.
             ?s ea:guid ?guid.
-            ?s ea:stereotype "Relatiesoort".
+            ?s ea:stereotype ?stereotype.
             ?s ea:destRole ?label.
             ?s ea:end ?o.
             ?o ea:guid ?obj.
             OPTIONAL {?s ea:destCard ?card}
+            FILTER (?stereotype='Relatiesoort' || ?stereotype='Externe koppeling')
           }
+        }
+      }
+  - title: get Externe koppeling
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?externekoppeling a mim:ExterneKoppeling.
+          ?externekoppeling mim:naam ?label.
+        }
+        GRAPH <urn:input> {
+          ?externekoppeling rdfs:seeAlso ?s
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?guid)) as ?externekoppeling) ?s ?label
+          WHERE {
+            ?s a ea:Connector.
+            ?s ea:guid ?guid.
+            ?s ea:stereotype "Externe koppeling".
+            ?s rdfs:label ?label.
+          }
+        }
+      }
+  - title: link Externe koppeling aan bron
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?externekoppeling mim:bron ?objecttype
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?rel)) as ?externekoppeling) (iri(concat('urn:uuid:',?obj)) as ?objecttype)
+          WHERE {
+            ?s a ea:Connector.
+            ?s ea:stereotype "Externe koppeling".
+            ?s ea:guid ?rel.
+            ?s ea:start ?o.
+            ?o ea:guid ?obj.
+          }
+        }
+      }
+  - title: link Externe koppeling aan doel
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?externekoppeling mim:doel ?objecttype
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          SELECT (iri(concat('urn:uuid:',?rel)) as ?externekoppeling) (iri(concat('urn:uuid:',?obj)) as ?objecttype)
+          WHERE {
+            ?s a ea:Connector.
+            ?s ea:stereotype "Externe koppeling".
+            ?s ea:guid ?rel.
+            ?s ea:end ?o.
+            ?o ea:guid ?obj.
+          }
+        }
+      }
+  - title: set aggregatietype
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?relatiesoort mim:aggregatietype ?aggregatietype
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?relatiesoort rdfs:seeAlso ?rel.
+          ?rel a ea:Connector.
+          ?rel ea:sourceIsAggregate ?at
+        }
+        GRAPH <urn:metadata> {
+          ?aggregatietype rdfs:seeAlso ?at
+        }
+      }
+  - title: set unidirectioneel
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?relatiesoort mim:unidirectioneel true
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?relatiesoort rdfs:seeAlso ?rel.
+          ?rel a ea:Connector.
+          ?rel ea:sourceIsNavigable false
         }
       }
   - title: link Relatieklasse aan bron
@@ -846,75 +917,6 @@ queries:
           ?relatieklasse a mim:Relatieklasse.
           ?relatiesoort ?pk ?ok.
           FILTER (?pk!=mim:naam && ?pk!=rdfs:label && ?pk!=rdf:type)
-        }
-      }
-  - title: get Externe koppeling
-    query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
-      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      INSERT {
-        GRAPH <urn:output> {
-          ?externekoppeling a mim:ExterneKoppeling.
-          ?externekoppeling mim:naam ?label.
-        }
-        GRAPH <urn:input> {
-          ?externekoppeling rdfs:seeAlso ?s
-        }
-      }
-      WHERE {
-        GRAPH <urn:input> {
-          SELECT (iri(concat('urn:uuid:',?guid)) as ?externekoppeling) ?s ?label
-          WHERE {
-            ?s a ea:Connector.
-            ?s ea:guid ?guid.
-            ?s ea:stereotype "Externe koppeling".
-            ?s rdfs:label ?label.
-          }
-        }
-      }
-  - title: link Externe koppeling aan bron
-    query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
-      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      INSERT {
-        GRAPH <urn:output> {
-          ?externekoppeling mim:bron ?objecttype
-        }
-      }
-      WHERE {
-        GRAPH <urn:input> {
-          SELECT (iri(concat('urn:uuid:',?rel)) as ?externekoppeling) (iri(concat('urn:uuid:',?obj)) as ?objecttype)
-          WHERE {
-            ?s a ea:Connector.
-            ?s ea:stereotype "Externe koppeling".
-            ?s ea:guid ?rel.
-            ?s ea:start ?o.
-            ?o ea:guid ?obj.
-          }
-        }
-      }
-  - title: link Externe koppeling aan doel
-    query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
-      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      INSERT {
-        GRAPH <urn:output> {
-          ?externekoppeling mim:doel ?objecttype
-        }
-      }
-      WHERE {
-        GRAPH <urn:input> {
-          SELECT (iri(concat('urn:uuid:',?rel)) as ?externekoppeling) (iri(concat('urn:uuid:',?obj)) as ?objecttype)
-          WHERE {
-            ?s a ea:Connector.
-            ?s ea:stereotype "Externe koppeling".
-            ?s ea:guid ?rel.
-            ?s ea:end ?o.
-            ?o ea:guid ?obj.
-          }
         }
       }
   - title: get Generalisatie
