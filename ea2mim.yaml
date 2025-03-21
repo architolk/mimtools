@@ -3,6 +3,23 @@ version: 0.3
 prefixes:
   mim: http://bp4mc2.org/def/mim#
 queries:
+  - title: Add default mim primitiefdatatype and aggregatietype
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:metadata> {
+          mim:CharacterString rdfs:seeAlso "CharacterString".
+          mim:Integer rdfs:seeAlso "Integer".
+          mim:Date rdfs:seeAlso "Date".
+          mim:Decimal rdfs:seeAlso "Decimal".
+          mim:Boolean rdfs:seeAlso "Boolean".
+          mim:Aggregatie rdfs:seeAlso 1.
+          mim:Compositie rdfs:seeAlso 2.
+        }
+      }
+      where {}
   - title: Fix interface naar Primitief datatype
     query: >
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
@@ -608,6 +625,43 @@ queries:
           }
         }
       }
+  - title: set aggregatietype
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?relatiesoort mim:aggregatietype ?aggregatietype
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?relatiesoort rdfs:seeAlso ?rel.
+          ?rel a ea:Connector.
+          ?rel ea:sourceIsAggregate ?at
+        }
+        GRAPH <urn:metadata> {
+          ?aggregatietype rdfs:seeAlso ?at
+        }
+      }
+  - title: set unidirectioneel
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?relatiesoort mim:unidirectioneel true
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?relatiesoort rdfs:seeAlso ?rel.
+          ?rel a ea:Connector.
+          ?rel ea:sourceIsNavigable false
+        }
+      }
   - title: link Relatiesoort aan bron
     query: >
       PREFIX mim: <http://bp4mc2.org/def/mim#>
@@ -717,6 +771,7 @@ queries:
         }
       }
   - title: link Relatieklasse aan bron
+    # Ik betwijfel of dit werkt... Relatieklasse is toch geen ea:Connector maar ea:Object??
     query: >
       PREFIX mim: <http://bp4mc2.org/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
@@ -739,6 +794,7 @@ queries:
         }
       }
   - title: link Relatieklasse aan doel
+    # Ik betwijfel of dit werkt... Relatieklasse is toch geen ea:Connector maar ea:Object??
     query: >
       PREFIX mim: <http://bp4mc2.org/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
@@ -758,6 +814,38 @@ queries:
             ?s ea:end ?o.
             ?o ea:guid ?obj.
           }
+        }
+      }
+  - title: combine Relatieklasse en Relatiesoort
+    # Alternatieve oplossing voor de 2 queries hierboven
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      DELETE {
+        GRAPH <urn:output> {
+          ?relatiesoort ?p ?o
+        }
+      }
+      INSERT {
+        GRAPH <urn:output> {
+          ?relatieklasse ?pk ?ok
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?relatiesoort rdfs:seeAlso ?rel.
+          ?rel ea:pdata1/ea:guid ?obj.
+          ?rk ea:guid ?obj.
+          ?relatieklasse rdfs:seeAlso ?rk.
+        }
+        GRAPH <urn:output> {
+          ?relatiesoort a mim:Relatiesoort.
+          ?relatiesoort ?p ?o.
+          ?relatieklasse a mim:Relatieklasse.
+          ?relatiesoort ?pk ?ok.
+          FILTER (?pk!=mim:naam && ?pk!=rdfs:label && ?pk!=rdf:type)
         }
       }
   - title: get Externe koppeling
@@ -927,6 +1015,26 @@ queries:
           ?property ea:classifier ?classifier.
           ?element rdfs:seeAlso ?property.
           ?datatype rdfs:seeAlso ?classifier.
+        }
+      }
+  - title: add mim:type (standaard EA datatypes)
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?element mim:type ?datatype
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?element rdfs:seeAlso ?property.
+          ?property a ea:Attribute.
+          ?property ea:type ?eatypestr.
+        }
+        GRAPH <urn:metadata> {
+          ?datatype rdfs:seeAlso ?eatypestr
         }
       }
   - title: add mim:kardinaliteit (Attributes)

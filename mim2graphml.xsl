@@ -79,7 +79,9 @@
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Objecttype']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Enumeratie']" mode="node"/>
+  <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Codelijst']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#GestructureerdDatatype']" mode="node"/>
+  <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Referentielijst']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse']" mode="node"/>
 	<xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Gegevensgroeptype']" mode="node"/>
   <xsl:apply-templates select="rdf:Description[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatiesoort']" mode="edge"/>
@@ -112,7 +114,7 @@
           <y:UML clipContent="true" constraint="" detailsColor="#000000" omitDetails="false" stereotype="{replace(rdf:type/@rdf:resource,'^.*(#|/)([^(#|/)]+)$','$2')}" use3DEffect="false">
             <y:AttributeLabel>
               <!-- Properties -->
-    					<xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement)/(@rdf:nodeID|@rdf:resource))">
+    					<xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement|mim:referentieElement)/(@rdf:nodeID|@rdf:resource))">
                 <xsl:apply-templates select="." mode="property-label"/><xsl:text>
 </xsl:text>
     					</xsl:for-each>
@@ -125,7 +127,7 @@
   </xsl:if>
   <!-- Link to DataType elements -->
   <xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement)/(@rdf:nodeID|@rdf:resource))">
-    <xsl:for-each select="key('resources',mim:type/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Enumeratie' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#GestructureerdDatatype']">
+    <xsl:for-each select="key('resources',mim:type/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Enumeratie' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#GestructureerdDatatype' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Referentielijst' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Codelijst']">
       <xsl:variable name="object-uri" select="@rdf:about"/>
       <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
       <xsl:variable name="property-uri">mim:type</xsl:variable>
@@ -194,10 +196,16 @@
         <!-- Asssociation with Association class -->
         <xsl:choose>
           <xsl:when test="../rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Relatieklasse'">
-            <node id="{../@rdf:about}_HELPER">
+            <xsl:variable name="object-uri-helper"><xsl:value-of select="../@rdf:about"/>_HELPER</xsl:variable>
+            <xsl:variable name="helper-geo" select="key('node-geo',$object-uri-helper)"/>
+            <node id="{$object-uri-helper}">
+              <data key="d3"><xsl:value-of select="$object-uri-helper"/></data>
               <data key="d6">
                 <y:ShapeNode>
-                  <y:Geometry height="5.0" width="5.0" x="645.0" y="241.5"/>
+                  <xsl:choose>
+                    <xsl:when test="exists($helper-geo/graphml:data/*/y:Geometry)"><xsl:copy-of select="$helper-geo/graphml:data/*/y:Geometry"/></xsl:when>
+          				  <xsl:otherwise><y:Geometry height="5.0" width="5.0" x="645.0" y="241.5"/></xsl:otherwise>
+                  </xsl:choose>
                   <y:Fill color="#000000" transparent="false"/>
                   <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
                   <y:Shape type="ellipse"/>
@@ -238,6 +246,22 @@
                       <xsl:with-param name="position">left</xsl:with-param>
                     </xsl:call-template>
                   </xsl:if>
+                  <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#RelatierolDoel']">
+                    <xsl:if test="mim:naam!='' or rdfs:label!=''">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
+                        <xsl:with-param name="ratio">1.0</xsl:with-param>
+                        <xsl:with-param name="position">left</xsl:with-param>
+                      </xsl:call-template>
+                    </xsl:if>
+                    <xsl:if test="mim:kardinaliteit!=''">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:value-of select="mim:kardinaliteit"/></xsl:with-param>
+                        <xsl:with-param name="ratio">1.0</xsl:with-param>
+                        <xsl:with-param name="position">right</xsl:with-param>
+                      </xsl:call-template>
+                    </xsl:if>
+                  </xsl:for-each>
                 </y:PolyLineEdge>
               </data>
             </edge>
@@ -259,6 +283,7 @@
                     <xsl:variable name="source-arrow">
                       <xsl:choose>
                         <xsl:when test="../mim:aggregatietype/@rdf:resource='http://bp4mc2.org/def/mim#Compositie'">diamond</xsl:when>
+                        <xsl:when test="../mim:aggregatietype/@rdf:resource='http://bp4mc2.org/def/mim#Aggregatie'">white_diamond</xsl:when>
                         <xsl:otherwise>none</xsl:otherwise>
                       </xsl:choose>
                     </xsl:variable>
