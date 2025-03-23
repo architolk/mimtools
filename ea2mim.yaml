@@ -919,6 +919,26 @@ queries:
           FILTER (?pk!=mim:naam && ?pk!=rdfs:label && ?pk!=rdf:type)
         }
       }
+  - title: link doelen aan doelkeuze
+    query: >
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?keuze mim:doel ?objecttype
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?keuze rdfs:seeAlso ?kz.
+          ?s a ea:Connector.
+          ?s ea:stereotype "Keuze".
+          ?s ea:start ?kz.
+          ?s ea:end ?o.
+          ?objecttype rdfs:seeAlso ?o
+        }
+      }
   - title: get Generalisatie
     query: >
       PREFIX mim: <http://bp4mc2.org/def/mim#>
