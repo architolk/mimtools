@@ -1079,6 +1079,26 @@ queries:
           ?datatype rdfs:seeAlso ?classifier.
         }
       }
+  - title: Add mim:attrbiuut (Attribuut-keuze)
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?object mim:attribuut ?keuze
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?keuze rdfs:seeAlso ?classifier.
+          ?classifier ea:stereotype "Keuze".
+          ?property ea:classifier ?classifier.
+          ?property ea:stereotype "Keuze".
+          ?property ea:object ?obj.
+          ?object rdfs:seeAlso ?obj.
+        }
+      }
   - title: add mim:kardinaliteit (Attributes)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
