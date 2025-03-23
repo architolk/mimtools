@@ -115,7 +115,7 @@
           <y:UML clipContent="true" constraint="" detailsColor="#000000" omitDetails="false" stereotype="{replace(rdf:type/@rdf:resource,'^.*(#|/)([^(#|/)]+)$','$2')}" use3DEffect="false">
             <y:AttributeLabel>
               <!-- Properties -->
-    					<xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement|mim:referentieElement)/(@rdf:nodeID|@rdf:resource))">
+    					<xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement|mim:referentieElement|mim:gegevensgroep)/(@rdf:nodeID|@rdf:resource))">
                 <xsl:apply-templates select="." mode="property-label"/><xsl:text>
 </xsl:text>
     					</xsl:for-each>
@@ -132,8 +132,8 @@
   	</node>
   </xsl:if>
   <!-- Link to DataType elements -->
-  <xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement)/(@rdf:nodeID|@rdf:resource))">
-    <xsl:for-each select="key('resources',mim:type/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Enumeratie' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#GestructureerdDatatype' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Referentielijst' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Codelijst']">
+  <xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement|mim:gegevensgroep)/(@rdf:nodeID|@rdf:resource))">
+    <xsl:for-each select="key('resources',mim:type/@rdf:resource)[rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Enumeratie' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#GestructureerdDatatype' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Gegevensgroeptype' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Keuze' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Referentielijst' or rdf:type/@rdf:resource='http://bp4mc2.org/def/mim#Codelijst']">
       <xsl:variable name="object-uri" select="@rdf:about"/>
       <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
       <xsl:variable name="property-uri">mim:type</xsl:variable>
