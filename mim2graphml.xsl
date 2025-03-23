@@ -119,6 +119,11 @@
                 <xsl:apply-templates select="." mode="property-label"/><xsl:text>
 </xsl:text>
     					</xsl:for-each>
+              <!-- Datatypes (bij keuzes) -->
+              <xsl:for-each select="key('resources',mim:type/@rdf:resource)">
+                <xsl:apply-templates select="." mode="label"/><xsl:text>
+</xsl:text>
+    					</xsl:for-each>
             </y:AttributeLabel>
             <y:MethodLabel />
           </y:UML>
