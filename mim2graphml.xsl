@@ -163,10 +163,11 @@
   </xsl:for-each>
 </xsl:template>
 
+<!-- edge-gen: exclude mim:PrimitiefDatatype, those elements are never shown! -->
 <xsl:template match="rdf:Description" mode="edge-gen">
   <xsl:variable name="subject-uri" select="mim:subtype/@rdf:resource"/>
-  <xsl:if test="exists(key('items',$subject-uri))">
-    <xsl:for-each select="mim:supertype[exists(key('items',@rdf:resource))]">
+  <xsl:if test="exists(key('items',$subject-uri)[rdf:type/@rdf:resource!='http://bp4mc2.org/def/mim#PrimitiefDatatype'])">
+    <xsl:for-each select="mim:supertype[exists(key('items',@rdf:resource)[rdf:type/@rdf:resource!='http://bp4mc2.org/def/mim#PrimitiefDatatype'])]">
       <xsl:variable name="object-uri" select="@rdf:resource"/>
       <xsl:variable name="subject-geo" select="key('node-geo',$subject-uri)"/>
       <xsl:if test="not($params='follow') or exists($subject-geo/graphml:data)">
