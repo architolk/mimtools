@@ -3,12 +3,12 @@ version: 0.1
 prefixes:
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   xsd:  http://www.w3.org/2001/XMLSchema#
-  mim: http://bp4mc2.org/def/mim#
+  mim: http://modellen.mim-standaard.nl/def/mim#
 queries:
   - title: Mapping of fbm datatypes to mim datatypes
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:metadata> {
@@ -21,7 +21,7 @@ queries:
   - title: fbm:FactBasedModel naar mim:Informatiemodel
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -38,7 +38,7 @@ queries:
   - title: fbm:Objecttype naar mim:Objecttype
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -59,7 +59,7 @@ queries:
   - title: mim:Generalisatie vanuit supertyperole
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -83,7 +83,7 @@ queries:
   - title: mim:Attribuutsoort direct vanuit valuetype rol met fbm:Objecttype
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -116,7 +116,7 @@ queries:
   - title: mim:Attribuutsoort via facttype (alleen binair)
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -154,7 +154,7 @@ queries:
   - title: mim:Relatiesoort direct via objecttype rol met fbm:Objecttype
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -205,7 +205,7 @@ queries:
   - title: mim:Relatiesoort via facttypes (alleen binaire relaties)
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
@@ -263,7 +263,7 @@ queries:
   - title: mim:Relatiesoort met keuze (tertiair feittype met binaire expressies)
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
@@ -320,7 +320,7 @@ queries:
       }
   - title: aanmaken mim:Relatierollen voor keuze-relaties
     query: >
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       insert {
         graph <urn:output> {
           ?rel mim:relatierol [
@@ -346,7 +346,7 @@ queries:
   - title: kardinaliteiten invullen
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -397,7 +397,7 @@ queries:
   - title: Expressies overnemen naar definities
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -420,7 +420,7 @@ queries:
   - title: primitieve datatypes vanuit valuetypes
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -444,7 +444,7 @@ queries:
   - title: enumeraties vanuit valuetypes
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
@@ -470,7 +470,7 @@ queries:
   - title: verwijder ongebruikte mim:PrimitiefDatatypes
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       delete {
         graph <urn:output> {
@@ -489,7 +489,7 @@ queries:
   - title: specialisatie-relatie vanuit overgebleven primitieve datatypes naar standaard datatypes
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:output> {
