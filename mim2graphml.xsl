@@ -238,6 +238,29 @@
         				<y:PolyLineEdge>
                   <y:LineStyle color="#000000" type="line" width="1.0"/>
         					<y:Arrows source="none" target="none"/>
+                  <xsl:if test="../mim:kardinaliteitRelatieBron!='' and not(key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#RelatierolBron']/mim:kardinaliteit!='')">
+                    <xsl:call-template name="edge-label">
+                      <xsl:with-param name="label"><xsl:value-of select="../mim:kardinaliteitRelatieBron"/></xsl:with-param>
+                      <xsl:with-param name="ratio">0.0</xsl:with-param>
+                      <xsl:with-param name="position">left</xsl:with-param>
+                    </xsl:call-template>
+                  </xsl:if>
+                  <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#RelatierolBron']">
+                    <xsl:if test="mim:naam!='' or rdfs:label!=''">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
+                        <xsl:with-param name="ratio">0.0</xsl:with-param>
+                        <xsl:with-param name="position">left</xsl:with-param>
+                      </xsl:call-template>
+                    </xsl:if>
+                    <xsl:if test="mim:kardinaliteit!=''">
+                      <xsl:call-template name="edge-label">
+                        <xsl:with-param name="label"><xsl:value-of select="mim:kardinaliteit"/></xsl:with-param>
+                        <xsl:with-param name="ratio">0.0</xsl:with-param>
+                        <xsl:with-param name="position">right</xsl:with-param>
+                      </xsl:call-template>
+                    </xsl:if>
+                  </xsl:for-each>
                 </y:PolyLineEdge>
               </data>
             </edge>
