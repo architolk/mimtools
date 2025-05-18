@@ -394,6 +394,42 @@ queries:
           }
         }
       }
+  - title: Relatieklasse bij feittypen met meer dan 2 rollen, alle andere rollen zijn valuetypes
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      delete {
+        graph <urn:output> {
+          ?rel a mim:Relatiesoort
+        }
+      }
+      insert {
+        graph <urn:output> {
+          ?rel a mim:Relatieklasse.
+          ?rel mim:attribuut ?attr.
+          ?attr a mim:Attribuutsoort.
+          ?attr rdfs:label ?vtlabel
+        }
+      }
+      where {
+        graph <urn:output> {
+          ?rel a mim:Relatiesoort.
+          ?rel mim:bron ?bron.
+          ?rel mim:doel ?doel.
+        }
+        graph <urn:input> {
+          ?rel fbm:role ?bronrol.
+          ?rel fbm:role ?doelrol.
+          ?bronrol fbm:playedBy ?bron.
+          ?doelrol fbm:playedBy ?doel.
+          ?rel fbm:role ?attr.
+          ?attr fbm:playedBy ?vt.
+          ?vt a fbm:Valuetype.
+          ?vt rdfs:label ?vtlabel.
+          FILTER (?attr!=?bronrol && ?attr!=?doelrol)
+        }
+      }
   - title: Expressies overnemen naar definities
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
