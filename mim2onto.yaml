@@ -11,7 +11,7 @@ prefixes:
 queries:
   - title: create technical names
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       INSERT {
         GRAPH <urn:input> {
@@ -29,7 +29,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -55,7 +55,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -81,7 +81,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -107,7 +107,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -133,7 +133,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -170,7 +170,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -214,7 +214,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -254,7 +254,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -279,7 +279,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -306,7 +306,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -334,7 +334,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -360,7 +360,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -400,7 +400,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -442,7 +442,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -493,7 +493,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -533,7 +533,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -559,7 +559,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -583,7 +583,7 @@ queries:
   - title: convert mim:Generalisatie
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?subclass rdfs:subClassOf ?superclass
@@ -603,7 +603,7 @@ queries:
   - title: convert mim:begrip
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX dct: <http://purl.org/dc/terms/>
       INSERT {
         GRAPH <urn:output> {
@@ -621,7 +621,7 @@ queries:
   - title: convert mim:definitie
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element rdfs:comment ?definitie
@@ -639,7 +639,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element sh:pattern ?patroon
@@ -656,7 +656,7 @@ queries:
   - title: convert mim:type (mim:PrimitiefDatatype)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       INSERT {
@@ -694,7 +694,7 @@ queries:
   - title: convert mim:type (mim:GestructureerdDatatype)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -716,7 +716,7 @@ queries:
   - title: convert mim:type (mim:Enumeratie)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -737,7 +737,7 @@ queries:
   - title: convert mim:type (mim:Referentielijst)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -758,7 +758,7 @@ queries:
   - title: convert mim:type (mim:Codelijst)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -779,7 +779,7 @@ queries:
   - title: change owl:DatatypeProperty to owl:ObjectProperty for non-primitive datatypes
     query: >
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       DELETE {
         GRAPH <urn:output> {
@@ -801,7 +801,7 @@ queries:
   - title: convert mim:lengte (minimum)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
       INSERT {
@@ -827,7 +827,7 @@ queries:
   - title: convert mim:lengte (maximum)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
       INSERT {
@@ -853,7 +853,7 @@ queries:
   - title: convert mim:kardinaliteit (minimum)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
       INSERT {
@@ -879,7 +879,7 @@ queries:
   - title: convert mim:kardinaliteit (maximum)
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
       INSERT {
@@ -915,7 +915,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -938,7 +938,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       INSERT {
         GRAPH <urn:output> {
@@ -960,7 +960,7 @@ queries:
   - title: remove rdfs:seeAlso / Add mim:equivalent
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       DELETE {
         GRAPH <urn:output> {
           ?s rdfs:seeAlso ?o

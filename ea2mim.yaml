@@ -1,12 +1,12 @@
 title: MIM conversie
 version: 0.3
 prefixes:
-  mim: http://bp4mc2.org/def/mim#
+  mim: http://modellen.mim-standaard.nl/def/mim#
 queries:
   - title: Add default mim primitiefdatatype and aggregatietype
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
-      prefix mim: <http://bp4mc2.org/def/mim#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       insert {
         graph <urn:metadata> {
@@ -60,7 +60,7 @@ queries:
       }
   - title: get Informatiemodellen
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -85,7 +85,7 @@ queries:
       }
   - title: get Domeinen
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -110,7 +110,7 @@ queries:
       }
   - title: get Objecttypes
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -145,7 +145,7 @@ queries:
       }
   - title: get Primitief datatype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -170,7 +170,7 @@ queries:
       }
   - title: get Gestructureerd datatype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -195,7 +195,7 @@ queries:
       }
   - title: get Gegevensgroeptype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -220,7 +220,7 @@ queries:
       }
   - title: get Keuze
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -245,7 +245,7 @@ queries:
       }
   - title: get Relatieklasse
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -270,7 +270,7 @@ queries:
       }
   - title: get Referentielijst
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -295,7 +295,7 @@ queries:
       }
   - title: get Enumeratie
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -320,7 +320,7 @@ queries:
       }
   - title: get Codelijst
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -345,7 +345,7 @@ queries:
       }
   - title: get Attribuutsoorten
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -370,7 +370,7 @@ queries:
       }
   - title: link Attribuutsoort to Objecttype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -392,7 +392,7 @@ queries:
       }
   - title: get Gegevensgroep
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -417,7 +417,7 @@ queries:
       }
   - title: link Gegevensgroep to Objecttype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -439,7 +439,7 @@ queries:
       }
   - title: link Gegevensgroep to Gegevensgroeptype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -461,7 +461,7 @@ queries:
       }
   - title: get DataElement
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -486,7 +486,7 @@ queries:
       }
   - title: link DataElement to GestructureerdDatatype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -508,7 +508,7 @@ queries:
       }
   - title: get ReferentieElement
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -533,7 +533,7 @@ queries:
       }
   - title: link ReferentieElement to Referentielijst
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -555,7 +555,7 @@ queries:
       }
   - title: get Enumeratiewaarde
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -580,7 +580,7 @@ queries:
       }
   - title: link Enumeratiewaarde to Enumeratie
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -602,7 +602,7 @@ queries:
       }
   - title: get Relatiesoort
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -627,7 +627,7 @@ queries:
       }
   - title: link Relatiesoort aan bron
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -649,7 +649,7 @@ queries:
       }
   - title: link Relatiesoort aan doel
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -671,7 +671,7 @@ queries:
       }
   - title: get Relatierol (bron)
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -704,7 +704,7 @@ queries:
       }
   - title: get Relatierol (doel)
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -737,7 +737,7 @@ queries:
       }
   - title: get Externe koppeling
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -762,7 +762,7 @@ queries:
       }
   - title: link Externe koppeling aan bron
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -784,7 +784,7 @@ queries:
       }
   - title: link Externe koppeling aan doel
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -806,7 +806,7 @@ queries:
       }
   - title: set aggregatietype
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -826,7 +826,7 @@ queries:
       }
   - title: set unidirectioneel
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -844,7 +844,7 @@ queries:
   - title: link Relatieklasse aan bron
     # Ik betwijfel of dit werkt... Relatieklasse is toch geen ea:Connector maar ea:Object??
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -867,7 +867,7 @@ queries:
   - title: link Relatieklasse aan doel
     # Ik betwijfel of dit werkt... Relatieklasse is toch geen ea:Connector maar ea:Object??
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -890,7 +890,7 @@ queries:
   - title: combine Relatieklasse en Relatiesoort
     # Alternatieve oplossing voor de 2 queries hierboven
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -921,7 +921,7 @@ queries:
       }
   - title: link doelen aan doelkeuze
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -941,7 +941,7 @@ queries:
       }
   - title: get Generalisatie
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -969,7 +969,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?package mim:bevatModelelement ?element
@@ -987,7 +987,7 @@ queries:
   - title: add mim:definitie
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:definitie ?definitie
@@ -1001,7 +1001,7 @@ queries:
       }
   - title: add mim:begrip, mim:begripsterm
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       INSERT {
@@ -1026,7 +1026,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:type ?datatype
@@ -1043,7 +1043,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:type ?datatype
@@ -1063,7 +1063,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?keuze mim:type ?datatype
@@ -1083,7 +1083,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?object mim:attribuut ?keuze
@@ -1103,7 +1103,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:kardinaliteit ?kardinaliteit
@@ -1127,7 +1127,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:kardinaliteit ?kardinaliteit
@@ -1146,7 +1146,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:alias ?alias
@@ -1162,7 +1162,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:toelichting ?toelichting
@@ -1180,7 +1180,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:herkomst ?herkomst
@@ -1198,7 +1198,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:herkomstDefinitie ?herkomstdefinitie
@@ -1216,7 +1216,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:datumOpname ?datumopname
@@ -1234,7 +1234,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:populatie ?populatie
@@ -1252,7 +1252,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:patroon ?patroon
@@ -1270,7 +1270,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:formeelPatroon ?formeelpatroon
@@ -1288,7 +1288,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       INSERT {
         GRAPH <urn:input> {
@@ -1304,7 +1304,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       INSERT {
         GRAPH <urn:output> {
@@ -1325,7 +1325,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:indicatieFormeleHistorie ?indicatie
@@ -1344,7 +1344,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:indicatieMaterieleHistorie ?indicatie
@@ -1363,7 +1363,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:lengte ?lengte
@@ -1381,7 +1381,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:locatie ?locatie
@@ -1399,7 +1399,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       INSERT {
         GRAPH <urn:input> {
@@ -1412,7 +1412,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       INSERT {
         GRAPH <urn:output> {
@@ -1433,7 +1433,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:indicatieAbstractObject ?abstract
@@ -1449,7 +1449,7 @@ queries:
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       INSERT {
         GRAPH <urn:output> {
           ?element mim:identificerend true
@@ -1465,7 +1465,7 @@ queries:
       }
   - title: Verwijder Kadaster-specifiek gebruik van opmaak in definities
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       DELETE {
         GRAPH <urn:output> {
           ?s mim:definitie ?def
@@ -1484,7 +1484,7 @@ queries:
       }
   - title: Verwijder lege definities
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       DELETE {
         GRAPH <urn:output> {
           ?s mim:definitie ""
@@ -1497,7 +1497,7 @@ queries:
       }
   - title: Verwijder Kadaster-specifiek gebruik van namen van abstracte klassen
     query: >
-      PREFIX mim: <http://bp4mc2.org/def/mim#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
       DELETE {
         GRAPH <urn:output> {
           ?s mim:naam ?anaam

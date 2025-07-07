@@ -204,7 +204,7 @@
     ],
     "@context": {
         "schema": "http://schema.org/",
-        "mim": "http://bp4mc2.org/def/mim#",
+        "mim": "http://modellen.mim-standaard.nl/def/mim#",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "owl": "http://www.w3.org/2002/07/owl#"
     }

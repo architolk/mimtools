@@ -1,5 +1,5 @@
 @prefix ex:  <http://example.org/> .
-@prefix mim: <http://bp4mc2.org/def/mim#> .
+@prefix mim: <http://modellen.mim-standaard.nl/def/mim#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 

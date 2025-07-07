@@ -10,12 +10,12 @@
   xmlns:owl="http://www.w3.org/2002/07/owl#"
   xmlns:dct="http://purl.org/dc/terms/"
   xmlns:foaf="http://xmlns.com/foaf/0.1/"
-  xmlns:mim="http://bp4mc2.org/def/mim#"
+  xmlns:mim="http://modellen.mim-standaard.nl/def/mim#"
 >
 
 <xsl:output method="text"/>
 
-<xsl:variable name="mim">http://bp4mc2.org/def/mim#</xsl:variable>
+<xsl:variable name="mim">http://modellen.mim-standaard.nl/def/mim#</xsl:variable>
 <xsl:variable name="mim-objecttype"><xsl:value-of select="$mim"/>Objecttype</xsl:variable>
 <xsl:variable name="mim-relatiesoort"><xsl:value-of select="$mim"/>Relatiesoort</xsl:variable>
 <xsl:variable name="mim-informatiemodel"><xsl:value-of select="$mim"/>Informatiemodel</xsl:variable>

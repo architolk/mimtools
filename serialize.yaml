@@ -1,7 +1,7 @@
 title: MIM serialization
 version: 0.1
 prefixes:
-  mim: http://bp4mc2.org/def/mim#
+  mim: http://modellen.mim-standaard.nl/def/mim#
   schema: http://schema.org/
 queries:
   - title: namespace rename

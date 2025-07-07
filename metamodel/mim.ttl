@@ -12,7 +12,7 @@
 # - Toelichtingen ook opnemen? -> Maar dan wel bij begrippen??
 # - Alternatief 1 (relatiesoort is leidend) is uitgewerkt, beter zou zijn om beide alternatieven uit te werken
 
-@prefix mim: <http://bp4mc2.org/def/mim#>.
+@prefix mim: <http://modellen.mim-standaard.nl/def/mim#>.
 @prefix mimdoc: <http://bp4mc2.org/def/mimdoc#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#>.

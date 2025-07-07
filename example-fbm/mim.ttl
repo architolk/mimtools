@@ -1,5 +1,5 @@
 @prefix fbm:  <http://bp4mc2.org/def/fbm#> .
-@prefix mim:  <http://bp4mc2.org/def/mim#> .
+@prefix mim:  <http://modellen.mim-standaard.nl/def/mim#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 

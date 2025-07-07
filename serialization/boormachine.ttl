@@ -1,4 +1,4 @@
-@prefix mim:    <http://bp4mc2.org/def/mim#> .
+@prefix mim:    <http://modellen.mim-standaard.nl/def/mim#> .
 @prefix schema: <http://schema.org/> .
 
 schema:Offers  a           mim:Relatiesoort ;
