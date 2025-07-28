@@ -24,6 +24,9 @@
 <xsl:variable name="mim-enumeratie"><xsl:value-of select="$mim"/>Enumeratie</xsl:variable>
 <xsl:variable name="mim-primitiefdatatype"><xsl:value-of select="$mim"/>PrimitiefDatatype</xsl:variable>
 
+   <xsl:variable name="diacritics">áàâäéèêëíìîïóòôöúùûü</xsl:variable>
+<xsl:variable name="nondiacritics">aaaaeeeeiiiioooouuuu</xsl:variable>
+
 <xsl:variable name="params" select="/ROOT/@params"/>
 <xsl:variable name="lang">
   <xsl:choose>
@@ -48,11 +51,11 @@
 </xsl:variable>
 
 <xsl:template match="*" mode="anchor">
-  <xsl:value-of select="replace(replace(.,'[^A-Za-z0-9-]','-'),'[-]+','-')"/>
+  <xsl:value-of select="replace(replace(replace(translate(.,$diacritics,$nondiacritics),'[^A-Za-z0-9-]','-'),'[-]+','-'),'[-]$','')"/>
 </xsl:template>
 
 <xsl:template match="*" mode="lcase-anchor">
-  <xsl:value-of select="replace(replace(lower-case(.),'[^A-Za-z0-9-]','-'),'[-]+','-')"/>
+  <xsl:value-of select="replace(replace(replace(translate(lower-case(.),$diacritics,$nondiacritics),'[^A-Za-z0-9-]','-'),'[-]+','-'),'[-]$','')"/>
 </xsl:template>
 
 <xsl:template match="*" mode="label">

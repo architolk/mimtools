@@ -1,65 +1,65 @@
-- [address](#-address)
-- [organisation](#-organisation)
-- [person](#-person)
+- [address](#Taddress)
+- [organisation](#Torganisation)
+- [person](#Tperson)
 
-## address {#-address}
-
-|{: .def}||
-|-|-|
-|Kenmerken|[city](#-), [house number](#-), [street name](#-)|
-|Relatie met|[lives at](#-living-lace)|
-
-## organisation {#-organisation}
+## address {#Taddress}
 
 |{: .def}||
 |-|-|
-|Kenmerken|[organisation's name](#-)|
-|Relatie met|[employment](#-employment)|
+|Kenmerken|[city](#T), [house number](#T), [street name](#T)|
+|Relatie met|[lives at](#TlivingPlace)|
 
-## person {#-person}
-
-|{: .def}||
-|-|-|
-|Kenmerken|[person's name](#-)|
-|Rollen|[employment](#-employment), [lives at](#-living-lace)|
-
-### lives at {#-living-lace}
+## organisation {#Torganisation}
 
 |{: .def}||
 |-|-|
-|Rol van|0..1 [person](#-person)|
-|Met|0..* [address](#-address)|
+|Kenmerken|[organisation's name](#T)|
+|Relatie met|[employment](#Temployment)|
 
-### employment {#-employment}
+## person {#Tperson}
 
 |{: .def}||
 |-|-|
-|Rol van|1..* [person](#-person)|
-|Met|0..* [organisation](#-organisation)|
+|Kenmerken|[person's name](#T)|
+|Rollen|[employment](#Temployment), [lives at](#TlivingPlace)|
+
+### lives at {#TlivingPlace}
+
+|{: .def}||
+|-|-|
+|Rol van|0..1 [person](#Tperson)|
+|Met|0..* [address](#Taddress)|
+
+### employment {#Temployment}
+
+|{: .def}||
+|-|-|
+|Rol van|1..* [person](#Tperson)|
+|Met|0..* [organisation](#Torganisation)|
 
 ## Waardetypering en referentielijsten
 
-### city {#-city}
+### city {#Tcity}
 
 |{: .def}||
 |-|-|
 
-### house number {#-house-umber}
+### house number {#ThouseNumber}
 
 |{: .def}||
 |-|-|
 
-### organisation's name {#-oname}
+### organisation's name {#Toname}
 
 |{: .def}||
 |-|-|
 
-### person's name {#-pname}
+### person's name {#Tpname}
 
 |{: .def}||
 |-|-|
 
-### street name {#-street-ame}
+### street name {#TstreetName}
 
 |{: .def}||
 |-|-|
