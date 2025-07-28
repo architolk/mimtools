@@ -338,14 +338,15 @@
   <xsl:for-each select="key('resource',mim:waarde/@rdf:nodeID)"><xsl:sort select="rdfs:label"/>
     <xsl:text>- </xsl:text>
     <xsl:choose>
-      <xsl:when test="mim:begrip/@rdf:resource!=''">
+      <xsl:when test="mim:begrip[1]/@rdf:resource!=''">
+        <!-- More than one mim:begrip is technically possible, but semantically unclear, so use only first mim:begrip -->
         <xsl:text>[</xsl:text><xsl:value-of select="rdfs:label"/><xsl:text>]</xsl:text>
-        <xsl:variable name="term-anchor"><xsl:apply-templates select="key('resource',mim:begrip/@rdf:resource)/rdfs:label" mode="lcase-anchor"/></xsl:variable>
+        <xsl:variable name="term-anchor"><xsl:apply-templates select="key('resource',mim:begrip[1]/@rdf:resource)/rdfs:label[1]" mode="lcase-anchor"/></xsl:variable>
         <xsl:choose>
           <!-- When info of begrip in this file, use it -->
           <xsl:when test="$term-anchor!=''"><xsl:text>(#</xsl:text><xsl:value-of select="$term-anchor"/><xsl:text>)</xsl:text></xsl:when>
           <!-- Otherwise: expect begrip in different document, use URI -->
-          <xsl:otherwise><xsl:text>(</xsl:text><xsl:value-of select="mim:begrip/@rdf:resource"/><xsl:text>)</xsl:text></xsl:otherwise>
+          <xsl:otherwise><xsl:text>(</xsl:text><xsl:value-of select="mim:begrip[1]/@rdf:resource"/><xsl:text>)</xsl:text></xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="rdfs:label"/></xsl:otherwise>
