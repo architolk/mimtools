@@ -69,6 +69,14 @@
 <urn:facttype:headOf> a fbm:Facttype;
   fbm:role <urn:role:head>;
   fbm:role <urn:role:organisation>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:organisation>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:organisation>
+  ];
   fbm:predicate [
     fbm:ordersRole [fbm:role <urn:role:head>; fbm:atPosition 1];
     fbm:ordersRole [fbm:role <urn:role:organisation>; fbm:atPosition 2];
