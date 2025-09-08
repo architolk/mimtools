@@ -39,11 +39,11 @@
     fbm:ordersRole [fbm:role <urn:role:employee>; fbm:atPosition 1];
     fbm:ordersRole [fbm:role <urn:role:employer>; fbm:atPosition 2];
     fbm:reading [
-      fbm:text "[Person] works for [Organization]";
+      fbm:text "[Person] works for [Organisation]";
       fbm:parts (<urn:role:employee> "works for" <urn:role:employer>);
     ];
     fbm:reading [
-      fbm:text "[Person] has employer [Organization]";
+      fbm:text "[Person] has employer [Organisation]";
       fbm:parts (<urn:role:employee> "has employer" <urn:role:employer>);
     ]
   ];
@@ -52,7 +52,7 @@
 #    fbm:ordersRole [fbm:role <urn:role:employee>; fbm:atPosition 2];
 #    fbm:reading [
 #      rdfs:label "has employee";
-#      fbm:text "[Organization] has employee [Person]";
+#      fbm:text "[Organisation] has employee [Person]";
 #      fbm:parts (<urn:role:employer> "has employee" <urn:role:employee>)
 #    ]
 #  ]
@@ -64,6 +64,32 @@
 <urn:role:employee> a fbm:Role;
   rdfs:label "employee";
   fbm:playedBy <urn:facttype:person>
+.
+
+<urn:facttype:headOf> a fbm:Facttype;
+  fbm:role <urn:role:head>;
+  fbm:role <urn:role:organisation>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:head>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:organisation>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Person] is head of [Organisation]";
+      fbm:parts (<urn:role:employee> "is head of" <urn:role:employer>);
+    ]
+  ]
+.
+<urn:role:organisation> a fbm:Role;
+  fbm:playedBy <urn:facttype:organisation>
+.
+<urn:role:head> a fbm:Role;
+  rdfs:label "head";
+  fbm:playedBy <urn:facttype:person>
+.
+
+<urn:constraint:headMustBeEmployeeOfOrganisation> a fbm:SubsetConstraint;
+  rdfs:label "Head must be employee of organisation";
+  fbm:roleSequenceSubset (<urn:role:head> <urn:role:organisation>);
+  fbm:roleSequenceSuperset (<urn:role:employee> <urn:role:employer>);
 .
 
 <urn:facttype:address> a fbm:Objecttype;
