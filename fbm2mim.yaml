@@ -549,6 +549,36 @@ queries:
           }
         }
       }
+  - title: SubsetConstraint als mim:Constraint
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      insert {
+        graph <urn:output> {
+          ?constraint a mim:Constraint.
+          ?constraint rdfs:label "subset".
+          ?constraint mim:identifier ?id.
+          ?constraint mim:specificatieText ?spec.
+          ?constraint mim:specificatieFormeel "{subset}".
+          ?sub mim:constraint ?constraint.
+          ?super mim:constraint ?constraint.
+        }
+      }
+      where {
+        graph <urn:input> {
+          ?constraint a fbm:SubsetConstraint.
+          ?constraint rdfs:label ?spec.
+          ?constraint fbm:roleSequenceSubset/rdf:first ?roleSubset.
+          ?sub fbm:role ?roleSubset.
+          ?sub a ?subtype.
+          ?constraint fbm:roleSequenceSuperset/rdf:first ?roleSuperset.
+          ?super fbm:role ?roleSuperset.
+          ?super a ?supertype.
+          FILTER ((?subtype=fbm:Objecttype || ?subtype=fbm:Facttype) && (?supertype=fbm:Objecttype || ?supertype=fbm:Facttype))
+        }
+      }
   - title: verwijder ongebruikte mim:PrimitiefDatatypes
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>

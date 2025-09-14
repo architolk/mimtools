@@ -3,6 +3,12 @@ PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
+<urn:constraint:headMustBeEmployeeOfOrganisation>
+        a                        mim:Constraint;
+        rdfs:label               "subset";
+        mim:specificatieFormeel  "{subset}";
+        mim:specificatieText     "Head must be employee of organisation" .
+
 <urn:facttype:houseNumber>
         a               mim:PrimitiefDatatype;
         rdfs:label      "house number";
@@ -33,6 +39,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         a                    mim:Relatiesoort;
         rdfs:label           "head of";
         mim:bron             <urn:facttype:person>;
+        mim:constraint       <urn:constraint:headMustBeEmployeeOfOrganisation>;
         mim:doel             <urn:facttype:organisation>;
         mim:identifier       "TheadOf";
         mim:relatierol       [ a                  mim:RelatierolDoel;
@@ -67,6 +74,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         a                    mim:Relatiesoort;
         rdfs:label           "employment";
         mim:bron             <urn:facttype:person>;
+        mim:constraint       <urn:constraint:headMustBeEmployeeOfOrganisation>;
         mim:doel             <urn:facttype:organisation>;
         mim:identifier       "Temployment";
         mim:relatierol       [ a                  mim:RelatierolDoel;
