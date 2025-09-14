@@ -1,106 +1,180 @@
-@prefix fbm:  <http://bp4mc2.org/def/fbm#> .
-@prefix mim:  <http://modellen.mim-standaard.nl/def/mim#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
-
-<urn:facttype:oname>  a  mim:PrimitiefDatatype ;
-        rdfs:label      "organisation's name" ;
-        mim:identifier  "Toname" .
-
-<urn:facttype:address>
-        a               mim:Objecttype ;
-        rdfs:label      "address" ;
-        mim:attribuut   [ a                  mim:Attribuutsoort ;
-                          rdfs:label         "city" ;
-                          mim:identifier     "T" ;
-                          mim:kardinaliteit  "1..1" ;
-                          mim:type           <urn:facttype:city>
-                        ] ;
-        mim:attribuut   [ a                  mim:Attribuutsoort ;
-                          rdfs:label         "house number" ;
-                          mim:identifier     "T" ;
-                          mim:kardinaliteit  "1..1" ;
-                          mim:type           <urn:facttype:houseNumber>
-                        ] ;
-        mim:attribuut   [ a                  mim:Attribuutsoort ;
-                          rdfs:label         "street name" ;
-                          mim:identifier     "T" ;
-                          mim:kardinaliteit  "1..1" ;
-                          mim:type           <urn:facttype:streetName>
-                        ] ;
-        mim:identifier  "Taddress" .
-
-<urn:facttype:streetName>
-        a               mim:PrimitiefDatatype ;
-        rdfs:label      "street name" ;
-        mim:identifier  "TstreetName" .
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 <urn:facttype:houseNumber>
-        a               mim:PrimitiefDatatype ;
-        rdfs:label      "house number" ;
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "house number";
         mim:identifier  "ThouseNumber" .
 
-<urn:facttype:livingPlace>
-        a                    mim:Relatiesoort ;
-        rdfs:label           "lives at" ;
-        mim:bron             <urn:facttype:person> ;
-        mim:doel             <urn:facttype:address> ;
-        mim:identifier       "TlivingPlace" ;
-        mim:relatierol       [ a                  mim:RelatierolDoel ;
-                               rdfs:label         "home address" ;
-                               mim:doel           <urn:facttype:address> ;
-                               mim:kardinaliteit  "0..*"
-                             ] ;
-        mim:relatierol       [ a                  mim:RelatierolBron ;
-                               mim:bron           <urn:facttype:person> ;
+<urn:facttype:oname>  a  mim:PrimitiefDatatype;
+        rdfs:label      "organisation's name";
+        mim:identifier  "Toname" .
+
+<urn:facttype:posid>  a  mim:PrimitiefDatatype;
+        rdfs:label      "position id";
+        mim:identifier  "Tposid" .
+
+<urn:facttype:streetName>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "street name";
+        mim:identifier  "TstreetName" .
+
+<urn:facttype:pname>  a  mim:PrimitiefDatatype;
+        rdfs:label      "person's name";
+        mim:identifier  "Tpname" .
+
+<urn:facttype:city>  a  mim:PrimitiefDatatype;
+        rdfs:label      "city";
+        mim:identifier  "Tcity" .
+
+<urn:facttype:headOf>
+        a                    mim:Relatiesoort;
+        rdfs:label           "head of";
+        mim:bron             <urn:facttype:person>;
+        mim:doel             <urn:facttype:organisation>;
+        mim:identifier       "TheadOf";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:organisation>;
                                mim:kardinaliteit  "0..1"
-                             ] ;
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "head";
+                               mim:bron           <urn:facttype:person>;
+                               mim:kardinaliteit  "1..*"
+                             ];
+        mim:unidirectioneel  false .
+
+<urn:facttype:livingPlace>
+        a                    mim:Relatiesoort;
+        rdfs:label           "lives at";
+        mim:bron             <urn:facttype:person>;
+        mim:doel             <urn:facttype:address>;
+        mim:identifier       "TlivingPlace";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "home address";
+                               mim:doel           <urn:facttype:address>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:person>;
+                               mim:kardinaliteit  "0..1"
+                             ];
         mim:unidirectioneel  false .
 
 <urn:facttype:employment>
-        a                    mim:Relatiesoort ;
-        rdfs:label           "employment" ;
-        mim:bron             <urn:facttype:person> ;
-        mim:doel             <urn:facttype:organisation> ;
-        mim:identifier       "Temployment" ;
-        mim:relatierol       [ a                  mim:RelatierolDoel ;
-                               rdfs:label         "employer" ;
-                               mim:doel           <urn:facttype:organisation> ;
+        a                    mim:Relatiesoort;
+        rdfs:label           "employment";
+        mim:bron             <urn:facttype:person>;
+        mim:doel             <urn:facttype:organisation>;
+        mim:identifier       "Temployment";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "employer";
+                               mim:doel           <urn:facttype:organisation>;
                                mim:kardinaliteit  "0..*"
-                             ] ;
-        mim:relatierol       [ a                  mim:RelatierolBron ;
-                               rdfs:label         "employee" ;
-                               mim:bron           <urn:facttype:person> ;
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "employee";
+                               mim:bron           <urn:facttype:person>;
                                mim:kardinaliteit  "1..*"
-                             ] ;
+                             ];
         mim:unidirectioneel  false .
 
-<urn:facttype:pname>  a  mim:PrimitiefDatatype ;
-        rdfs:label      "person's name" ;
-        mim:identifier  "Tpname" .
+<urn:role:department>
+        a                    mim:Relatiesoort;
+        rdfs:label           "Assignment in relatie met organisation";
+        mim:bron             <urn:facttype:assignment>;
+        mim:doel             <urn:facttype:organisation>;
+        mim:identifier       "Tdepartment";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:assignment>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
 
-<urn:facttype:person>
-        a               mim:Objecttype ;
-        rdfs:label      "person" ;
-        mim:attribuut   [ a                  mim:Attribuutsoort ;
-                          rdfs:label         "person's name" ;
-                          mim:identifier     "T" ;
-                          mim:kardinaliteit  "1..1" ;
-                          mim:type           <urn:facttype:pname>
-                        ] ;
-        mim:identifier  "Tperson" .
+<urn:role:position>  a       mim:Relatiesoort;
+        rdfs:label           "Assignment in relatie met position";
+        mim:bron             <urn:facttype:assignment>;
+        mim:doel             <urn:facttype:position>;
+        mim:identifier       "Tposition";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:assignment>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
 
-<urn:facttype:city>  a  mim:PrimitiefDatatype ;
-        rdfs:label      "city" ;
-        mim:identifier  "Tcity" .
+<urn:role:assignee>  a       mim:Relatiesoort;
+        rdfs:label           "Assignment in relatie met person";
+        mim:bron             <urn:facttype:assignment>;
+        mim:doel             <urn:facttype:person>;
+        mim:identifier       "Tassignee";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:assignment>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:facttype:position>
+        a               mim:Objecttype;
+        rdfs:label      "position";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "position id";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:posid>
+                        ];
+        mim:identifier  "Tposition" .
 
 <urn:facttype:organisation>
-        a               mim:Objecttype ;
-        rdfs:label      "organisation" ;
-        mim:attribuut   [ a                  mim:Attribuutsoort ;
-                          rdfs:label         "organisation's name" ;
-                          mim:identifier     "T" ;
-                          mim:kardinaliteit  "1..1" ;
+        a               mim:Objecttype;
+        rdfs:label      "organisation";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "organisation's name";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
                           mim:type           <urn:facttype:oname>
-                        ] ;
+                        ];
         mim:identifier  "Torganisation" .
+
+<urn:facttype:person>
+        a               mim:Objecttype;
+        rdfs:label      "person";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "person's name";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:pname>
+                        ];
+        mim:identifier  "Tperson" .
+
+<urn:facttype:address>
+        a               mim:Objecttype;
+        rdfs:label      "address";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "city";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:city>
+                        ];
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "house number";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:houseNumber>
+                        ];
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "street name";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:streetName>
+                        ];
+        mim:identifier  "Taddress" .
+
+<urn:facttype:assignment>
+        a               mim:Relatieklasse;
+        rdfs:label      "Assignment";
+        mim:identifier  "Tassignment" .

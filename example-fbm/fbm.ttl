@@ -67,6 +67,7 @@
 .
 
 <urn:facttype:headOf> a fbm:Facttype;
+  rdfs:label "head of"; # This is necessary for conversion, but that seems wrong!
   fbm:role <urn:role:head>;
   fbm:role <urn:role:organisation>;
   fbm:constraint [
@@ -148,4 +149,39 @@
 <urn:role:homeAddress> a fbm:Role;
   rdfs:label "home address";
   fbm:playedBy <urn:facttype:address>;
+.
+
+<urn:facttype:assignment> a fbm:Facttype;
+  rdfs:label "Assignment";
+  fbm:role <urn:role:assignee>;
+  fbm:role <urn:role:position>;
+  fbm:role <urn:role:department>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:assignee>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:position>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:department>; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "[Assignee] is assigned [Position] in [Department]";
+    ]
+  ]
+.
+<urn:role:assignee> a fbm:Role;
+  rdfs:label "assignee";
+  fbm:playedBy <urn:facttype:person>;
+.
+<urn:role:position> a fbm:Role;
+  fbm:playedBy <urn:facttype:position>;
+.
+<urn:role:department> a fbm:Role;
+  fbm:playedBy <urn:facttype:organisation>;
+.
+
+<urn:facttype:position> a fbm:Objecttype;
+  rdfs:label "position";
+  fbm:role [
+    fbm:playedBy <urn:facttype:posid>;
+  ]
+.
+<urn:facttype:posid> a fbm:Valuetype;
+  rdfs:label "position id";
 .

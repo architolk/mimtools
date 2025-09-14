@@ -18,6 +18,33 @@ queries:
         }
       }
       where {}
+  - title: fmb:Facttype with more than two roles with objecttypes (a high-level facttype), convert to fbm:Objecttype (hack)
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      delete {
+        graph <urn:input> {
+          ?hlft a fbm:Facttype
+        }
+      }
+      insert {
+        graph <urn:input> {
+          ?hlft a fbm:Objecttype.
+          ?hlft a fbm:HighLevelFacttype
+        }
+      }
+      where {
+        graph <urn:input> {
+          select ?hlft
+          where {
+            ?hlft a fbm:Facttype.
+            ?hlft fbm:role ?role.
+            ?role fbm:playedBy ?ot.
+            ?ot a fbm:Objecttype
+          }
+          group by ?hlft
+          having (count(?role)>2)
+        }
+      }
   - title: fbm:FactBasedModel naar mim:Informatiemodel
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
@@ -202,7 +229,7 @@ queries:
           }
         }
       }
-  - title: mim:Relatiesoort via facttypes (alleen binaire relaties)
+  - title: mim:Relatiesoort via facttypes (alleen binaire relaties en relaties waarbij de andere rollen valuestypes zijn)
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
       prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
@@ -428,6 +455,25 @@ queries:
           ?vt a fbm:Valuetype.
           ?vt rdfs:label ?vtlabel.
           FILTER (?attr!=?bronrol && ?attr!=?doelrol)
+        }
+      }
+  - title: Change mim:Objecttype to mim:Relatieklasse for high level facttypes
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      delete {
+        graph <urn:output> {
+          ?relclass a mim:Objecttype
+        }
+      }
+      insert {
+        graph <urn:output> {
+          ?relclass a mim:Relatieklasse
+        }
+      }
+      where {
+        graph <urn:input> {
+          ?relclass a fbm:HighLevelFacttype
         }
       }
   - title: Expressies overnemen naar definities
