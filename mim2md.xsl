@@ -18,6 +18,7 @@
 <xsl:variable name="mim">http://modellen.mim-standaard.nl/def/mim#</xsl:variable>
 <xsl:variable name="mim-objecttype"><xsl:value-of select="$mim"/>Objecttype</xsl:variable>
 <xsl:variable name="mim-relatiesoort"><xsl:value-of select="$mim"/>Relatiesoort</xsl:variable>
+<xsl:variable name="mim-relatieklasse"><xsl:value-of select="$mim"/>Relatieklasse</xsl:variable>
 <xsl:variable name="mim-informatiemodel"><xsl:value-of select="$mim"/>Informatiemodel</xsl:variable>
 <xsl:variable name="mim-relatierolbron"><xsl:value-of select="$mim"/>RelatierolBron</xsl:variable>
 <xsl:variable name="mim-relatieroldoel"><xsl:value-of select="$mim"/>RelatierolDoel</xsl:variable>
@@ -246,23 +247,27 @@
 </xsl:template>
 
 <xsl:template match="*" mode="meta-rolbron">
-  <xsl:text>|Rol van|</xsl:text>
-  <xsl:value-of select="key('resource',mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource=$mim-relatierolbron]/mim:kardinaliteit"/>
-  <xsl:text> </xsl:text>
-  <xsl:apply-templates select="key('resource',mim:bron/@rdf:resource)" mode="labelledlink"/>
-  <xsl:text>|&#xa;</xsl:text>
+  <xsl:if test="exists(key('resource',mim:bron/@rdf:resource))">
+    <xsl:text>|Rol van|</xsl:text>
+    <xsl:value-of select="key('resource',mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource=$mim-relatierolbron]/mim:kardinaliteit"/>
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates select="key('resource',mim:bron/@rdf:resource)" mode="labelledlink"/>
+    <xsl:text>|&#xa;</xsl:text>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="*" mode="meta-roldoel">
-  <xsl:text>|Met|</xsl:text>
-  <xsl:variable name="card"><xsl:value-of select="key('resource',mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource=$mim-relatieroldoel]/mim:kardinaliteit"/></xsl:variable>
-  <xsl:value-of select="$card"/>
-  <xsl:if test="$card=''"><xsl:value-of select="mim:kardinaliteit"/></xsl:if>
-  <xsl:text> </xsl:text>
-  <xsl:for-each select="key('resource',mim:doel/@rdf:resource)">
-      <xsl:apply-templates select="." mode="labelledlink"/>
-  </xsl:for-each>
-  <xsl:text>|&#xa;</xsl:text>
+  <xsl:if test="exists(key('resource',mim:doel/@rdf:resource))">
+    <xsl:text>|Met|</xsl:text>
+    <xsl:variable name="card"><xsl:value-of select="key('resource',mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource=$mim-relatieroldoel]/mim:kardinaliteit"/></xsl:variable>
+    <xsl:value-of select="$card"/>
+    <xsl:if test="$card=''"><xsl:value-of select="mim:kardinaliteit"/></xsl:if>
+    <xsl:text> </xsl:text>
+    <xsl:for-each select="key('resource',mim:doel/@rdf:resource)">
+        <xsl:apply-templates select="." mode="labelledlink"/>
+    </xsl:for-each>
+    <xsl:text>|&#xa;</xsl:text>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="*" mode="meta-waardetype">
@@ -293,6 +298,17 @@
   </xsl:if>
 </xsl:template>
 
+<xsl:template match="*" mode="meta-constraints">
+  <xsl:if test="exists(key('resource',mim:constraint/@rdf:resource))">
+    <xsl:text>|Constraints|</xsl:text>
+    <xsl:for-each select="key('resource',mim:constraint/@rdf:resource)"><xsl:sort select="rdfs:label"/>
+      <xsl:if test="position()!=1"><xsl:text>, </xsl:text></xsl:if>
+      <xsl:value-of select="mim:specificatieText"/>
+    </xsl:for-each>
+    <xsl:text>|&#xa;</xsl:text>
+  </xsl:if>
+</xsl:template>
+
 <xsl:template match="*" mode="objecttypen">
   <xsl:apply-templates select="." mode="header2"/>
   <xsl:apply-templates select="." mode="table-def-header"/>
@@ -306,7 +322,8 @@
   <xsl:apply-templates select="." mode="meta-eigenschappen-rollen"/>
   <xsl:apply-templates select="." mode="meta-eigenschappen-relaties"/>
   <xsl:apply-templates select="key('resource',mim:attribuut/@rdf:resource)" mode="attribuutsoorten"/>
-  <xsl:apply-templates select="key('rs-bron',@rdf:about)" mode="relatiesoorten"/>
+  <!-- <xsl:apply-templates select="key('rs-bron',@rdf:about)" mode="relatiesoorten"/> -->
+  <xsl:apply-templates select="." mode="meta-constraints"/>
 </xsl:template>
 
 <xsl:template match="*" mode="attribuutsoorten">
@@ -319,6 +336,7 @@
   <xsl:apply-templates select="." mode="meta-eigenaar"/>
   <xsl:apply-templates select="." mode="meta-waardetype"/>
   <xsl:apply-templates select="." mode="meta-waarden"/>
+  <xsl:apply-templates select="." mode="meta-constraints"/>
 </xsl:template>
 
 <xsl:template match="*" mode="relatiesoorten">
@@ -330,6 +348,11 @@
   <xsl:apply-templates select="." mode="meta-bron"/>
   <xsl:apply-templates select="." mode="meta-rolbron"/>
   <xsl:apply-templates select="." mode="meta-roldoel"/>
+  <xsl:apply-templates select="." mode="meta-eigenschappen-kenmerken"/>
+  <xsl:apply-templates select="." mode="meta-eigenschappen-rollen"/>
+  <xsl:apply-templates select="." mode="meta-eigenschappen-relaties"/>
+  <xsl:apply-templates select="key('resource',mim:attribuut/@rdf:resource)" mode="attribuutsoorten"/>
+  <xsl:apply-templates select="." mode="meta-constraints"/>
 </xsl:template>
 
 <xsl:template match="*" mode="enumeraties">
@@ -397,6 +420,9 @@
   <xsl:apply-templates select="." mode="class-hierarchy"/>
   <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-objecttype]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
     <xsl:apply-templates select="." mode="objecttypen"/>
+  </xsl:for-each>
+  <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-relatiesoort or rdf:type/@rdf:resource=$mim-relatieklasse]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>
+    <xsl:apply-templates select="." mode="relatiesoorten"/>
   </xsl:for-each>
   <xsl:text>&#x0a;## Waardetypering en referentielijsten&#x0a;</xsl:text>
   <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-primitiefdatatype]"><xsl:sort select="concat(rdfs:label[@xml:lang=$lang],rdfs:label[1])"/>

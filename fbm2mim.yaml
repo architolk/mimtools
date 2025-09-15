@@ -476,7 +476,7 @@ queries:
           ?relclass a fbm:HighLevelFacttype
         }
       }
-  - title: Expressies overnemen naar definities
+  - title: Predicate readings overnemen naar toelichting
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
       prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
@@ -491,10 +491,10 @@ queries:
         where {
           graph <urn:output> {
             ?rel a ?t
-            FILTER (?t=mim:Relatiesoort || ?t=mim:Attribuutsoort || ?t=mim:Objecttype)
+            FILTER (?t=mim:Relatiesoort || ?t=mim:Attribuutsoort || ?t=mim:Objecttype || ?t=mim:Relatieklasse)
           }
           graph <urn:input> {
-            ?rel fbm:expressionText ?def
+            ?rel fbm:predicate/fbm:reading/fbm:text ?def
           }
         }
         group by ?rel

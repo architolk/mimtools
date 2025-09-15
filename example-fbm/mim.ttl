@@ -51,6 +51,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                                mim:bron           <urn:facttype:person>;
                                mim:kardinaliteit  "1..*"
                              ];
+        mim:toelichting      "[Person] is head of [Organisation]";
         mim:unidirectioneel  false .
 
 <urn:facttype:livingPlace>
@@ -68,6 +69,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                                mim:bron           <urn:facttype:person>;
                                mim:kardinaliteit  "0..1"
                              ];
+        mim:toelichting      "[Person] lives at [Address]";
         mim:unidirectioneel  false .
 
 <urn:facttype:employment>
@@ -87,6 +89,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                                mim:bron           <urn:facttype:person>;
                                mim:kardinaliteit  "1..*"
                              ];
+        mim:toelichting      "[Person] works for [Organisation];\n[Person] has employer [Organisation]";
         mim:unidirectioneel  false .
 
 <urn:role:department>
@@ -183,6 +186,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         mim:identifier  "Taddress" .
 
 <urn:facttype:assignment>
-        a               mim:Relatieklasse;
-        rdfs:label      "Assignment";
-        mim:identifier  "Tassignment" .
+        a                mim:Relatieklasse;
+        rdfs:label       "Assignment";
+        mim:identifier   "Tassignment";
+        mim:toelichting  "[Assignee] is assigned [Position] in [Department]" .
