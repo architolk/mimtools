@@ -9,6 +9,16 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         mim:specificatieFormeel  "{subset}";
         mim:specificatieText     "Head must be employee of organisation" .
 
+<urn:facttype:pname>  a  mim:Enumeratie;
+        rdfs:label      "person's name";
+        mim:identifier  "Tpname";
+        mim:waarde      [ a           mim:Enumeratiewaarde;
+                          rdfs:label  "Kees"
+                        ];
+        mim:waarde      [ a           mim:Enumeratiewaarde;
+                          rdfs:label  "Jan"
+                        ] .
+
 <urn:facttype:houseNumber>
         a               mim:PrimitiefDatatype;
         rdfs:label      "house number";
@@ -26,10 +36,6 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         a               mim:PrimitiefDatatype;
         rdfs:label      "street name";
         mim:identifier  "TstreetName" .
-
-<urn:facttype:pname>  a  mim:PrimitiefDatatype;
-        rdfs:label      "person's name";
-        mim:identifier  "Tpname" .
 
 <urn:facttype:city>  a  mim:PrimitiefDatatype;
         rdfs:label      "city";
@@ -166,6 +172,12 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         a               mim:Objecttype;
         rdfs:label      "address";
         mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "street name";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:streetName>
+                        ];
+        mim:attribuut   [ a                  mim:Attribuutsoort;
                           rdfs:label         "city";
                           mim:identifier     "T";
                           mim:kardinaliteit  "1..1";
@@ -176,12 +188,6 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                           mim:identifier     "T";
                           mim:kardinaliteit  "1..1";
                           mim:type           <urn:facttype:houseNumber>
-                        ];
-        mim:attribuut   [ a                  mim:Attribuutsoort;
-                          rdfs:label         "street name";
-                          mim:identifier     "T";
-                          mim:kardinaliteit  "1..1";
-                          mim:type           <urn:facttype:streetName>
                         ];
         mim:identifier  "Taddress" .
 

@@ -10,6 +10,7 @@
 
 <urn:facttype:pname> a fbm:Valuetype;
   rdfs:label "person's name";
+  fbm:datatype "char";
 .
 
 <urn:facttype:organisation> a fbm:Objecttype;
