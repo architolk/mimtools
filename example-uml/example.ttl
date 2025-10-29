@@ -1,160 +1,175 @@
 @prefix ea: <http://www.sparxsystems.eu/def/ea#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 <urn:package:1> a ea:Package;
-  ea:guid '''0A56C5E9-C8CD-4d16-BA1C-FF5F96878658''';
+  ea:guid '0A56C5E9-C8CD-4d16-BA1C-FF5F96878658';
   rdfs:label '''Model''';
 .
 <urn:package:2> a ea:Package;
-  ea:guid '''B6CB975E-F24C-4650-98F7-5D64A15C3BAC''';
+  ea:guid 'B6CB975E-F24C-4650-98F7-5D64A15C3BAC';
   rdfs:label '''Class model''';
   ea:parent <urn:package:1>;
 .
 <urn:package:6> a ea:Package;
-  ea:guid '''CAC26415-2589-467a-AF55-C6C943D7AFDB''';
+  ea:guid 'CAC26415-2589-467a-AF55-C6C943D7AFDB';
   rdfs:label '''Class model - Copy''';
   ea:parent <urn:package:1>;
 .
 <urn:package:7> a ea:Package;
-  ea:guid '''64C8332F-3DF7-4f5d-8F2C-70752B9873D5''';
+  ea:guid '64C8332F-3DF7-4f5d-8F2C-70752B9873D5';
   rdfs:label '''Class model - Copy1''';
   ea:parent <urn:package:1>;
 .
 <urn:package:8> a ea:Package;
-  ea:guid '''37697AAE-B3F2-4498-AC1A-D0138CE5D074''';
+  ea:guid '37697AAE-B3F2-4498-AC1A-D0138CE5D074';
   rdfs:label '''Class model - Copy2''';
   ea:parent <urn:package:1>;
 .
 <urn:object:1> a ea:Object;
-  ea:guid '''B6CB975E-F24C-4650-98F7-5D64A15C3BAC''';
+  ea:guid 'B6CB975E-F24C-4650-98F7-5D64A15C3BAC';
   ea:type '''Package''';
   rdfs:label '''Class model''';
+  ea:abstract false;
   ea:package <urn:package:1>;
 .
 <urn:object:2> a ea:Object;
-  ea:guid '''83C3B3C4-5AAA-4dfd-9074-C286D5A87EA5''';
+  ea:guid '83C3B3C4-5AAA-4dfd-9074-C286D5A87EA5';
   ea:type '''Class''';
   rdfs:label '''Wine''';
-  ea:stereotype "Objecttype";
+  ea:abstract false;
   ea:package <urn:package:2>;
 .
 <urn:object:3> a ea:Object;
-  ea:guid '''8C433237-D14C-4916-8229-C093C7A9E7AB''';
+  ea:guid '8C433237-D14C-4916-8229-C093C7A9E7AB';
   ea:type '''Class''';
   rdfs:label '''Bank account''';
+  ea:abstract false;
   ea:package <urn:package:2>;
   rdfs:comment '''The number registered with this bank account''';
 .
 <urn:object:17> a ea:Object;
-  ea:guid '''CAC26415-2589-467a-AF55-C6C943D7AFDB''';
+  ea:guid 'CAC26415-2589-467a-AF55-C6C943D7AFDB';
   ea:type '''Package''';
   rdfs:label '''Class model - Copy''';
+  ea:abstract false;
   ea:package <urn:package:1>;
 .
 <urn:object:18> a ea:Object;
-  ea:guid '''7C5B3D4C-A8C8-4a87-A7AC-D38DABADBC41''';
+  ea:guid '7C5B3D4C-A8C8-4a87-A7AC-D38DABADBC41';
   ea:type '''Class''';
   rdfs:label '''Person''';
+  ea:abstract false;
   ea:package <urn:package:6>;
 .
 <urn:object:19> a ea:Object;
-  ea:guid '''21A9D56C-53FF-4508-B9AC-7EB906FF9148''';
+  ea:guid '21A9D56C-53FF-4508-B9AC-7EB906FF9148';
   ea:type '''Class''';
   rdfs:label '''Organization''';
+  ea:abstract false;
   ea:package <urn:package:6>;
 .
 <urn:object:20> a ea:Object;
-  ea:guid '''64C8332F-3DF7-4f5d-8F2C-70752B9873D5''';
+  ea:guid '64C8332F-3DF7-4f5d-8F2C-70752B9873D5';
   ea:type '''Package''';
   rdfs:label '''Class model - Copy1''';
+  ea:abstract false;
   ea:package <urn:package:1>;
 .
 <urn:object:21> a ea:Object;
-  ea:guid '''413AD9E1-DF89-4311-AAF5-BEABCC3485E7''';
+  ea:guid '413AD9E1-DF89-4311-AAF5-BEABCC3485E7';
   ea:type '''Class''';
   rdfs:label '''Person''';
+  ea:abstract false;
   ea:package <urn:package:7>;
 .
 <urn:object:22> a ea:Object;
-  ea:guid '''08E999E7-433C-451a-A7F5-5AC6122246A1''';
+  ea:guid '08E999E7-433C-451a-A7F5-5AC6122246A1';
   ea:type '''Class''';
   rdfs:label '''Organization''';
+  ea:abstract false;
   ea:package <urn:package:7>;
 .
 <urn:object:25> a ea:Object;
-  ea:guid '''37697AAE-B3F2-4498-AC1A-D0138CE5D074''';
+  ea:guid '37697AAE-B3F2-4498-AC1A-D0138CE5D074';
   ea:type '''Package''';
   rdfs:label '''Class model - Copy2''';
+  ea:abstract false;
   ea:package <urn:package:1>;
 .
 <urn:object:32> a ea:Object;
-  ea:guid '''62160722-6D3B-4ae5-9B77-EAA1024B6D16''';
+  ea:guid '62160722-6D3B-4ae5-9B77-EAA1024B6D16';
   ea:type '''Artifact''';
   ea:stereotype '''Image''';
   rdfs:label '''ImageAsset''';
+  ea:abstract false;
   ea:package <urn:package:2>;
 .
 <urn:object:33> a ea:Object;
-  ea:guid '''8A85CFF0-1427-46ce-BF1E-A653039C1014''';
+  ea:guid '8A85CFF0-1427-46ce-BF1E-A653039C1014';
   ea:type '''Class''';
   rdfs:label '''Red wine''';
-  ea:stereotype "Objecttype";
+  ea:abstract false;
   ea:package <urn:package:2>;
 .
 <urn:object:26> a ea:Object;
-  ea:guid '''E073BE04-9B8F-443e-9825-D4E7635CB44A''';
+  ea:guid 'E073BE04-9B8F-443e-9825-D4E7635CB44A';
   ea:type '''Class''';
   rdfs:label '''Telephone SIM''';
+  ea:abstract false;
   ea:package <urn:package:8>;
   rdfs:comment '''The number registered with this SIM''';
 .
 <urn:object:27> a ea:Object;
-  ea:guid '''8E5B4533-E27A-4deb-A8D5-DA5112719A35''';
+  ea:guid '8E5B4533-E27A-4deb-A8D5-DA5112719A35';
   ea:type '''Class''';
   rdfs:label '''Bank account''';
+  ea:abstract false;
   ea:package <urn:package:8>;
   rdfs:comment '''The number registered with this bank account''';
 .
 <urn:object:28> a ea:Object;
-  ea:guid '''30D8F62C-55F7-4f16-A8E1-58B328892150''';
+  ea:guid '30D8F62C-55F7-4f16-A8E1-58B328892150';
   ea:type '''Note''';
+  ea:abstract false;
   ea:package <urn:package:8>;
   rdfs:comment '''The number registered with this SIM''';
 .
 <urn:object:29> a ea:Object;
-  ea:guid '''A205A5FB-C981-441c-A17C-4838ABE87273''';
+  ea:guid 'A205A5FB-C981-441c-A17C-4838ABE87273';
   ea:type '''Note''';
+  ea:abstract false;
   ea:package <urn:package:8>;
   rdfs:comment '''The number registered with this bank account''';
 .
 <urn:object:30> a ea:Object;
-  ea:guid '''4EB5E414-1EAD-4d7f-A0B8-D020EE9892DC''';
+  ea:guid '4EB5E414-1EAD-4d7f-A0B8-D020EE9892DC';
   ea:type '''Enumeration''';
   rdfs:label '''Kind of Wine''';
+  ea:abstract false;
   ea:package <urn:package:2>;
 .
 <urn:object:31> a ea:Object;
-  ea:guid '''B962B019-4855-48fc-B84E-48C59851625A''';
+  ea:guid 'B962B019-4855-48fc-B84E-48C59851625A';
   ea:type '''Class''';
   rdfs:label '''Grape''';
-  ea:stereotype "Objecttype";
+  ea:abstract false;
   ea:package <urn:package:2>;
 .
 <urn:object:34> a ea:Object;
-  ea:guid '''4B288D2D-CE1C-4b5f-ABA8-414BF02AD7D8''';
+  ea:guid '4B288D2D-CE1C-4b5f-ABA8-414BF02AD7D8';
   ea:type '''Class''';
   rdfs:label '''White wine''';
-  ea:stereotype "Objecttype";
+  ea:abstract false;
   ea:package <urn:package:2>;
 .
 <urn:object:35> a ea:Object;
-  ea:guid '''724D4C0C-395E-4e7f-9D6A-A78F3BCBE81E''';
+  ea:guid '724D4C0C-395E-4e7f-9D6A-A78F3BCBE81E';
   ea:type '''Class''';
   rdfs:label '''Rose''';
-  ea:stereotype "Objecttype";
+  ea:abstract false;
   ea:package <urn:package:2>;
 .
 <urn:attribute:1> a ea:Attribute;
-  ea:guid '''C04E43AB-0BAF-4835-943C-15027D3F50B9''';
+  ea:guid 'C04E43AB-0BAF-4835-943C-15027D3F50B9';
   rdfs:label '''name''';
   ea:type '''char''';
   ea:classifier <urn:object:0>;
@@ -163,7 +178,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:4> a ea:Attribute;
-  ea:guid '''BBF644B0-2A8B-4ea1-8CD6-E60C929CA53F''';
+  ea:guid 'BBF644B0-2A8B-4ea1-8CD6-E60C929CA53F';
   rdfs:label '''number''';
   ea:type '''char''';
   ea:classifier <urn:object:0>;
@@ -172,7 +187,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:9> a ea:Attribute;
-  ea:guid '''ED105427-EC8A-43e7-89A9-70C43EFDC4E2''';
+  ea:guid 'ED105427-EC8A-43e7-89A9-70C43EFDC4E2';
   rdfs:label '''birthDate''';
   ea:type '''date''';
   ea:object <urn:object:21>;
@@ -180,7 +195,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:10> a ea:Attribute;
-  ea:guid '''85E8EAFC-4B31-4617-8C77-B56C648A21B3''';
+  ea:guid '85E8EAFC-4B31-4617-8C77-B56C648A21B3';
   rdfs:label '''familyName''';
   ea:type '''char''';
   ea:object <urn:object:21>;
@@ -188,7 +203,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:11> a ea:Attribute;
-  ea:guid '''A5D5BC1C-5FFA-4fe4-9B17-96FE50CB2F13''';
+  ea:guid 'A5D5BC1C-5FFA-4fe4-9B17-96FE50CB2F13';
   rdfs:label '''firstName''';
   ea:type '''char''';
   ea:object <urn:object:21>;
@@ -196,7 +211,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:12> a ea:Attribute;
-  ea:guid '''8CABCC16-97C6-4e7a-8C85-5083FA7EF5C6''';
+  ea:guid '8CABCC16-97C6-4e7a-8C85-5083FA7EF5C6';
   rdfs:label '''name''';
   ea:type '''char''';
   ea:object <urn:object:22>;
@@ -204,7 +219,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:13> a ea:Attribute;
-  ea:guid '''3D07CDBE-3B01-41af-AFC4-CF796648C7D8''';
+  ea:guid '3D07CDBE-3B01-41af-AFC4-CF796648C7D8';
   rdfs:label '''number''';
   ea:type '''char''';
   ea:object <urn:object:26>;
@@ -212,7 +227,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:14> a ea:Attribute;
-  ea:guid '''B73EBB39-43B6-4aa6-B721-1A88D9C5B271''';
+  ea:guid 'B73EBB39-43B6-4aa6-B721-1A88D9C5B271';
   rdfs:label '''number''';
   ea:type '''char''';
   ea:object <urn:object:27>;
@@ -220,7 +235,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:15> a ea:Attribute;
-  ea:guid '''890684EE-79DE-4c33-A468-B823B51AE6F4''';
+  ea:guid '890684EE-79DE-4c33-A468-B823B51AE6F4';
   rdfs:label '''Red''';
   ea:stereotype '''enum''';
   ea:object <urn:object:30>;
@@ -228,7 +243,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:16> a ea:Attribute;
-  ea:guid '''CF42F3A0-10A7-4fe1-B2E8-7758BD22C1F5''';
+  ea:guid 'CF42F3A0-10A7-4fe1-B2E8-7758BD22C1F5';
   rdfs:label '''White''';
   ea:stereotype '''enum''';
   ea:object <urn:object:30>;
@@ -236,7 +251,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:17> a ea:Attribute;
-  ea:guid '''218CDC4D-57BB-4352-AED9-FB8B7FA91F62''';
+  ea:guid '218CDC4D-57BB-4352-AED9-FB8B7FA91F62';
   rdfs:label '''Rose''';
   ea:stereotype '''enum''';
   ea:object <urn:object:30>;
@@ -244,7 +259,7 @@
   ea:upperBound '''1''';
 .
 <urn:attribute:18> a ea:Attribute;
-  ea:guid '''05B30E86-EBF4-447a-BE8C-AD027D9E79AB''';
+  ea:guid '05B30E86-EBF4-447a-BE8C-AD027D9E79AB';
   rdfs:label '''name''';
   ea:type '''char''';
   ea:classifier <urn:object:0>;
@@ -253,7 +268,7 @@
   ea:upperBound '''1''';
 .
 <urn:connector:7> a ea:Connector;
-  ea:guid '''16B47B57-6C77-4e12-AF27-1ECF546CD590''';
+  ea:guid '16B47B57-6C77-4e12-AF27-1ECF546CD590';
   ea:type '''Association''';
   ea:start <urn:object:18>;
   ea:end <urn:object:19>;
@@ -261,9 +276,11 @@
   ea:sourceRole '''employee''';
   ea:sourceIsNavigable true;
   ea:destIsNavigable false;
+  ea:sourceIsAggregate 0;
+  ea:destIsAggregate 0;
 .
 <urn:connector:8> a ea:Connector;
-  ea:guid '''9EE65B11-EDAC-4bbe-9EB7-BF28AA9B2176''';
+  ea:guid '9EE65B11-EDAC-4bbe-9EB7-BF28AA9B2176';
   ea:type '''Association''';
   rdfs:label '''worksFor''';
   ea:start <urn:object:21>;
@@ -271,9 +288,11 @@
   ea:direction '''Source -> Destination''';
   ea:sourceIsNavigable false;
   ea:destIsNavigable false;
+  ea:sourceIsAggregate 0;
+  ea:destIsAggregate 0;
 .
 <urn:connector:10> a ea:Connector;
-  ea:guid '''C3DB1F1F-661F-4fea-9499-1D9A3572BA51''';
+  ea:guid 'C3DB1F1F-661F-4fea-9499-1D9A3572BA51';
   ea:type '''Association''';
   ea:start <urn:object:2>;
   ea:end <urn:object:30>;
@@ -281,9 +300,11 @@
   ea:destRole '''kind''';
   ea:sourceIsNavigable false;
   ea:destIsNavigable false;
+  ea:sourceIsAggregate 0;
+  ea:destIsAggregate 0;
 .
 <urn:connector:11> a ea:Connector;
-  ea:guid '''CADBF674-0AD5-4c0c-9175-CCBE14920C4B''';
+  ea:guid 'CADBF674-0AD5-4c0c-9175-CCBE14920C4B';
   ea:type '''Association''';
   ea:start <urn:object:2>;
   ea:end <urn:object:31>;
@@ -291,31 +312,43 @@
   ea:destRole '''grape''';
   ea:sourceIsNavigable false;
   ea:destIsNavigable false;
+  ea:sourceIsAggregate 0;
+  ea:destIsAggregate 0;
 .
 <urn:connector:12> a ea:Connector;
-  ea:guid '''302AB1C9-DE94-464b-BE2A-244B300D2EB7''';
+  ea:guid '302AB1C9-DE94-464b-BE2A-244B300D2EB7';
   ea:type '''Generalization''';
   ea:start <urn:object:33>;
   ea:end <urn:object:2>;
   ea:direction '''Source -> Destination''';
   ea:sourceIsNavigable false;
   ea:destIsNavigable true;
+  ea:sourceIsAggregate 0;
+  ea:destIsAggregate 0;
 .
 <urn:connector:13> a ea:Connector;
-  ea:guid '''D85CE0F2-0527-49ff-A9A7-6ED8EEDD9D5C''';
+  ea:guid 'D85CE0F2-0527-49ff-A9A7-6ED8EEDD9D5C';
   ea:type '''Generalization''';
   ea:start <urn:object:34>;
   ea:end <urn:object:2>;
   ea:direction '''Source -> Destination''';
   ea:sourceIsNavigable false;
   ea:destIsNavigable true;
+  ea:sourceIsAggregate 0;
+  ea:destIsAggregate 0;
 .
 <urn:connector:14> a ea:Connector;
-  ea:guid '''3277A6F5-6CC0-4e62-91F4-0F71709B56ED''';
+  ea:guid '3277A6F5-6CC0-4e62-91F4-0F71709B56ED';
   ea:type '''Generalization''';
   ea:start <urn:object:35>;
   ea:end <urn:object:2>;
   ea:direction '''Source -> Destination''';
   ea:sourceIsNavigable false;
   ea:destIsNavigable true;
+  ea:sourceIsAggregate 0;
+  ea:destIsAggregate 0;
+.
+<urn:xref:294:0> a ea:XRef;
+  ea:client '62160722-6D3B-4ae5-9B77-EAA1024B6D16';
+  ea:stereotype '''Image''';
 .
