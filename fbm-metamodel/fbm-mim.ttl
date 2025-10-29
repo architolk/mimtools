@@ -1,0 +1,116 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:facttype:domeinobject> a fbm:Objecttype;
+  rdfs:label "domeinobject";
+  fbm:role [
+    fbm:playedBy <urn:facttype:sleutel>;
+  ]
+.
+
+<urn:facttype:sleutel> a fbm:Valuetype;
+  rdfs:label "sleutel";
+.
+
+<urn:facttype:eigenschap> a fbm:Objecttype;
+  rdfs:label "eigenschap";
+  fbm:role [
+    fbm:playedBy <urn:facttype:enaam>;
+  ]
+.
+
+<urn:facttype:enaam> a fbm:Valuetype;
+  rdfs:label "naam";
+.
+
+<urn:facttype:elementair-gegeven> a fbm:Objecttype;
+  rdfs:label "elementair gegeven";
+  fbm:role <urn:role:onderwerp>;
+  fbm:role <urn:role:predicaat>;
+  fbm:role <urn:role:waarde>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:onderwerp>, <urn:role:predicaat>, <urn:role:waarde>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:predicaat>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:onderwerp>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:waarde>; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "Vastgelegde uitdrukking over [Eigenschap] van [Domeinobject] met [Waarde]";
+      fbm:parts ("vastgelegde uitdrukking" <urn:role:predicaat> "van" <urn:role:onderwerp> "met" <urn:role:waarde>);
+    ];
+  ];
+.
+<urn:role:onderwerp> a fbm:Role;
+  rdfs:label "onderwerp";
+  fbm:playedBy <urn:facttype:domeinobject>
+.
+<urn:role:predicaat> a fbm:Role;
+  fbm:playedBy <urn:facttype:eigenschap>
+.
+<urn:role:waarde> a fbm:Role;
+  fbm:playedBy <urn:facttype:waarde>
+.
+
+<urn:facttype:waarde> a fbm:Valuetype;
+  rdfs:label "waarde";
+.
+
+<urn:facttype:objecttype> a fbm:Objecttype;
+  rdfs:label "objecttype";
+  fbm:role [
+    fbm:playedBy <urn:facttype:otnaam>;
+  ]
+.
+<urn:facttype:otnaam> a fbm:Valuetype;
+  rdfs:label "naam";
+.
+
+<urn:facttype:attribuuttype> a fbm:Objecttype;
+  rdfs:label "attribuuttype";
+  fbm:role <urn:role:objecttype>;
+  fbm:role <urn:role:eigenschap>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:objecttype>, <urn:role:eigenschap>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:eigenschap>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:objecttype>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Eigenschap] is geattribueerd aan [Objecttype]";
+      fbm:parts (<urn:role:eigenschap> "is geattribueerd aan" <urn:role:objecttype>);
+    ];
+  ];
+.
+<urn:role:eigenschap> a fbm:Role;
+  fbm:playedBy <urn:facttype:eigenschap>
+.
+<urn:role:objecttype> a fbm:Role;
+  fbm:playedBy <urn:facttype:objecttype>
+.
+
+<urn:facttype:typering> a fbm:Facttype;
+  fbm:role <urn:role:type>;
+  fbm:role <urn:role:voorkomen>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:type>, <urn:role:voorkomen>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:type>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:voorkomen>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Domeinobject] is voorkomen van [Objecttype]";
+      fbm:parts (<urn:role:voorkomen> "is voorkomen van" <urn:role:type>)
+    ]
+  ];
+.
+<urn:role:type> a fbm:Role;
+  rdfs:label "type";
+  fbm:playedBy <urn:facttype:objecttype>
+.
+<urn:role:voorkomen> a fbm:Role;
+  rdfs:label "voorkomen";
+  fbm:playedBy <urn:facttype:domeinobject>
