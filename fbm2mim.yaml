@@ -206,11 +206,17 @@ queries:
             a mim:RelatierolBron;
             mim:kardinaliteit ?refcard;
             mim:bron ?bron
+          ].
+          ?rel mim:relatierol [
+            a mim:RelatierolDoel;
+            mim:kardinaliteit ?card;
+            mim:doel ?doel;
+            rdfs:label ?relnaam
           ]
         }
       }
       where {
-        select ?rel (concat(?bronlabel," in relatie met ",?doellabel) as ?label) ?bron ?doel (if(bound(?optional),if(?optional,"0..1","1..1"),"1..1") as ?card) (concat("T",strafter(str(?rel),"role:")) as ?id)
+        select distinct ?rel ?relnaam (concat(?bronlabel," in relatie met ",?doellabel) as ?label) ?bron ?doel (if(bound(?optional),if(?optional,"0..1","1..1"),"1..1") as ?card) (concat("T",strafter(str(?rel),"role:")) as ?id)
                (concat(if(bound(?tc),"1","0"),"..",if(bound(?uc),if(bound(?refrole),"*","1"),"*")) as ?refcard)
         where {
           graph <urn:input> {
@@ -222,6 +228,7 @@ queries:
             ?doel a fbm:Objecttype.
             ?doel rdfs:label ?doellabel.
             OPTIONAL {?rel fbm:optional ?optional}
+            OPTIONAL {?rel rdfs:label ?relnaam}
             OPTIONAL {
               ?doel fbm:constraint ?tc.
               ?tc a fbm:MandatoryConstraint.
@@ -266,11 +273,11 @@ queries:
         }
       }
       where {
-        select ?rel ?label ?bron ?doel ?bronrollabel ?doelrollabel (concat("T",strafter(str(?rel),"facttype:")) as ?id)
+        select ?rel (if(?reading!='',?reading,?name) as ?label) ?bron ?doel ?bronrollabel ?doelrollabel (concat("T",strafter(str(?rel),"facttype:")) as ?id)
         where {
           graph <urn:input> {
             ?rel a fbm:Facttype.
-            ?rel rdfs:label ?label.
+            OPTIONAL {?rel rdfs:label ?name}
             ?rel fbm:role ?bronrol.
             ?rel fbm:role ?doelrol.
             ?bronrol a fbm:Role.
@@ -288,6 +295,7 @@ queries:
             ?dro fbm:atPosition ?doelrolorder.
             ?bron a fbm:Objecttype.
             ?doel a fbm:Objecttype.
+            OPTIONAL {?predicate fbm:reading/fbm:text ?reading}
             FILTER (?bronrolorder<?doelrolorder && ?bronrol!=?doelrol)
             FILTER NOT EXISTS {
               ?rel fbm:role ?derderol.
