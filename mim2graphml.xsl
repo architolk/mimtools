@@ -331,11 +331,15 @@
                     </xsl:variable>
           					<y:Arrows source="{$source-arrow}" target="{$target-arrow}"/>
                     <xsl:if test="../rdf:type/@rdf:resource!='http://modellen.mim-standaard.nl/def/mim#Keuze'">
-                      <xsl:call-template name="edge-label">
-                        <xsl:with-param name="label"><xsl:apply-templates select=".." mode="label"/></xsl:with-param>
-                        <xsl:with-param name="ratio">0.5</xsl:with-param>
-                        <xsl:with-param name="position">left</xsl:with-param>
-                      </xsl:call-template>
+                      <!-- if target role is labelled and relation is not labelled, don't use the URI of the relation -->
+                      <xsl:variable name="doelnaam"><xsl:apply-templates select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#RelatierolDoel']"/></xsl:variable>
+                      <xsl:if test="$doelnaam='' or ../rdfs:label!='' or ../mim:naam!=''">
+                        <xsl:call-template name="edge-label">
+                          <xsl:with-param name="label"><xsl:apply-templates select=".." mode="label"/></xsl:with-param>
+                          <xsl:with-param name="ratio">0.5</xsl:with-param>
+                          <xsl:with-param name="position">left</xsl:with-param>
+                        </xsl:call-template>
+                      </xsl:if>
                     </xsl:if>
                     <xsl:call-template name="edge-label">
                       <xsl:with-param name="label">«<xsl:apply-templates select="../rdf:type" mode="label"/>»</xsl:with-param>

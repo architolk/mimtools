@@ -83,6 +83,29 @@ queries:
           }
         }
       }
+  - title: mim:Generalisatie vanuit directe subtypering
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix f: <java:nl.architolk.rdf2rdf.>
+      insert {
+        graph <urn:output> {
+          ?gen a mim:Generalisatie.
+          ?gen rdfs:label ?label.
+          ?gen mim:subtype ?subtype.
+          ?gen mim:supertype ?supertype.
+        }
+      }
+      where {
+        select (f:uuid5(concat(str(?subtype)," is a",str(?supertype))) as ?gen) ?subtype ?supertype (concat(?sublabel,' is een ',?superlabel) as ?label) where {
+          graph <urn:input> {
+            ?subtype fbm:subtypeOf ?supertype.
+            ?subtype rdfs:label ?sublabel.
+            ?supertype rdfs:label ?superlabel.
+          }
+        }
+      }
   - title: mim:Generalisatie vanuit supertyperole
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
@@ -216,7 +239,7 @@ queries:
         }
       }
       where {
-        select distinct ?rel ?relnaam (concat(?bronlabel," in relatie met ",?doellabel) as ?label) ?bron ?doel (if(bound(?optional),if(?optional,"0..1","1..1"),"1..1") as ?card) (concat("T",strafter(str(?rel),"role:")) as ?id)
+        select distinct ?rel ?relnaam (if(bound(?relnaam),?nothing,concat(?bronlabel," in relatie met ",?doellabel)) as ?label) ?bron ?doel (if(bound(?optional),if(?optional,"0..1","1..1"),"1..1") as ?card) (concat("T",strafter(str(?rel),"role:")) as ?id)
                (concat(if(bound(?tc),"1","0"),"..",if(bound(?uc),if(bound(?refrole),"*","1"),"*")) as ?refcard)
         where {
           graph <urn:input> {
@@ -230,7 +253,7 @@ queries:
             OPTIONAL {?rel fbm:optional ?optional}
             OPTIONAL {?rel rdfs:label ?relnaam}
             OPTIONAL {
-              ?doel fbm:constraint ?tc.
+              ?bron fbm:constraint ?tc.
               ?tc a fbm:MandatoryConstraint.
               ?tc fbm:restricts ?rel
             }
