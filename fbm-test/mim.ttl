@@ -1,0 +1,256 @@
+PREFIX :     <http://example.org/fbm-test#>
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+:mn.o   a           mim:Attribuutsoort;
+        rdfs:label  "o" .
+
+:KL     a                    mim:Relatiesoort;
+        rdfs:label           "K has exactly one L | L has exactly one K";
+        mim:bron             :K;
+        mim:doel             :L;
+        mim:identifier       "T";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "l";
+                               mim:doel           :L;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "k";
+                               mim:bron           :K;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:toelichting      "K has exactly one L | L has exactly one K";
+        mim:unidirectioneel  false .
+
+:AB     a                    mim:Relatiesoort;
+        rdfs:label           "A has zero or more B | B has zero or more A";
+        mim:bron             :A;
+        mim:doel             :B;
+        mim:identifier       "T";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "b";
+                               mim:doel           :B;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "a";
+                               mim:bron           :A;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "A has zero or more B | B has zero or more A";
+        mim:unidirectioneel  false .
+
+:EF     a                    mim:Relatiesoort;
+        rdfs:label           "E has zero or one F | F has zero or more E";
+        mim:bron             :E;
+        mim:doel             :F;
+        mim:identifier       "T";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "f";
+                               mim:doel           :F;
+                               mim:kardinaliteit  "0..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "e";
+                               mim:bron           :E;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "E has zero or one F | F has zero or more E";
+        mim:unidirectioneel  false .
+
+:IJ     a                    mim:Relatiesoort;
+        rdfs:label           "I has zero or more J | J has zero or more I";
+        mim:bron             :I;
+        mim:doel             :J;
+        mim:identifier       "T";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "j";
+                               mim:doel           :J;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "i";
+                               mim:bron           :I;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "I has zero or more J | J has zero or more I";
+        mim:unidirectioneel  false .
+
+:MNO    a                    mim:Relatieklasse;
+        rdfs:label           "M has zero or one N | N has zero or more M";
+        mim:attribuut        :mn.o;
+        mim:bron             :N;
+        mim:doel             :M;
+        mim:identifier       "T";
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "n";
+                               mim:bron           :N;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "m";
+                               mim:doel           :M;
+                               mim:kardinaliteit  "0..1" , "0..*"
+                             ];
+        mim:toelichting      "M has zero or one N | N has zero or more M";
+        mim:unidirectioneel  false .
+
+:CD     a                    mim:Relatiesoort;
+        rdfs:label           "C has one or more D | D has zero or more C";
+        mim:bron             :C;
+        mim:doel             :D;
+        mim:identifier       "T";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "d";
+                               mim:doel           :D;
+                               mim:kardinaliteit  "1..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "c";
+                               mim:bron           :C;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "C has one or more D | D has zero or more C";
+        mim:unidirectioneel  false .
+
+:GH     a                    mim:Relatiesoort;
+        rdfs:label           "G has exactly one H | H has zero or more G";
+        mim:bron             :G;
+        mim:doel             :H;
+        mim:identifier       "T";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "h";
+                               mim:doel           :H;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "g";
+                               mim:bron           :G;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "G has exactly one H | H has zero or more G";
+        mim:unidirectioneel  false .
+
+:pqr.r  a                    mim:Relatiesoort;
+        mim:bron             :PQR;
+        mim:doel             :R;
+        mim:identifier       "T";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "r";
+                               mim:doel           :R;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           :PQR;
+                               mim:kardinaliteit  "1..*"
+                             ];
+        mim:unidirectioneel  true .
+
+:pqr.q  a                    mim:Relatiesoort;
+        mim:bron             :PQR;
+        mim:doel             :Q;
+        mim:identifier       "T";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "q";
+                               mim:doel           :Q;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           :PQR;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+:pqr.p  a                    mim:Relatiesoort;
+        mim:bron             :PQR;
+        mim:doel             :P;
+        mim:identifier       "T";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "p";
+                               mim:doel           :P;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           :PQR;
+                               mim:kardinaliteit  "0..1"
+                             ];
+        mim:unidirectioneel  true .
+
+:L      a               mim:Objecttype;
+        rdfs:label      "L";
+        mim:identifier  "T" .
+
+:G      a               mim:Objecttype;
+        rdfs:label      "G";
+        mim:identifier  "T" .
+
+:B      a               mim:Objecttype;
+        rdfs:label      "B";
+        mim:identifier  "T" .
+
+:N      a               mim:Objecttype;
+        rdfs:label      "N";
+        mim:identifier  "T" .
+
+:I      a               mim:Objecttype;
+        rdfs:label      "I";
+        mim:identifier  "T" .
+
+:D      a               mim:Objecttype;
+        rdfs:label      "D";
+        mim:identifier  "T" .
+
+:P      a               mim:Objecttype;
+        rdfs:label      "P";
+        mim:identifier  "T" .
+
+:K      a               mim:Objecttype;
+        rdfs:label      "K";
+        mim:identifier  "T" .
+
+:F      a               mim:Objecttype;
+        rdfs:label      "F";
+        mim:identifier  "T" .
+
+:R      a               mim:Objecttype;
+        rdfs:label      "R";
+        mim:identifier  "T" .
+
+:A      a               mim:Objecttype;
+        rdfs:label      "A";
+        mim:identifier  "T" .
+
+:M      a               mim:Objecttype;
+        rdfs:label      "M";
+        mim:identifier  "T" .
+
+:H      a               mim:Objecttype;
+        rdfs:label      "H";
+        mim:identifier  "T" .
+
+:C      a               mim:Objecttype;
+        rdfs:label      "C";
+        mim:identifier  "T" .
+
+:J      a               mim:Objecttype;
+        rdfs:label      "J";
+        mim:identifier  "T" .
+
+:E      a               mim:Objecttype;
+        rdfs:label      "E";
+        mim:identifier  "T" .
+
+:Q      a               mim:Objecttype;
+        rdfs:label      "Q";
+        mim:identifier  "T" .
+
+:PQR    a                mim:Relatieklasse;
+        rdfs:label       "P-Q-R";
+        mim:identifier   "T";
+        mim:toelichting  "P, Q, R are related" .

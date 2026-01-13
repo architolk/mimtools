@@ -9,16 +9,6 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         mim:specificatieFormeel  "{subset}";
         mim:specificatieText     "Head must be employee of organisation" .
 
-<urn:facttype:pname>  a  mim:Enumeratie;
-        rdfs:label      "person's name";
-        mim:identifier  "Tpname";
-        mim:waarde      [ a           mim:Enumeratiewaarde;
-                          rdfs:label  "Kees"
-                        ];
-        mim:waarde      [ a           mim:Enumeratiewaarde;
-                          rdfs:label  "Jan"
-                        ] .
-
 <urn:facttype:houseNumber>
         a               mim:PrimitiefDatatype;
         rdfs:label      "house number";
@@ -43,48 +33,58 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 <urn:facttype:headOf>
         a                    mim:Relatiesoort;
-        rdfs:label           "head of";
+        rdfs:label           "[Person] is head of [Organisation]";
         mim:bron             <urn:facttype:person>;
         mim:constraint       <urn:constraint:headMustBeEmployeeOfOrganisation>;
         mim:doel             <urn:facttype:organisation>;
         mim:identifier       "TheadOf";
         mim:relatierol       [ a                  mim:RelatierolDoel;
                                mim:doel           <urn:facttype:organisation>;
-                               mim:kardinaliteit  "0..1"
+                               mim:kardinaliteit  "0..*"
                              ];
         mim:relatierol       [ a                  mim:RelatierolBron;
                                rdfs:label         "head";
                                mim:bron           <urn:facttype:person>;
-                               mim:kardinaliteit  "1..*"
+                               mim:kardinaliteit  "1..1"
                              ];
         mim:toelichting      "[Person] is head of [Organisation]";
         mim:unidirectioneel  false .
 
 <urn:facttype:livingPlace>
         a                    mim:Relatiesoort;
-        rdfs:label           "lives at";
+        rdfs:label           "[Person] lives at [Address]";
         mim:bron             <urn:facttype:person>;
         mim:doel             <urn:facttype:address>;
         mim:identifier       "TlivingPlace";
         mim:relatierol       [ a                  mim:RelatierolDoel;
                                rdfs:label         "home address";
                                mim:doel           <urn:facttype:address>;
-                               mim:kardinaliteit  "0..*"
+                               mim:kardinaliteit  "0..1"
                              ];
         mim:relatierol       [ a                  mim:RelatierolBron;
                                mim:bron           <urn:facttype:person>;
-                               mim:kardinaliteit  "0..1"
+                               mim:kardinaliteit  "0..*"
                              ];
         mim:toelichting      "[Person] lives at [Address]";
         mim:unidirectioneel  false .
 
 <urn:facttype:employment>
         a                    mim:Relatiesoort;
-        rdfs:label           "employment";
+        rdfs:label           "[Person] has employer [Organisation]" , "[Person] works for [Organisation]";
         mim:bron             <urn:facttype:person>;
         mim:constraint       <urn:constraint:headMustBeEmployeeOfOrganisation>;
         mim:doel             <urn:facttype:organisation>;
         mim:identifier       "Temployment";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "employer";
+                               mim:doel           <urn:facttype:organisation>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "employee";
+                               mim:bron           <urn:facttype:person>;
+                               mim:kardinaliteit  "1..*"
+                             ];
         mim:relatierol       [ a                  mim:RelatierolDoel;
                                rdfs:label         "employer";
                                mim:doel           <urn:facttype:organisation>;
@@ -105,6 +105,10 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         mim:doel             <urn:facttype:organisation>;
         mim:identifier       "Tdepartment";
         mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:organisation>;
+                               mim:kardinaliteit  "1..1"
+                             ];
         mim:relatierol       [ a                  mim:RelatierolBron;
                                mim:bron           <urn:facttype:assignment>;
                                mim:kardinaliteit  "0..*"
@@ -117,6 +121,10 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         mim:doel             <urn:facttype:position>;
         mim:identifier       "Tposition";
         mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:position>;
+                               mim:kardinaliteit  "1..1"
+                             ];
         mim:relatierol       [ a                  mim:RelatierolBron;
                                mim:bron           <urn:facttype:assignment>;
                                mim:kardinaliteit  "0..*"
@@ -124,11 +132,15 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         mim:unidirectioneel  true .
 
 <urn:role:assignee>  a       mim:Relatiesoort;
-        rdfs:label           "Assignment in relatie met person";
         mim:bron             <urn:facttype:assignment>;
         mim:doel             <urn:facttype:person>;
         mim:identifier       "Tassignee";
         mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "assignee";
+                               mim:doel           <urn:facttype:person>;
+                               mim:kardinaliteit  "1..1"
+                             ];
         mim:relatierol       [ a                  mim:RelatierolBron;
                                mim:bron           <urn:facttype:assignment>;
                                mim:kardinaliteit  "0..*"
@@ -164,7 +176,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                           rdfs:label         "person's name";
                           mim:identifier     "T";
                           mim:kardinaliteit  "1..1";
-                          mim:type           <urn:facttype:pname>
+                          mim:type           mim:CharacterString
                         ];
         mim:identifier  "Tperson" .
 

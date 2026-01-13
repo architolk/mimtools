@@ -1,0 +1,289 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix : <http://example.org/fbm-test#>.
+
+:A a fbm:Objecttype;
+  rdfs:label "A";
+.
+:B a fbm:Objecttype;
+  rdfs:label "B";
+.
+:AB a fbm:Facttype;
+  rdfs:label "A->B";
+  fbm:role :a.b;
+  fbm:role :b.a;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :b.a; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :a.b; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "A has zero or more B | B has zero or more A";
+    ]
+  ]
+.
+:b.a a fbm:Role;
+  rdfs:label "a";
+  fbm:playedBy :A;
+.
+:a.b a fbm:Role;
+  rdfs:label "b";
+  fbm:playedBy :B;
+.
+
+:C a fbm:Objecttype;
+  rdfs:label "C";
+.
+:D a fbm:Objecttype;
+  rdfs:label "D";
+.
+:CD a fbm:Facttype;
+  rdfs:label "C->D";
+  fbm:role :c.d;
+  fbm:role :d.c;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts :d.c;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :d.c; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :c.d; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "C has one or more D | D has zero or more C";
+    ]
+  ]
+.
+:d.c a fbm:Role;
+  rdfs:label "c";
+  fbm:playedBy :C;
+.
+:c.d a fbm:Role;
+  rdfs:label "d";
+  fbm:playedBy :D;
+.
+
+:E a fbm:Objecttype;
+  rdfs:label "E";
+.
+:F a fbm:Objecttype;
+  rdfs:label "F";
+.
+:EF a fbm:Facttype;
+  rdfs:label "E->F";
+  fbm:role :e.f;
+  fbm:role :f.e;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :f.e;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :f.e; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :e.f; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "E has zero or one F | F has zero or more E";
+    ]
+  ]
+.
+:f.e a fbm:Role;
+  rdfs:label "e";
+  fbm:playedBy :E;
+.
+:e.f a fbm:Role;
+  rdfs:label "f";
+  fbm:playedBy :F;
+.
+
+:G a fbm:Objecttype;
+  rdfs:label "G";
+.
+:H a fbm:Objecttype;
+  rdfs:label "H";
+.
+:GH a fbm:Facttype;
+  rdfs:label "G->H";
+  fbm:role :g.h;
+  fbm:role :h.g;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts :h.g;
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :h.g;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :h.g; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :g.h; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "G has exactly one H | H has zero or more G";
+    ]
+  ]
+.
+:h.g a fbm:Role;
+  rdfs:label "g";
+  fbm:playedBy :G;
+.
+:g.h a fbm:Role;
+  rdfs:label "h";
+  fbm:playedBy :H;
+.
+
+:I a fbm:Objecttype;
+  rdfs:label "I";
+.
+:J a fbm:Objecttype;
+  rdfs:label "J";
+.
+:IJ a fbm:Facttype;
+  rdfs:label "I->J";
+  fbm:role :i.j;
+  fbm:role :j.i;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :i.j, :j.i;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :j.i; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :i.j; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "I has zero or more J | J has zero or more I";
+    ]
+  ]
+.
+:j.i a fbm:Role;
+  rdfs:label "i";
+  fbm:playedBy :I;
+.
+:i.j a fbm:Role;
+  rdfs:label "j";
+  fbm:playedBy :J;
+.
+
+:K a fbm:Objecttype;
+  rdfs:label "K";
+.
+:L a fbm:Objecttype;
+  rdfs:label "L";
+.
+:KL a fbm:Facttype;
+  rdfs:label "K->L";
+  fbm:role :k.l;
+  fbm:role :l.k;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :k.l;
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :l.k;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts :k.l;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts :l.k;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :l.k; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :k.l; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "K has exactly one L | L has exactly one K";
+    ]
+  ]
+.
+:k.l a fbm:Role;
+  rdfs:label "l";
+  fbm:playedBy :L;
+.
+:l.k a fbm:Role;
+  rdfs:label "k";
+  fbm:playedBy :K;
+.
+
+:M a fbm:Objecttype;
+  rdfs:label "M";
+.
+:N a fbm:Objecttype;
+  rdfs:label "N";
+.
+:MNO a fbm:Facttype;
+  rdfs:label "M->N";
+  fbm:role :m.n;
+  fbm:role :n.m;
+  fbm:role :mn.o;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :m.n, :mn.o;
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :m.n;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :m.n; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :n.m; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role :mn.o; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "M has zero or one N | N has zero or more M";
+    ]
+  ]
+.
+:n.m a fbm:Role;
+  rdfs:label "m";
+  fbm:playedBy :M;
+.
+:m.n a fbm:Role;
+  rdfs:label "n";
+  fbm:playedBy :N;
+.
+:mn.o a fbm:Role;
+  rdfs:label "o";
+  fbm:playedBy :o;
+.
+:o a fbm:Valuetype;
+  rdfs:label "o";
+.
+
+:P a fbm:Objecttype;
+  rdfs:label "P";
+.
+:Q a fbm:Objecttype;
+  rdfs:label "Q";
+.
+:R a fbm:Objecttype;
+  rdfs:label "R";
+.
+:PQR a fbm:Facttype;
+  rdfs:label "P-Q-R";
+  fbm:role :pqr.p;
+  fbm:role :pqr.q;
+  fbm:role :pqr.r;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts :pqr.p;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts :pqr.r;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role :pqr.p; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role :pqr.q; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role :pqr.r; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "P, Q, R are related";
+    ]
+  ]
+.
+:pqr.p a fbm:Role;
+  rdfs:label "p";
+  fbm:playedBy :P;
+.
+:pqr.q a fbm:Role;
+  rdfs:label "q";
+  fbm:playedBy :Q;
+.
+:pqr.r a fbm:Role;
+  rdfs:label "r";
+  fbm:playedBy :R;
+.
