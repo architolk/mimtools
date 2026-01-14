@@ -189,21 +189,29 @@ queries:
         }
       }
       where {
-        select ?attr ?label ?ot ?vt (if(bound(?optional),if(?optional,"0..1",if(bound(?tc),"1..1","0..1")),if(bound(?tc),"1..1","0..1")) as ?card) (concat("T",strafter(str(?attr),"facttype:")) as ?id)
+        select ?attr (if(bound(?rolelabel),?rolelabel,?ftlabel) as ?label) ?ot ?vt (concat(if(bound(?optional),if(?optional,"0",if(bound(?tc),"1","0")),if(bound(?tc),"1","0")),"..",if(bound(?uc),"1","*")) as ?card) (concat("T",strafter(str(?attr),"facttype:")) as ?id)
         where {
           graph <urn:input> {
             ?attr a fbm:Facttype.
-            ?attr rdfs:label ?label.
+            OPTIONAL {?attr rdfs:label ?ftlabel}
             ?attr fbm:role ?role.
             ?role fbm:playedBy ?ot.
             OPTIONAL {?role fbm:optional ?optional}.
             ?ot a fbm:Objecttype.
-            ?attr fbm:role/fbm:playedBy ?vt.
+            ?attr fbm:role ?vtrole.
+            ?vtrole fbm:playedBy ?vt.
             ?vt a fbm:Valuetype.
+            OPTIONAL {?vtrole rdfs:label ?rolelabel}
             OPTIONAL {
-              ?ot fbm:constraint ?tc.
+              ?attr fbm:constraint ?tc.
               ?tc a fbm:MandatoryConstraint.
               ?tc fbm:restricts ?role
+            }
+            OPTIONAL {
+              ?attr fbm:constraint ?uc.
+              ?uc a fbm:UniquenessConstraint.
+              ?uc fbm:restricts ?role
+              FILTER NOT EXISTS {?uc fbm:restricts ?vtrole}
             }
             FILTER NOT EXISTS {
               ?attr fbm:predicate/fbm:ordersRole/fbm:atPosition 3

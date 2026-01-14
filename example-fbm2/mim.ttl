@@ -1,0 +1,71 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:facttype:nameofplace>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "plaatsnaam";
+        mim:identifier  "Tnameofplace" .
+
+<urn:facttype:woontIn>
+        a                    mim:Relatiesoort;
+        rdfs:label           "woont in";
+        mim:bron             <urn:facttype:person>;
+        mim:doel             <urn:facttype:place>;
+        mim:identifier       "TwoontIn";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "woonplaats";
+                               mim:doel           <urn:facttype:place>;
+                               mim:kardinaliteit  "0..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:person>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "woont in";
+        mim:unidirectioneel  false .
+
+<urn:facttype:dateofbirth>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "geboortedatum";
+        mim:identifier     "Tdateofbirth";
+        mim:kardinaliteit  "1..1";
+        mim:type           []  .
+
+<urn:facttype:surname>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "achternaam";
+        mim:identifier     "Tsurname";
+        mim:kardinaliteit  "1..*";
+        mim:type           []  .
+
+<urn:facttype:givenname>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "voornaam";
+        mim:identifier     "Tgivenname";
+        mim:kardinaliteit  "1..*";
+        mim:type           []  .
+
+<urn:facttype:haircolor>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "haarkleur";
+        mim:identifier     "Thaircolor";
+        mim:kardinaliteit  "0..*";
+        mim:type           []  .
+
+<urn:facttype:person>
+        a               mim:Objecttype;
+        rdfs:label      "Natuurlijk persoon";
+        mim:attribuut   <urn:facttype:dateofbirth> , <urn:facttype:surname> , <urn:facttype:givenname> , <urn:facttype:haircolor>;
+        mim:identifier  "Tperson" .
+
+<urn:facttype:place>  a  mim:Objecttype;
+        rdfs:label      "Plaats";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "plaatsnaam";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:nameofplace>
+                        ];
+        mim:identifier  "Tplace" .

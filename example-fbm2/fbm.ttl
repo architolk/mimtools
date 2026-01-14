@@ -1,0 +1,107 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:facttype:person> a fbm:Objecttype;
+  rdfs:label "Natuurlijk persoon";
+  fbm:role [
+    a fbm:Role;
+  ]
+.
+
+<urn:facttype:place> a fbm:Objecttype;
+  rdfs:label "Plaats";
+  fbm:role [
+    fbm:playedBy <urn:facttype:nameofplace>;
+  ]
+.
+<urn:facttype:nameofplace> a fbm:Valuetype;
+  rdfs:label "plaatsnaam";
+.
+
+<urn:facttype:woontIn> a fbm:Facttype;
+  fbm:role <urn:role:inwoner>;
+  fbm:role <urn:role:woonplaats>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:inwoner>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:inwoner>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:woonplaats>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "woont in";
+      fbm:parts (<urn:role:inwoner> "woont in" <urn:role:woonplaats>);
+    ];
+  ];
+.
+<urn:role:inwoner> a fbm:Role;
+  fbm:playedBy <urn:facttype:person>;
+.
+<urn:role:woonplaats> a fbm:Role;
+  rdfs:label "woonplaats";
+  fbm:playedBy <urn:facttype:place>;
+.
+
+<urn:facttype:haircolor> a fbm:Facttype;
+  fbm:role <urn:role:person_haircolor>;
+  fbm:role <urn:role:haircolor>;
+.
+<urn:role:person_haircolor> a fbm:Role;
+  fbm:playedBy <urn:facttype:person>
+.
+<urn:role:haircolor> a fbm:Role;
+  rdfs:label "haarkleur";
+  fbm:playedBy [a fbm:Valuetype]
+.
+
+<urn:facttype:givenname> a fbm:Facttype;
+  fbm:role <urn:role:person_givenname>;
+  fbm:role <urn:role:givenname>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:person_givenname>
+  ];
+.
+<urn:role:person_givenname> a fbm:Role;
+  fbm:playedBy <urn:facttype:person>
+.
+<urn:role:givenname> a fbm:Role;
+  rdfs:label "voornaam";
+  fbm:playedBy [a fbm:Valuetype]
+.
+
+<urn:facttype:surname> a fbm:Facttype;
+  fbm:role <urn:role:person_surname>;
+  fbm:role <urn:role:surname>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:person_surname>
+  ];
+.
+<urn:role:person_surname> a fbm:Role;
+  fbm:playedBy <urn:facttype:person>
+.
+<urn:role:surname> a fbm:Role;
+  rdfs:label "achternaam";
+  fbm:playedBy [a fbm:Valuetype]
+.
+
+<urn:facttype:dateofbirth> a fbm:Facttype;
+  fbm:role <urn:role:person_dateofbirth>;
+  fbm:role <urn:role:dateofbirth>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:person_dateofbirth>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:person_dateofbirth>
+  ];
+.
+<urn:role:person_dateofbirth> a fbm:Role;
+  fbm:playedBy <urn:facttype:person>
+.
+<urn:role:dateofbirth> a fbm:Role;
+  rdfs:label "geboortedatum";
+  fbm:playedBy [a fbm:Valuetype]
+.
