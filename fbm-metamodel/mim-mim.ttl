@@ -1,0 +1,482 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:facttype:enaam>  a  mim:PrimitiefDatatype;
+        rdfs:label      "naam";
+        mim:identifier  "Tenaam" .
+
+<urn:facttype:otnaam>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "naam";
+        mim:identifier  "Totnaam" .
+
+<urn:facttype:cnaam>  a  mim:PrimitiefDatatype;
+        rdfs:label      "naam";
+        mim:identifier  "Tcnaam" .
+
+<urn:facttype:ontstaansmoment>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "ontstaansmoment";
+        mim:identifier  "Tontstaansmoment" .
+
+<urn:facttype:waarde>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "waarde";
+        mim:identifier  "Twaarde" .
+
+<urn:facttype:relnaam>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "naam";
+        mim:identifier  "Trelnaam" .
+
+<urn:facttype:sleutel>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "sleutel";
+        mim:identifier  "Tsleutel" .
+
+<urn:facttype:rolnaam>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "naam";
+        mim:identifier  "Trolnaam" .
+
+<urn:facttype:typering>
+        a                    mim:Relatiesoort;
+        rdfs:label           "[Domeinobject] is voorkomen van [Objecttype]";
+        mim:bron             <urn:facttype:domeinobject>;
+        mim:doel             <urn:facttype:objecttype>;
+        mim:identifier       "Ttypering";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "type";
+                               mim:doel           <urn:facttype:objecttype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "voorkomen";
+                               mim:bron           <urn:facttype:domeinobject>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "[Domeinobject] is voorkomen van [Objecttype]";
+        mim:unidirectioneel  false .
+
+<urn:facttype:rolinvulling>
+        a                    mim:Relatiesoort;
+        rdfs:label           "[Domeinobject] speelt [Relatierol]";
+        mim:bron             <urn:facttype:domeinobject>;
+        mim:doel             <urn:facttype:rol>;
+        mim:identifier       "Trolinvulling";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:rol>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:domeinobject>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "[Domeinobject] speelt [Relatierol]";
+        mim:unidirectioneel  false .
+
+<urn:facttype:deelneming>
+        a                    mim:Relatiesoort;
+        rdfs:label           "[Domeinobject] neemt deel in [Verbintenis]";
+        mim:bron             <urn:facttype:domeinobject>;
+        mim:doel             <urn:facttype:verbintenis>;
+        mim:identifier       "Tdeelneming";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:verbintenis>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "deelnemer";
+                               mim:bron           <urn:facttype:domeinobject>;
+                               mim:kardinaliteit  "1..*"
+                             ];
+        mim:toelichting      "[Domeinobject] neemt deel in [Verbintenis]";
+        mim:unidirectioneel  false .
+
+[ a                    mim:Relatiesoort;
+  rdfs:label           "rol in relatie met relatie";
+  mim:bron             <urn:facttype:rol>;
+  mim:doel             <urn:facttype:relatie>;
+  mim:identifier       "T";
+  mim:kardinaliteit    "1..1";
+  mim:relatierol       [ a                  mim:RelatierolDoel;
+                         mim:doel           <urn:facttype:relatie>;
+                         mim:kardinaliteit  "1..1"
+                       ];
+  mim:relatierol       [ a                  mim:RelatierolBron;
+                         mim:bron           <urn:facttype:rol>;
+                         mim:kardinaliteit  "0..*"
+                       ];
+  mim:unidirectioneel  true
+] .
+
+<urn:role:predicaat>  a      mim:Relatiesoort;
+        rdfs:label           "elementair gegeven in relatie met eigenschap";
+        mim:bron             <urn:facttype:elementair-gegeven>;
+        mim:doel             <urn:facttype:eigenschap>;
+        mim:identifier       "Tpredicaat";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:eigenschap>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-gegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:onderwerp>  a      mim:Relatiesoort;
+        mim:bron             <urn:facttype:elementair-gegeven>;
+        mim:doel             <urn:facttype:domeinobject>;
+        mim:identifier       "Tonderwerp";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "onderwerp";
+                               mim:doel           <urn:facttype:domeinobject>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-gegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:eigenschap>
+        a                    mim:Relatiesoort;
+        rdfs:label           "attribuuttype in relatie met eigenschap";
+        mim:bron             <urn:facttype:attribuuttype>;
+        mim:doel             <urn:facttype:eigenschap>;
+        mim:identifier       "Teigenschap";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:eigenschap>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:attribuuttype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:objecttype>
+        a                    mim:Relatiesoort;
+        rdfs:label           "attribuuttype in relatie met objecttype";
+        mim:bron             <urn:facttype:attribuuttype>;
+        mim:doel             <urn:facttype:objecttype>;
+        mim:identifier       "Tobjecttype";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:objecttype>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:attribuuttype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:categorie>  a      mim:Relatiesoort;
+        rdfs:label           "elementair categoriegegeven in relatie met categorie";
+        mim:bron             <urn:facttype:elementair-categoriegegeven>;
+        mim:doel             <urn:facttype:categorie>;
+        mim:identifier       "Tcategorie";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:categorie>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-categoriegegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:catpredicaat>
+        a                    mim:Relatiesoort;
+        rdfs:label           "elementair categoriegegeven in relatie met eigenschap";
+        mim:bron             <urn:facttype:elementair-categoriegegeven>;
+        mim:doel             <urn:facttype:eigenschap>;
+        mim:identifier       "Tcatpredicaat";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:eigenschap>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-categoriegegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:catonderwerp>
+        a                    mim:Relatiesoort;
+        mim:bron             <urn:facttype:elementair-categoriegegeven>;
+        mim:doel             <urn:facttype:domeinobject>;
+        mim:identifier       "Tcatonderwerp";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "onderwerp";
+                               mim:doel           <urn:facttype:domeinobject>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-categoriegegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:voorwerp>  a       mim:Relatiesoort;
+        rdfs:label           "elementair relatie gegeven in relatie met domeinobject";
+        mim:bron             <urn:facttype:elementair-relatiegegeven>;
+        mim:doel             <urn:facttype:domeinobject>;
+        mim:identifier       "Tvoorwerp";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:domeinobject>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-relatiegegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:relpredicaat>
+        a                    mim:Relatiesoort;
+        rdfs:label           "elementair relatie gegeven in relatie met relatie";
+        mim:bron             <urn:facttype:elementair-relatiegegeven>;
+        mim:doel             <urn:facttype:relatie>;
+        mim:identifier       "Trelpredicaat";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:relatie>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-relatiegegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:relonderwerp>
+        a                    mim:Relatiesoort;
+        mim:bron             <urn:facttype:elementair-relatiegegeven>;
+        mim:doel             <urn:facttype:domeinobject>;
+        mim:identifier       "Trelonderwerp";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "onderwerp";
+                               mim:doel           <urn:facttype:domeinobject>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:elementair-relatiegegeven>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:deelnemertype>
+        a                    mim:Relatiesoort;
+        rdfs:label           "relatietype in relatie met objecttype";
+        mim:bron             <urn:facttype:relatietype>;
+        mim:doel             <urn:facttype:objecttype>;
+        mim:identifier       "Tdeelnemertype";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:objecttype>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:relatietype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:relatie>  a        mim:Relatiesoort;
+        rdfs:label           "relatietype in relatie met relatie";
+        mim:bron             <urn:facttype:relatietype>;
+        mim:doel             <urn:facttype:relatie>;
+        mim:identifier       "Trelatie";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:relatie>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:relatietype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:relatietype>
+        a                    mim:Relatiesoort;
+        rdfs:label           "roltype in relatie met relatietype";
+        mim:bron             <urn:facttype:roltype>;
+        mim:doel             <urn:facttype:relatietype>;
+        mim:identifier       "Trelatietype";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:relatietype>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:roltype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:roltypering>
+        a                    mim:Relatiesoort;
+        rdfs:label           "roltype in relatie met rol";
+        mim:bron             <urn:facttype:roltype>;
+        mim:doel             <urn:facttype:rol>;
+        mim:identifier       "Troltypering";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:rol>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:roltype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:objecttypering>
+        a                    mim:Relatiesoort;
+        rdfs:label           "roltype in relatie met objecttype";
+        mim:bron             <urn:facttype:roltype>;
+        mim:doel             <urn:facttype:objecttype>;
+        mim:identifier       "Tobjecttypering";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:objecttype>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:roltype>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:waarde>  a       mim:Attribuutsoort;
+        rdfs:label         "waarde";
+        mim:identifier     "Twaarde";
+        mim:kardinaliteit  "1..1";
+        mim:type           <urn:facttype:waarde> .
+
+<urn:facttype:rol>  a   mim:Objecttype;
+        rdfs:label      "rol";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "naam";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:rolnaam>
+                        ];
+        mim:identifier  "Trol" .
+
+<urn:facttype:elementair-gegeven>
+        a                mim:Objecttype;
+        rdfs:label       "elementair gegeven";
+        mim:attribuut    <urn:role:waarde>;
+        mim:identifier   "Telementair-gegeven";
+        mim:toelichting  "Vastgelegde uitdrukking over [Eigenschap] van [Domeinobject] met [Waarde]" .
+
+<urn:facttype:attribuuttype>
+        a                mim:Objecttype;
+        rdfs:label       "attribuuttype";
+        mim:identifier   "Tattribuuttype";
+        mim:toelichting  "[Eigenschap] is geattribueerd aan [Objecttype]" .
+
+<urn:facttype:elementair-categoriegegeven>
+        a                mim:Objecttype;
+        rdfs:label       "elementair categoriegegeven";
+        mim:identifier   "Telementair-categoriegegeven";
+        mim:toelichting  "Vastgelegde uitdrukking over [Relatie] van [Domeinobject] met [Domeinobject]" .
+
+<urn:facttype:categorie>
+        a               mim:Objecttype;
+        rdfs:label      "categorie";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "naam";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:cnaam>
+                        ];
+        mim:identifier  "Tcategorie" .
+
+<urn:facttype:eigenschap>
+        a               mim:Objecttype;
+        rdfs:label      "eigenschap";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "naam";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:enaam>
+                        ];
+        mim:identifier  "Teigenschap" .
+
+<urn:facttype:domeinobject>
+        a               mim:Objecttype;
+        rdfs:label      "domeinobject";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "sleutel";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:sleutel>
+                        ];
+        mim:identifier  "Tdomeinobject" .
+
+<urn:facttype:objecttype>
+        a               mim:Objecttype;
+        rdfs:label      "objecttype";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "naam";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:otnaam>
+                        ];
+        mim:identifier  "Tobjecttype" .
+
+<urn:facttype:relatie>
+        a               mim:Objecttype;
+        rdfs:label      "relatie";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "naam";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:relnaam>
+                        ];
+        mim:identifier  "Trelatie" .
+
+<urn:facttype:elementair-relatiegegeven>
+        a                mim:Objecttype;
+        rdfs:label       "elementair relatie gegeven";
+        mim:identifier   "Telementair-relatiegegeven";
+        mim:toelichting  "Vastgelegde uitdrukking over [Relatie] van [Domeinobject] met [Domeinobject]" .
+
+<urn:facttype:relatietype>
+        a                mim:Objecttype;
+        rdfs:label       "relatietype";
+        mim:identifier   "Trelatietype";
+        mim:toelichting  "[Relatie] is verbintenis tussen [Objecttypen]" .
+
+<urn:facttype:verbintenis>
+        a               mim:Objecttype;
+        rdfs:label      "verbintenis";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "ontstaansmoment";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:ontstaansmoment>
+                        ];
+        mim:identifier  "Tverbintenis" .
+
+<urn:facttype:roltype>
+        a                mim:Relatieklasse;
+        rdfs:label       "roltype";
+        mim:identifier   "Troltype";
+        mim:toelichting  "Domeinobject van [Objecttype] speelt [Rol] in relatie van [Relatietype]" .

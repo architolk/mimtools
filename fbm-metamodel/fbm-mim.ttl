@@ -18,7 +18,6 @@
     fbm:playedBy <urn:facttype:enaam>;
   ]
 .
-
 <urn:facttype:enaam> a fbm:Valuetype;
   rdfs:label "naam";
 .
@@ -91,6 +90,44 @@
   fbm:playedBy <urn:facttype:objecttype>
 .
 
+<urn:facttype:verbintenis> a fbm:Objecttype;
+  rdfs:label "verbintenis";
+  fbm:role [
+    fbm:playedBy <urn:facttype:ontstaansmoment>
+  ];
+.
+<urn:facttype:ontstaansmoment> a fbm:Valuetype;
+  rdfs:label "ontstaansmoment";
+.
+
+<urn:facttype:deelneming> a fbm:Facttype;
+  fbm:role <urn:role:deelnemer>;
+  fbm:role <urn:role:verbintenis>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:verbintenis>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:deelnemer>, <urn:role:verbintenis>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:deelnemer>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:verbintenis>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Domeinobject] neemt deel in [Verbintenis]";
+      fbm:parts (<urn:role:deelnemer> "neemt deel in" <urn:role:verbintenis>)
+    ]
+  ];
+.
+<urn:role:deelnemer> a fbm:Role;
+  rdfs:label "deelnemer";
+  fbm:playedBy <urn:facttype:domeinobject>;
+.
+<urn:role:verbintenis> a fbm:Role;
+  fbm:playedBy <urn:facttype:verbintenis>;
+.
+
 <urn:facttype:typering> a fbm:Facttype;
   fbm:role <urn:role:type>;
   fbm:role <urn:role:voorkomen>;
@@ -99,8 +136,8 @@
     fbm:restricts <urn:role:type>, <urn:role:voorkomen>
   ];
   fbm:predicate [
-    fbm:ordersRole [fbm:role <urn:role:type>; fbm:atPosition 1];
-    fbm:ordersRole [fbm:role <urn:role:voorkomen>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:voorkomen>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:type>; fbm:atPosition 2];
     fbm:reading [
       fbm:text "[Domeinobject] is voorkomen van [Objecttype]";
       fbm:parts (<urn:role:voorkomen> "is voorkomen van" <urn:role:type>)
@@ -114,3 +151,170 @@
 <urn:role:voorkomen> a fbm:Role;
   rdfs:label "voorkomen";
   fbm:playedBy <urn:facttype:domeinobject>
+.
+
+<urn:facttype:relatie> a fbm:Objecttype;
+  rdfs:label "relatie";
+  fbm:role [
+    fbm:playedBy <urn:facttype:relnaam>;
+  ]
+.
+<urn:facttype:relnaam> a fbm:Valuetype;
+  rdfs:label "naam";
+.
+
+<urn:facttype:rol> a fbm:Objecttype;
+  rdfs:label "rol";
+  fbm:role [
+    fbm:playedBy <urn:facttype:rolnaam>;
+  ];
+  fbm:role [
+    a fbm:Role;
+    fbm:playedBy <urn:facttype:relatie>;
+  ]
+.
+<urn:facttype:rolnaam> a fbm:Valuetype;
+  rdfs:label "naam";
+.
+
+<urn:facttype:rolinvulling> a fbm:Facttype;
+  fbm:role <urn:role:rolspeler>;
+  fbm:role <urn:role:rol>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:rolspeler>, <urn:role:rol>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:rolspeler>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:rol>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Domeinobject] speelt [Relatierol]";
+      fbm:parts (<urn:role:rolspeler> "speelt" <urn:role:rol>)
+    ]
+  ];
+.
+<urn:role:rolspeler> a fbm:Role;
+  fbm:playedBy <urn:facttype:domeinobject>;
+.
+<urn:role:rol> a fbm:Role;
+  fbm:playedBy <urn:facttype:rol>;
+.
+
+<urn:facttype:elementair-categoriegegeven> a fbm:Objecttype;
+  rdfs:label "elementair categoriegegeven";
+  fbm:role <urn:role:catonderwerp>;
+  fbm:role <urn:role:catpredicaat>;
+  fbm:role <urn:role:categorie>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:catonderwerp>, <urn:role:catpredicaat>, <urn:role:categorie>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:catpredicaat>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:catonderwerp>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:categorie>; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "Vastgelegde uitdrukking over [Relatie] van [Domeinobject] met [Domeinobject]";
+      fbm:parts ("vastgelegde uitdrukking over " <urn:role:relpredicaat> "van" <urn:role:onderwerp> "met" <urn:role:categorie>);
+    ];
+  ];
+.
+<urn:role:catonderwerp> a fbm:Role;
+  rdfs:label "onderwerp";
+  fbm:playedBy <urn:facttype:domeinobject>
+.
+<urn:role:catpredicaat> a fbm:Role;
+  fbm:playedBy <urn:facttype:eigenschap>
+.
+<urn:role:categorie> a fbm:Role;
+  fbm:playedBy <urn:facttype:categorie>
+.
+
+<urn:facttype:categorie> a fbm:Objecttype;
+  rdfs:label "categorie";
+  fbm:role [
+    fbm:playedBy <urn:facttype:cnaam>
+  ];
+.
+<urn:facttype:cnaam> a fbm:Valuetype;
+  rdfs:label "naam";
+.
+
+<urn:facttype:elementair-relatiegegeven> a fbm:Objecttype;
+  rdfs:label "elementair relatie gegeven";
+  fbm:role <urn:role:relonderwerp>;
+  fbm:role <urn:role:relpredicaat>;
+  fbm:role <urn:role:voorwerp>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:relonderwerp>, <urn:role:relpredicaat>, <urn:role:voorwerp>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:relpredicaat>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:relonderwerp>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:voorwerp>; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "Vastgelegde uitdrukking over [Relatie] van [Domeinobject] met [Domeinobject]";
+      fbm:parts ("vastgelegde uitdrukking over " <urn:role:relpredicaat> "van" <urn:role:onderwerp> "met" <urn:role:voorwerp>);
+    ];
+  ];
+.
+<urn:role:relonderwerp> a fbm:Role;
+  rdfs:label "onderwerp";
+  fbm:playedBy <urn:facttype:domeinobject>
+.
+<urn:role:relpredicaat> a fbm:Role;
+  fbm:playedBy <urn:facttype:relatie>
+.
+<urn:role:voorwerp> a fbm:Role;
+  fbm:playedBy <urn:facttype:domeinobject>
+.
+
+<urn:facttype:relatietype> a fbm:Objecttype;
+  rdfs:label "relatietype";
+  fbm:role <urn:role:relatie>;
+  fbm:role <urn:role:deelnemertype>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:relatie>, <urn:role:deelnemertype>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:relatie>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:deelnemertype>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Relatie] is verbintenis tussen [Objecttypen]";
+      fbm:parts (<urn:role:relatie> "is verbintenis tussen" <urn:role:deelnemertype>);
+    ]
+  ]
+.
+<urn:role:relatie> a fbm:Role;
+  fbm:playedBy <urn:facttype:relatie>;
+.
+<urn:role:deelnemertype> a fbm:Role;
+  fbm:playedBy <urn:facttype:objecttype>;
+.
+
+<urn:facttype:roltype> a fbm:Facttype;
+  rdfs:label "roltype";
+  fbm:role <urn:role:objecttypering>;
+  fbm:role <urn:role:roltypering>;
+  fbm:role <urn:role:relatietype>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:objecttypering>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:roltypering>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:relatietype>; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "Domeinobject van [Objecttype] speelt [Rol] in relatie van [Relatietype]";
+      fbm:part ("Domeinobject van "<urn:role:objecttypering> "speelt" <urn:role:roltypering> "in" <urn:role:relatietype>)
+    ]
+  ]
+.
+<urn:role:objecttypering> a fbm:Role;
+  fbm:playedBy <urn:facttype:objecttype>;
+.
+<urn:role:roltypering> a fbm:Role;
+  fbm:playedBy <urn:facttype:rol>;
+.
+<urn:role:relatietype> a fbm:Role;
+  fbm:playedBy <urn:facttype:relatietype>;
+.

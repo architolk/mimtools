@@ -1,0 +1,404 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+@prefix ft: <http://bp4mc2.org/mim/ft#>
+@prefix rl: <http://bp4mc2.org/mim/rl#>
+
+#
+# KENMERKEN
+#
+ft:Kenmerk a fbm:Objecttype;
+  rdfs:label "Kenmerk";
+  fbm:role [
+    fbm:playedBy ft:kenmerknaam;
+  ]
+.
+ft:kenmerknaam a fbm:Valuetype;
+  rdfs:label "kenmerknaam";
+.
+
+ft:Eigenschap a fbm:Objecttype;
+  rdfs:label "Eigenschap";
+  fbm:subtypeOf ft:Kenmerk;
+.
+
+ft:Rol a fbm:Objecttype;
+  rdfs:label "Rol";
+  fbm:subtypeOf ft:Kenmerk;
+.
+
+ft:CategorischKenmerk a fbm:Objecttype;
+  rdfs:label "Categorisch kenmerk";
+  fbm:subtypeOf ft:Kenmerk;
+.
+
+#
+# DOMEINOBJECT en RELATIE
+#
+ft:Domeinobject a fbm:Objecttype;
+  rdfs:label "Domeinobject";
+  fbm:role rl:domeinobjectID;
+.
+rl:domeinobjectID a fbm:Role.
+
+ft:Relatie a fbm:Objecttype;
+  rdfs:label "Relatie";
+  fbm:role rl:relatieID;
+.
+rl:relatieID a fbm:Role.
+
+#
+# FEIT OVER EIGENSCHAP
+#
+ft:LetterlijkeWaarde a fbm:Objecttype;
+  rdfs:label "Letterlijke waarde";
+  fbm:role [
+    a fbm:Role;
+  ]
+.
+
+ft:DomeinobjectEigenschap a fbm:Facttype;
+  rdfs:label "Feit over eigenschap";
+  fbm:role rl:domeinobjectMetEigenschap;
+  fbm:role rl:eigenschapVanDomeinobject;
+  fbm:role rl:waarde;
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Domeinobject] heeft [Eigenschap] met [Letterlijke waarde]"
+    ]
+  ]
+.
+rl:domeinobjectMetEigenschap a fbm:Role;
+  rdfs:label "onderwerp";
+  fbm:playedBy ft:Domeinobject;
+.
+rl:eigenschapVanDomeinobject a fbm:Role;
+  fbm:playedBy ft:Eigenschap;
+.
+rl:waarde a fbm:Role;
+  fbm:playedBy ft:LetterlijkeWaarde;
+.
+
+#
+# FEIT OVER RELATIE (VERVULLING)
+#
+ft:DomeinobjectRol a fbm:Facttype;
+  rdfs:label "Feit over relatie(vervulling)";
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts rl:relatie
+  ];
+  fbm:role rl:domeinobjectMetRol;
+  fbm:role rl:rolVanDomeinobject;
+  fbm:role rl:relatie;
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Domeinobject] vervult [Rol] in [Relatie]"
+    ]
+  ]
+.
+rl:domeinobjectMetRol a fbm:Role;
+  rdfs:label "deelnemer";
+  fbm:playedBy ft:Domeinobject;
+.
+rl:rolVanDomeinobject a fbm:Role;
+  fbm:playedBy ft:Rol;
+.
+rl:relatie a fbm:Role;
+  fbm:playedBy ft:Relatie;
+.
+
+#
+# FEIT OVER RELATIE (PROPOSITIE)
+#
+ft:RolPropositie a fbm:Facttype;
+  rdfs:label "Feit over relatie(propositie)";
+  fbm:role rl:propositieOnderwerp;
+  fbm:role rl:propositieRol;
+  fbm:role rl:rolvervuller;
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Domeinobject] heeft [Rol] vervuld door [Rolvervuller]"
+    ]
+  ]
+.
+rl:propositieOnderwerp a fbm:Role;
+  rdfs:label "onderwerp";
+  fbm:playedBy ft:Domeinobject;
+.
+rl:propositieRol a fbm:Role;
+  fbm:playedBy ft:Rol;
+.
+rl:rolvervuller a fbm:Role;
+  rdfs:label "rolvervuller";
+  fbm:playedBy ft:Domeinobject;
+.
+
+#
+# FEIT OVER CATEGORISCH KENMERK
+#
+ft:Classificatieschema a fbm:Objecttype;
+  rdfs:label "Classificatieschema";
+  fbm:role [
+    fbm:playedBy ft:schemanaam
+  ]
+.
+ft:schemanaam a fbm:Valuetype;
+  rdfs:label "schemanaam";
+.
+ft:Categorie a fbm:Objecttype;
+  rdfs:label "Categorie";
+  fbm:role ft:categorieID;
+.
+ft:categorieID a fbm:Role;
+.
+ft:SchemaCategorieen a fbm:Facttype;
+  fbm:role rl:onderdeel;
+  fbm:role rl:schema;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts rl:onderdeel;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role rl:onderdeel; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role rl:schema; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Categorie] is onderdeel van [Classificatieschema]";
+    ]
+  ]
+.
+rl:onderdeel a fbm:Role;
+  fbm:playedBy ft:Categorie;
+.
+rl:schema a fbm:Role;
+  fbm:playedBy ft:Classificatieschema;
+.
+
+ft:DomeinobjectCategorie a fbm:Facttype;
+  rdfs:label "Feit over categorisch kenmerk";
+  fbm:role rl:domeinobjectMetCategorie;
+  fbm:role rl:categorischKenmerkVanDomeinobject;
+  fbm:role rl:categorie;
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Domeinobject] heeft [Categorisch kenmerk] en behoort daarbij tot [Categorie]"
+    ]
+  ]
+.
+rl:domeinobjectMetCategorie a fbm:Role;
+  rdfs:label "onderwerp";
+  fbm:playedBy ft:Domeinobject
+.
+rl:categorischKenmerkVanDomeinobject a fbm:Role;
+  fbm:playedBy ft:CategorischKenmerk;
+.
+rl:categorie a fbm:Role;
+  fbm:playedBy ft:Categorie;
+.
+
+#
+# FEIT OVER TYPERING
+#
+ft:DomeinobjectType a fbm:Facttype;
+  rdfs:label "Feit over typering";
+  fbm:role rl:voorkomen;
+  fbm:role rl:type;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role rl:voorkomen; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role rl:type; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Domeinobject] is voorkomen van [Objecttype]"
+    ]
+  ]
+.
+rl:voorkomen a fbm:Role;
+  rdfs:label "voorkomen";
+  fbm:playedBy ft:Domeinobject
+.
+rl:type a fbm:Role;
+  rdfs:label "type";
+  fbm:playedBy ft:Objecttype
+.
+
+#
+# OBJECTTYPE
+#
+ft:Objecttype a fbm:Objecttype;
+  rdfs:label "Objecttype";
+  fbm:role [
+    fbm:playedBy ft:objecttypenaam;
+  ];
+.
+ft:objecttypenaam a fbm:Valuetype;
+  rdfs:label "objecttypenaam";
+.
+
+#
+# ATTRIBUUTTYPE
+#
+ft:Attribuuttype a fbm:Objecttype;
+  rdfs:label "Attribuuttype";
+  fbm:role rl:objecttype;
+  fbm:role rl:attribuut;
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Eigenschap] is geattribueerd aan [Objecttype]";
+    ]
+  ]
+.
+rl:objecttype a fbm:Role;
+  fbm:playedBy ft:Objecttype;
+.
+rl:attribuut a fbm:Role;
+  fbm:playedBy ft:Eigenschap;
+.
+
+#
+# RELATIETYPE
+#
+ft:Relatietype a fbm:Objecttype;
+  rdfs:label "Relatietype";
+  fbm:role [
+    fbm:playedBy ft:relatietypenaam;
+  ]
+.
+ft:relatietypenaam a fbm:Valuetype;
+  rdfs:label "relatietypenaam"
+.
+
+ft:Deelnametype a fbm:Objecttype;
+  rdfs:label "Deelname";
+  fbm:role rl:relatietype;
+  fbm:role rl:rol;
+  fbm:role rl:deelnemer;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts rl:relatietype;
+  ];
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Objecttype] is in [Rol] betrokken bij [Relatietype]";
+    ]
+  ]
+.
+rl:relatietype a fbm:Role;
+  fbm:playedBy ft:Relatietype;
+.
+rl:rol a fbm:Role;
+  fbm:playedBy ft:Rol;
+.
+rl:deelnemer a fbm:Role;
+  fbm:playedBy ft:Objecttype;
+.
+
+#
+# CLASSIFICATIE
+#
+ft:CategoriserendAttribuuttype a fbm:Objecttype;
+  rdfs:label "Attribuuttype van classificerende aard";
+  fbm:role rl:classificatie;
+  fbm:role rl:objecttypeMetCategorischKenmerk;
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Categorisch kenmerk] is geattribueerd aan [Objecttype]"
+    ]
+  ]
+.
+rl:classificatie a fbm:Role;
+  fbm:playedBy ft:CategorischKenmerk;
+.
+rl:objecttypeMetCategorischKenmerk a fbm:Role;
+  fbm:playedBy ft:Objecttype
+.
+ft:CategoriserendAttribuuttypeWaarden a fbm:Facttype;
+  fbm:role rl:attribuuttypeWaardebeperkt;
+  fbm:role rl:attribuuttypeWaarden;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role rl:attribuuttypeWaardebeperkt; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role rl:attribuuttypeWaarden; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Attribuuttype] betreft eigenschap met waarden conform [Waardetype]";
+    ]
+  ]
+.
+rl:attribuuttypeWaarden a fbm:Role;
+  fbm:playedBy ft:CategorischWaardetype;
+.
+rl:attribuuttypeWaardebeperkt a fbm:Role;
+  fbm:playedBy ft:CategoriserendAttribuuttype;
+.
+
+#
+# Categorisch waardetype
+#
+ft:CategorischWaardetype a fbm:Objecttype;
+  rdfs:label "Categorisch waardetype";
+  fbm:role [
+    fbm:playedBy ft:waardetypenaam;
+  ]
+.
+ft:waardetypenaam a fbm:Valuetype;
+  rdfs:label "waardetypenaam";
+.
+ft:WaardetypeClassificatieschema a fbm:Facttype;
+  fbm:role rl:waardetypeClassificatie;
+  fbm:role rl:schemaGebruik;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role rl:waardetypeClassificatie; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role rl:schemaGebruik; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Categorisch waardetype] typeert categorieën uit [Classificatieschema]";
+    ]
+  ]
+.
+rl:waardetypeClassificatie a fbm:Role;
+  fbm:playedBy ft:CategorischWaardetype;
+.
+rl:schemaGebruik a fbm:Role;
+  fbm:playedBy ft:Classificatieschema;
+.
+
+#
+# BEGRIPPEN STUKJE
+#
+ft:Begrip a fbm:Objecttype;
+  rdfs:label "Begrip";
+  fbm:role rl:voorkeursterm;
+.
+rl:voorkeursterm a fbm:Role;
+  rdfs:label "voorkeursterm";
+  fbm:playedBy ft:term;
+.
+ft:term a fbm:Valuetype;
+  rdfs:label "term";
+.
+
+ft:JuridischeCategorie a fbm:Objecttype;
+  rdfs:label "Juridische categorie";
+  fbm:role rl:juridischeCategorieID
+.
+rl:juridischeCategorieID a fbm:Role.
+
+ft:Begripsclassificatie a fbm:Facttype;
+  fbm:role rl:begrip;
+  fbm:role rl:juridischeCategorie;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts rl:juridischeCategorie
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role rl:begrip; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role rl:juridischeCategorie; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:relatietype>; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "[Begrip] behoort tot [Juridische categorie]";
+      fbm:part (rl:begrip "behoort tot" rl:categorie)
+    ]
+  ]
+.
+rl:begrip a fbm:Role;
+  fbm:playedBy ft:Begrip;
+.
+rl:juridischeCategorie a fbm:Role;
+  fbm:playedBy ft:JuridischeCategorie;
+.
