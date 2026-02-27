@@ -1178,7 +1178,7 @@ queries:
           ?element rdfs:seeAlso ?item.
           ?tag ea:element ?item.
           ?tag ea:property "Toelichting".
-          ?tag ea:notes ?toelichting
+          ?tag ea:value ?toelichting
         }
       }
   - title: add mim:herkomst
@@ -1250,7 +1250,7 @@ queries:
           ?element rdfs:seeAlso ?item.
           ?tag ea:element ?item.
           ?tag ea:property "Populatie".
-          ?tag ea:notes ?populatie
+          ?tag ea:value ?populatie
         }
       }
   - title: add mim:patroon
@@ -1268,7 +1268,7 @@ queries:
           ?element rdfs:seeAlso ?item.
           ?tag ea:element ?item.
           ?tag ea:property "Patroon".
-          ?tag ea:notes ?patroon
+          ?tag ea:value ?patroon
         }
       }
   - title: add mim:formeelPatroon
