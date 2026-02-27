@@ -61,6 +61,8 @@
 
 <xsl:template match="*" mode="label">
   <xsl:choose>
+    <xsl:when test="mim:naam[@xml:lang=$lang]!=''"><xsl:value-of select="mim:naam[@xml:lang=$lang]"/></xsl:when>
+    <xsl:when test="mim:naam[1]!=''"><xsl:value-of select="mim:naam[1]"/></xsl:when>
     <xsl:when test="rdfs:label[@xml:lang=$lang]!=''"><xsl:value-of select="rdfs:label[@xml:lang=$lang]"/></xsl:when>
     <xsl:otherwise><xsl:value-of select="rdfs:label[1]"/></xsl:otherwise>
   </xsl:choose>

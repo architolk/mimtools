@@ -1039,7 +1039,7 @@ queries:
           ?datatype rdfs:seeAlso ?classifier.
         }
       }
-  - title: add mim:type (standaard EA datatypes)
+  - title: add mim:type (standaard EA datatypes) - only when normal datatypes don't exists
     query: >
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
@@ -1057,6 +1057,11 @@ queries:
         }
         GRAPH <urn:metadata> {
           ?datatype rdfs:seeAlso ?eatypestr
+        }
+        FILTER NOT EXISTS {
+          GRAPH <urn:output> {
+            ?element mim:type ?modeldatatype
+          }
         }
       }
   - title: add mim:type (Datatype-keuze)
