@@ -27,6 +27,7 @@
 
 <xsl:key name="item" match="/ROOT/rdf:RDF/rdf:Description" use="@rdf:about|@rdf:nodeID"/>
 <xsl:key name="relatie" match="/ROOT/rdf:RDF/rdf:Description" use="(mim:bron|mim:doel|mim:subtype|mim:supertype)/@rdf:resource"/>
+<xsl:key name="diagram" match="/ROOT/rdf:RDF/rdf:Description" use="mim:beschrijft/@rdf:resource"/>
 
 <!-- ================ -->
 <!-- Helper templates -->
@@ -247,11 +248,20 @@
 <!-- Model element templates -->
 <!-- ======================= -->
 
+<xsl:template match="rdf:Description" mode="diagram">
+  <xsl:variable name="filename"><xsl:value-of select="substring-after(@rdf:about,'urn:uuid:')"/></xsl:variable>
+  <xsl:if test="$filename!=''">
+    <xsl:text>![](</xsl:text>
+    <xsl:value-of select="$filename"/>
+    <xsl:text>.svg)&#xa;&#xa;</xsl:text>
+  </xsl:if>
+</xsl:template>
+
 <xsl:template match="rdf:Description[rdf:type/@rdf:resource=$mim-informatiemodel]" mode="parse">
   <xsl:text># Model </xsl:text>
   <xsl:apply-templates select="." mode="label"/>
   <xsl:text>&#xa;&#xa;</xsl:text>
-  <!-- HIER MOET EIGENLIJK NOG IETS MET EEN PLAATJE -->
+  <xsl:apply-templates select="key('diagram',@rdf:about)" mode="diagram"/>
   <xsl:for-each select="key('item',mim:bevatModelelement/@rdf:resource)"><xsl:sort select="mim:naam[1]|rdfs:label[1]"/>
     <xsl:apply-templates select="." mode="parse"/>
   </xsl:for-each>
@@ -261,7 +271,7 @@
   <xsl:text>## Domein </xsl:text>
   <xsl:apply-templates select="." mode="label"/>
   <xsl:text>&#xa;&#xa;</xsl:text>
-  <!-- HIER MOET EIGENLIJK NOG IETS MET EEN PLAATJE -->
+  <xsl:apply-templates select="key('diagram',@rdf:about)" mode="diagram"/>
   <xsl:for-each select="key('item',mim:bevatModelelement/@rdf:resource)[rdf:type/@rdf:resource=($mim-objecttype,$mim-relatieklasse)]"><xsl:sort select="mim:naam[1]|rdfs:label[1]"/>
     <xsl:if test="position()=1"><xsl:text>## Objecttypes en relatieklassen&#xa;&#xa;</xsl:text></xsl:if>
     <xsl:apply-templates select="." mode="parse"/>
