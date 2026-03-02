@@ -688,7 +688,7 @@ queries:
           SELECT  (iri(concat('urn:uuid:',?guid)) as ?relatiesoort)
                   (iri(concat('urn:uuid-src:',?guid)) as ?relatierolbron)
                   (iri(concat('urn:uuid:',?obj)) as ?objecttype)
-                  (replace(if(strlen(?card)=1,concat(?card,"..",?card),?card),"\\*","-1") as ?kardinaliteit)
+                  (if(strlen(?card)=1,concat(if(?card='*','0',?card),"..",?card),?card) as ?kardinaliteit)
                   ?label
           WHERE {
             ?s a ea:Connector.
@@ -721,7 +721,7 @@ queries:
           SELECT  (iri(concat('urn:uuid:',?guid)) as ?relatiesoort)
                   (iri(concat('urn:uuid-dst:',?guid)) as ?relatieroldoel)
                   (iri(concat('urn:uuid:',?obj)) as ?objecttype)
-                  (replace(if(strlen(?card)=1,concat(?card,"..",?card),?card),"\\*","-1") as ?kardinaliteit)
+                  (if(strlen(?card)=1,concat(if(?card='*','0',?card),"..",?card),?card) as ?kardinaliteit)
                   ?label
           WHERE {
             ?s a ea:Connector.
@@ -1139,7 +1139,7 @@ queries:
         }
       }
       WHERE {
-        SELECT ?element (replace(if(strlen(?card)=1,concat(?card,"..",?card),?card),"\\*","-1") as ?kardinaliteit)
+        SELECT ?element (if(strlen(?card)=1,concat(if(?card='*','0',?card),"..",?card),?card) as ?kardinaliteit)
         WHERE {
           GRAPH <urn:input> {
             ?item ea:destCard ?card.

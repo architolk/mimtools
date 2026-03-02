@@ -54,12 +54,7 @@
 </xsl:template>
 
 <xsl:template match="*" mode="card">
-  <xsl:choose>
-    <xsl:when test=".='1..1'">1</xsl:when>
-    <xsl:when test=".='0..-1'">0..*</xsl:when>
-    <xsl:when test=".='1..-1'">1..*</xsl:when>
-    <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-  </xsl:choose>
+  <xsl:value-of select="."/>
 </xsl:template>
 
 <!-- ========== -->

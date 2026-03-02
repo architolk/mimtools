@@ -11,7 +11,7 @@ do
   if [ "${LINE:0:9}" == "urn:uuid:" ]
   then
     java -jar ../../rdf2xml/target/rdf2xml.jar ./model/mim.ttl ./media/mim-edited.graphml ../mim2dia.xsl ${LINE:0:45}
-    java -jar ../../rdf2xml/target/rdf2xml.jar ./model/mim.ttl ./media/${LINE:9:36}.graphml ../mim2graphml.xsl add ./media/mim-edited.graphml
+    java -jar ../../rdf2xml/target/rdf2xml.jar ./model/mim.ttl ./media/${LINE:9:36}.graphml ../mim2graphml.xsl follow ./media/mim-edited.graphml
   fi
 done < ./media/diagrams.txt
 

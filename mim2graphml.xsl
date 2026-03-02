@@ -10,6 +10,8 @@
   xmlns:y="http://www.yworks.com/xml/graphml"
 >
 
+<!-- <xsl:output indent="yes"/> -->
+
 <xsl:key name="items" match="/ROOT/rdf:RDF/rdf:Description" use="@rdf:about"/>
 <xsl:key name="blanks" match="/ROOT/rdf:RDF/rdf:Description" use="@rdf:nodeID"/>
 <xsl:key name="resources" match="/ROOT/rdf:RDF/rdf:Description" use="@rdf:about|@rdf:nodeID"/>
@@ -136,31 +138,31 @@
         </y:UMLClassNode>
   		</data>
   	</node>
-  </xsl:if>
-  <!-- Link to DataType elements -->
-  <xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement|mim:gegevensgroep)/(@rdf:nodeID|@rdf:resource))">
-    <xsl:for-each select="key('resources',(@rdf:about|mim:type/@rdf:resource))[rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Enumeratie' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#GestructureerdDatatype' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Gegevensgroeptype' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Keuze' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Referentielijst' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Codelijst']">
-      <xsl:variable name="object-uri" select="@rdf:about"/>
-      <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
-      <xsl:variable name="property-uri">mim:type</xsl:variable>
-      <xsl:variable name="statement-uri">urn:md5:<xsl:value-of select="concat($subject-uri,$property-uri,$object-uri)"/></xsl:variable>
-      <xsl:variable name="statement-geo" select="key('edge-geo',$statement-uri)"/>
-      <xsl:if test="not($params='follow') or exists($object-geo/graphml:data)">
-        <edge source="{$subject-uri}" target="{$object-uri}">
-          <data key="d7"><xsl:value-of select="$statement-uri"/></data>
-          <data key="d8"><xsl:value-of select="$property-uri"/></data>
-          <data key="d10">
-            <y:PolyLineEdge>
-              <xsl:copy-of select="$statement-geo/graphml:data/y:PolyLineEdge/y:Path"/>
-              <y:LineStyle color="#000000" type="dashed" width="1.0"/>
-              <y:Arrows source="none" target="plain"/>
-              <y:BendStyle smoothed="false"/>
-            </y:PolyLineEdge>
-          </data>
-        </edge>
-      </xsl:if>
+    <!-- Link to DataType elements -->
+    <xsl:for-each select="key('resources',(mim:attribuut|mim:waarde|mim:dataElement|mim:gegevensgroep)/(@rdf:nodeID|@rdf:resource))">
+      <xsl:for-each select="key('resources',(@rdf:about|mim:type/@rdf:resource))[rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Enumeratie' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#GestructureerdDatatype' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Gegevensgroeptype' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Keuze' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Referentielijst' or rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Codelijst']">
+        <xsl:variable name="object-uri" select="@rdf:about"/>
+        <xsl:variable name="object-geo" select="key('node-geo',$object-uri)"/>
+        <xsl:variable name="property-uri">mim:type</xsl:variable>
+        <xsl:variable name="statement-uri">urn:md5:<xsl:value-of select="concat($subject-uri,$property-uri,$object-uri)"/></xsl:variable>
+        <xsl:variable name="statement-geo" select="key('edge-geo',$statement-uri)"/>
+        <xsl:if test="not($params='follow') or exists($object-geo/graphml:data)">
+          <edge source="{$subject-uri}" target="{$object-uri}">
+            <data key="d7"><xsl:value-of select="$statement-uri"/></data>
+            <data key="d8"><xsl:value-of select="$property-uri"/></data>
+            <data key="d10">
+              <y:PolyLineEdge>
+                <xsl:copy-of select="$statement-geo/graphml:data/y:PolyLineEdge/y:Path"/>
+                <y:LineStyle color="#000000" type="dashed" width="1.0"/>
+                <y:Arrows source="none" target="plain"/>
+                <y:BendStyle smoothed="false"/>
+              </y:PolyLineEdge>
+            </data>
+          </edge>
+        </xsl:if>
+      </xsl:for-each>
     </xsl:for-each>
-  </xsl:for-each>
+  </xsl:if>
 </xsl:template>
 
 <!-- edge-gen: exclude mim:PrimitiefDatatype, those elements are never shown! -->
@@ -207,8 +209,11 @@
       <xsl:variable name="subject-geo" select="key('node-geo',$subject-uri)"/>
       <xsl:if test="not($params='follow') or exists($subject-geo/graphml:data)">
         <!-- Asssociation with Association class -->
+        <xsl:variable name="assclass-uri" select="../@rdf:about"/>
+        <xsl:variable name="assclass-geo" select="key('node-geo',$assclass-uri)"/>
         <xsl:choose>
-          <xsl:when test="../rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Relatieklasse'">
+          <!-- When association class itself is not part of the geodata, and we do follow, consider the association class as a normal association -->
+          <xsl:when test="(../rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#Relatieklasse') and (not($params='follow') or exists($assclass-geo/graphml:data))">
             <xsl:variable name="object-uri-helper"><xsl:value-of select="../@rdf:about"/>_HELPER</xsl:variable>
             <xsl:variable name="helper-geo" select="key('node-geo',$object-uri-helper)"/>
             <node id="{$object-uri-helper}">
