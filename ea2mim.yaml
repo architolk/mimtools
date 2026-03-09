@@ -1179,6 +1179,7 @@ queries:
           ?tag ea:element ?item.
           ?tag ea:property "Toelichting".
           ?tag ea:value ?toelichting
+          FILTER (?toelichting!='<memo>')
         }
       }
   - title: add mim:herkomst
@@ -1251,6 +1252,7 @@ queries:
           ?tag ea:element ?item.
           ?tag ea:property "Populatie".
           ?tag ea:value ?populatie
+          FILTER (?populatie!='<memo>')
         }
       }
   - title: add mim:patroon
@@ -1269,6 +1271,7 @@ queries:
           ?tag ea:element ?item.
           ?tag ea:property "Patroon".
           ?tag ea:value ?patroon
+          FILTER (?patroon!='<memo>')
         }
       }
   - title: add mim:formeelPatroon
@@ -1530,6 +1533,22 @@ queries:
           }
         }
       }
+  - title: Voeg Kadaster-specifiek gebruik van toelichtingen toe
+    query: >
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?s mim:toelichting ?toelichting.
+        }
+      }
+      WHERE {
+        GRAPH <urn:output> {
+          ?s mim:definitie ?def
+          BIND (replace(replace(replace(?def,"^(.*\r\n)*--[ |-]*Toelichting[ |-]*--",""),"^[\r\n| ]+",""),"[\r\n| ]+$","") as ?toelichting)
+          FILTER (regex(?def,"--[ |-]*Toelichting[ |-]*--"))
+          FILTER NOT EXISTS {?s mim:toelichting ?toel}
+        }
+      }
   - title: Verwijder Kadaster-specifiek gebruik van opmaak in definities
     query: >
       PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
@@ -1546,8 +1565,9 @@ queries:
       WHERE {
         GRAPH <urn:output> {
           ?s mim:definitie ?def
-          BIND (replace(replace(replace(replace(replace(?def,"---IMKAD---\r\n",""),"--Definitie--\r\n",""),"--Toelichting--(\r\n.*)*$",""),"^[\r\n| ]+",""),"[\r\n| ]+$","") as ?definitie)
+          BIND (replace(replace(replace(replace(replace(?def,"---[A-Z]+---\r\n",""),"--[ |-]*Definitie[ |-]*--\r\n",""),"--[ |-]*Toelichting[ |-]*--(\r\n.*)*$",""),"^[\r\n| ]+",""),"[\r\n| ]+$","") as ?definitie)
         }
+        FILTER NOT EXISTS {?s mim:toelichting ?toel}
       }
   - title: Verwijder lege definities
     query: >
@@ -1560,6 +1580,19 @@ queries:
       WHERE {
         GRAPH <urn:output> {
           ?s mim:definitie ""
+        }
+      }
+  - title: Verwijder lege toelichtingen
+    query: >
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
+      DELETE {
+        GRAPH <urn:output> {
+          ?s mim:toelichting ""
+        }
+      }
+      WHERE {
+        GRAPH <urn:output> {
+          ?s mim:toelichting ""
         }
       }
   - title: Verwijder Kadaster-specifiek gebruik van namen van abstracte klassen
