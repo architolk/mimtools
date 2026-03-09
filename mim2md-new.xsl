@@ -154,6 +154,18 @@
 
 <!-- ======================== -->
 <!-- Model property templates -->
+<!-- (as descriptions)        -->
+<!-- ======================== -->
+
+<xsl:template match="mim:definitie" mode="content">
+  <xsl:if test=".!=''">
+    <xsl:value-of select="."/>
+    <xsl:text>&#xa;&#xa;</xsl:text>
+  </xsl:if>
+</xsl:template>
+
+<!-- ======================== -->
+<!-- Model property templates -->
 <!-- ======================== -->
 
 <xsl:template match="mim:naam|mim:label" mode="property">
@@ -174,6 +186,14 @@
   <xsl:text>|Definitie|</xsl:text>
   <xsl:apply-templates select="." mode="truncate"/>
   <xsl:text>|&#xa;</xsl:text>
+</xsl:template>
+
+<xsl:template match="mim:toelichting" mode="property">
+  <xsl:if test=".!=''">
+    <xsl:text>|Toelichting|</xsl:text>
+    <xsl:apply-templates select="." mode="truncate"/>
+    <xsl:text>|&#xa;</xsl:text>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="mim:herkomstDefinitie" mode="property">
@@ -256,6 +276,7 @@
   <xsl:text># Model </xsl:text>
   <xsl:apply-templates select="." mode="label"/>
   <xsl:text>&#xa;&#xa;</xsl:text>
+  <xsl:apply-templates select="mim:definitie" mode="content"/>
   <xsl:apply-templates select="key('diagram',@rdf:about)" mode="diagram"/>
   <xsl:for-each select="key('item',mim:bevatModelelement/@rdf:resource)"><xsl:sort select="mim:naam[1]|rdfs:label[1]"/>
     <xsl:apply-templates select="." mode="parse"/>
@@ -266,6 +287,7 @@
   <xsl:text>## Domein </xsl:text>
   <xsl:apply-templates select="." mode="label"/>
   <xsl:text>&#xa;&#xa;</xsl:text>
+  <xsl:apply-templates select="mim:definitie" mode="content"/>
   <xsl:apply-templates select="key('diagram',@rdf:about)" mode="diagram"/>
   <xsl:for-each select="key('item',mim:bevatModelelement/@rdf:resource)[rdf:type/@rdf:resource=($mim-objecttype,$mim-relatieklasse)]"><xsl:sort select="mim:naam[1]|rdfs:label[1]"/>
     <xsl:if test="position()=1"><xsl:text>## Objecttypes en relatieklassen&#xa;&#xa;</xsl:text></xsl:if>
@@ -294,6 +316,7 @@
     <xsl:text> (relatieklasse)</xsl:text>
   </xsl:if>
   <xsl:text>&#xa;&#xa;</xsl:text>
+  <xsl:apply-templates select="mim:definitie" mode="content"/>
   <xsl:text>|{: .def}||&#xa;</xsl:text>
   <xsl:text>|-|-|&#xa;</xsl:text>
   <xsl:apply-templates select="*" mode="property"/>
