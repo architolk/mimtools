@@ -16,6 +16,7 @@
 <xsl:variable name="mim-externekoppeling"><xsl:value-of select="$mim"/>ExterneKoppeling</xsl:variable>
 <xsl:variable name="mim-informatiemodel"><xsl:value-of select="$mim"/>Informatiemodel</xsl:variable>
 <xsl:variable name="mim-domein"><xsl:value-of select="$mim"/>Domein</xsl:variable>
+<xsl:variable name="mim-package"><xsl:value-of select="$mim"/>Package</xsl:variable>
 <xsl:variable name="mim-relatierolbron"><xsl:value-of select="$mim"/>RelatierolBron</xsl:variable>
 <xsl:variable name="mim-relatieroldoel"><xsl:value-of select="$mim"/>RelatierolDoel</xsl:variable>
 <xsl:variable name="mim-referentielijst"><xsl:value-of select="$mim"/>Referentielijst</xsl:variable>
@@ -33,6 +34,17 @@
 <!-- Helper templates -->
 <!-- ================ -->
 
+   <xsl:variable name="diacritics">áàâäéèêëíìîïóòôöúùûü</xsl:variable>
+<xsl:variable name="nondiacritics">aaaaeeeeiiiioooouuuu</xsl:variable>
+
+<xsl:template match="*" mode="anchor">
+  <xsl:value-of select="replace(replace(replace(translate(.,$diacritics,$nondiacritics),'[^A-Za-z0-9-]','-'),'[-]+','-'),'[-]$','')"/>
+</xsl:template>
+
+<xsl:template match="*" mode="lcase-anchor">
+  <xsl:value-of select="replace(replace(replace(translate(lower-case(.),$diacritics,$nondiacritics),'[^A-Za-z0-9-]','-'),'[-]+','-'),'[-]$','')"/>
+</xsl:template>
+
 <xsl:template match="rdf:Description" mode="label">
   <xsl:choose>
     <xsl:when test="mim:naam[1]!=''"><xsl:value-of select="mim:naam[1]"/></xsl:when>
@@ -42,7 +54,9 @@
 
 <xsl:template match="rdf:Description" mode="link">
   <xsl:text>[</xsl:text><xsl:apply-templates select="." mode="label"/><xsl:text>]</xsl:text>
-  <xsl:text>(</xsl:text><xsl:text>)</xsl:text>
+  <xsl:text>(</xsl:text>
+  <xsl:if test="mim:identifier!=''"><xsl:text>#</xsl:text><xsl:apply-templates select="mim:identifier" mode="anchor"/></xsl:if>
+  <xsl:text>)</xsl:text>
 </xsl:template>
 
 <xsl:template match="*" mode="link">
@@ -168,7 +182,7 @@
 <!-- Model property templates -->
 <!-- ======================== -->
 
-<xsl:template match="mim:naam|mim:label" mode="property">
+<xsl:template match="mim:naam|rdfs:label" mode="property">
   <xsl:if test="local-name()!='label' or not(exists(../mim:naam))">
     <xsl:text>|Naam|</xsl:text>
     <xsl:apply-templates select=".." mode="label"/>
@@ -246,7 +260,34 @@
   <xsl:text>|&#xa;</xsl:text>
 </xsl:template>
 
-<xsl:template match="mim:attribuut|rdf:type|mim:gegevensgroep|mim:bron|mim:doel|mim:relatierol|mim:type|mim:dataElement|mim:referentieElement|mim:waarde" mode="property">
+<xsl:template match="mim:begrip" mode="property">
+  <xsl:text>|Begrip|</xsl:text>
+  <xsl:choose>
+    <xsl:when test="exists(key('item',@rdf:resource))">
+      <xsl:text>[</xsl:text>
+      <xsl:value-of select="key('item',@rdf:resource)/rdfs:label"/>
+      <xsl:text>](#</xsl:text>
+      <xsl:apply-templates select="key('item',@rdf:resource)/rdfs:label" mode="lcase-anchor"/>
+      <xsl:text>)</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>[</xsl:text>
+      <xsl:value-of select="@rdf:resource"/>
+      <xsl:text>](</xsl:text>
+      <xsl:value-of select="@rdf:resource"/>
+      <xsl:text>)</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
+  <xsl:text>|&#xa;</xsl:text>
+</xsl:template>
+
+<xsl:template match="mim:begripsterm" mode="property">
+  <xsl:text>|Begrip|</xsl:text>
+  <xsl:value-of select="."/>
+  <xsl:text>|&#xa;</xsl:text>
+</xsl:template>
+
+<xsl:template match="mim:attribuut|rdf:type|mim:gegevensgroep|mim:bron|mim:doel|mim:relatierol|mim:type|mim:dataElement|mim:referentieElement|mim:waarde|mim:identifier" mode="property">
   <!-- Handled otherwise -->
 </xsl:template>
 
@@ -264,8 +305,17 @@
 <!-- ======================= -->
 
 <xsl:template match="rdf:Description" mode="diagram">
-  <xsl:variable name="filename"><xsl:value-of select="substring-after(@rdf:about,'urn:uuid:')"/></xsl:variable>
+  <xsl:variable name="filename">
+    <xsl:value-of select="substring-after(@rdf:about,'urn:uuid:')"/>
+    <xsl:value-of select="substring-after(@rdf:about,'urn:name:')"/>
+  </xsl:variable>
   <xsl:if test="$filename!=''">
+    <!-- Added title of diagram - probably only necessary if more than one diagram is part of the package -->
+    <xsl:if test="rdfs:label!=''">
+      <xsl:text>### </xsl:text>
+      <xsl:value-of select="rdfs:label"/>
+      <xsl:text>&#xa;&#xa;</xsl:text>
+    </xsl:if>
     <xsl:text>![](</xsl:text>
     <xsl:value-of select="$filename"/>
     <xsl:text>.svg)&#xa;&#xa;</xsl:text>
@@ -283,7 +333,7 @@
   </xsl:for-each>
 </xsl:template>
 
-<xsl:template match="rdf:Description[rdf:type/@rdf:resource=$mim-domein]" mode="parse">
+<xsl:template match="rdf:Description[rdf:type/@rdf:resource=$mim-package or rdf:type/@rdf:resource=$mim-domein]" mode="parse">
   <xsl:text>## Domein </xsl:text>
   <xsl:apply-templates select="." mode="label"/>
   <xsl:text>&#xa;&#xa;</xsl:text>
@@ -315,6 +365,7 @@
   <xsl:if test="rdf:type/@rdf:resource=$mim-relatieklasse">
     <xsl:text> (relatieklasse)</xsl:text>
   </xsl:if>
+  <xsl:if test="mim:identifier!=''"> {#<xsl:value-of select="mim:identifier"/>}</xsl:if>
   <xsl:text>&#xa;&#xa;</xsl:text>
   <xsl:apply-templates select="mim:definitie" mode="content"/>
   <xsl:text>|{: .def}||&#xa;</xsl:text>
@@ -387,6 +438,11 @@
   </xsl:if>
 </xsl:template>
 
+<xsl:template match="rdf:Description[rdf:type/@rdf:resource=$mim-relatiesoort]" mode="parse">
+  <!-- Skip -->
+  <!-- Relatiesoort wordt binnen een objecttype afgehandeld, maar is wel onderdeel van een package -->
+</xsl:template>
+
 <!-- Failsafe, for unparsed items -->
 <xsl:template match="rdf:Description" mode="parse">
   <xsl:text>> TODO ELEMENT: </xsl:text>
@@ -399,9 +455,20 @@
 <!-- ================ -->
 
 <xsl:template match="/ROOT/rdf:RDF">
-  <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-informatiemodel]"><xsl:sort select="mim:naam[1]|rdfs:label[1]"/>
-    <xsl:apply-templates select="." mode="parse"/>
-  </xsl:for-each>
+  <xsl:choose>
+    <!-- Correct situation: a file should contain at least one informatiemodel -->
+    <xsl:when test="exists(rdf:Description[rdf:type/@rdf:resource=$mim-informatiemodel])">
+      <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-informatiemodel]"><xsl:sort select="mim:naam[1]|rdfs:label[1]"/>
+        <xsl:apply-templates select="." mode="parse"/>
+      </xsl:for-each>
+    </xsl:when>
+    <!-- Fallback scenario: just process mim:Package and mim:Domein -->
+    <xsl:otherwise>
+      <xsl:for-each select="rdf:Description[rdf:type/@rdf:resource=$mim-package or rdf:type/@rdf:resource=$mim-domein]"><xsl:sort select="mim:naam[1]|rdfs:label[1]"/>
+        <xsl:apply-templates select="." mode="parse"/>
+      </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
   <!-- Completeness check - only for debug -->
   <!--
   <xsl:for-each-group select="rdf:Description" group-by="rdf:type/@rdf:resource">
