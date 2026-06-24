@@ -1,10 +1,10 @@
 #
 
-If you want to automate the process of generating MIM models, please at the following in:
+If you want to automate the process of generating MIM models, please add the following in:
 
 `.github/workflows/gen-mim-ld.yml`
 
-(and change accordingly... - stuff in CAPTITALS)
+(and change accordingly... - stuff in CAPITALS)
 
 ```
 
