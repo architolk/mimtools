@@ -951,10 +951,13 @@ queries:
           ?generalisatie mim:subtype ?subtype.
           ?generalisatie mim:supertype ?supertype.
         }
+        GRAPH <urn:input> {
+          ?generalisatie rdfs:seeAlso ?s
+        }
       }
       WHERE {
         GRAPH <urn:input> {
-          SELECT (iri(concat('urn:uuid:',?gen)) as ?generalisatie) (iri(concat('urn:uuid:',?sub)) as ?subtype) (iri(concat('urn:uuid:',?super)) as ?supertype)
+          SELECT (iri(concat('urn:uuid:',?gen)) as ?generalisatie) ?s (iri(concat('urn:uuid:',?sub)) as ?subtype) (iri(concat('urn:uuid:',?super)) as ?supertype)
           WHERE {
             ?s a ea:Connector.
             ?s ea:type "Generalization".
