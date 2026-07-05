@@ -969,6 +969,22 @@ queries:
           }
         }
       }
+  - title: WORKAROUND creeer objecten voor connectors (ownership defaults to starting point, but can be moved - but not stored in the usual location)
+    query: >
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      INSERT {
+        GRAPH <urn:input> {
+          ?c a ea:Object.
+          ?c ea:package ?p
+        }
+      }
+      WHERE {
+        GRAPH <urn:input> {
+          ?c a ea:Connector.
+          ?c ea:start ?s.
+          ?s ea:package ?p.
+        }
+      }
   - title: voeg packages toe die modelementen bevatten, maar niet het juiste stereotype hebben
     query: >
       PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
