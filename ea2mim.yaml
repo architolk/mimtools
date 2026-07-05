@@ -1580,6 +1580,41 @@ queries:
           }
         }
       }
+  - title: DIAGRAM EXTENSION link diagram to connectors
+    query: >
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
+      PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
+      INSERT {
+        GRAPH <urn:output> {
+          ?diagram mim:visualiseert [
+            mim:connector ?connector;
+            mim:startX ?startX;
+            mim:startY ?startY;
+            mim:endX ?endX;
+            mim:endY ?endY;
+            mim:path ?path
+          ]
+        }
+      }
+      WHERE {
+        SELECT ?diagram ?connector (1.5*?sx as ?startX) (-1.0*?sy as ?startY) (1.5*?tx as ?endX) (-1.0*?ty as ?endY)
+        WHERE {
+          GRAPH <urn:input> {
+            ?dia a ea:Diagram.
+            ?diagram rdfs:seeAlso ?dia.
+            ?link a ea:DiagramLink.
+            ?link ea:diagram ?dia.
+            ?link ea:connector ?con.
+            ?connector rdfs:seeAlso ?con.
+            ?link ea:startX ?sx.
+            ?link ea:startY ?sy.
+            ?link ea:endX ?tx.
+            ?link ea:endY ?ty.
+            OPTIONAL {?link ea:path ?path}
+          }
+        }
+      }
   - title: Voeg Kadaster-specifiek gebruik van toelichtingen toe
     query: >
       PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
