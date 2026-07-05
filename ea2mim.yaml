@@ -1598,7 +1598,7 @@ queries:
         }
       }
       WHERE {
-        SELECT ?diagram ?connector (1.5*?sx as ?startX) (-1.0*?sy as ?startY) (1.5*?tx as ?endX) (-1.0*?ty as ?endY)
+        SELECT ?diagram ?connector (1.5*?sx as ?startX) (-1.0*?sy as ?startY) (1.5*?tx as ?endX) (-1.0*?ty as ?endY) ?path
         WHERE {
           GRAPH <urn:input> {
             ?dia a ea:Diagram.

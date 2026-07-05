@@ -23,7 +23,7 @@
 	</graphml:graphml>
 </xsl:template>
 
-<xsl:template match="rdf:Description" mode="diaobj">
+<xsl:template match="rdf:Description[exists(mim:object)]" mode="diaobj">
   <graphml:node>
     <graphml:data key='d3'><xsl:value-of select="mim:object/@rdf:resource"/></graphml:data>
     <graphml:data key='d5'>
@@ -32,6 +32,26 @@
       </y:UMLClassNode>
     </graphml:data>
   </graphml:node>
+</xsl:template>
+
+<xsl:template match="rdf:Description[exists(mim:connector)]" mode="diaobj">
+  <xsl:variable name="subject-uri" select="key('item',mim:connector/@rdf:resource)/mim:bron/@rdf:resource"/>
+  <xsl:variable name="property-uri" select="mim:connector/@rdf:resource"/>
+  <xsl:variable name="object-uri" select="key('item',mim:connector/@rdf:resource)/mim:doel/@rdf:resource"/>
+  <xsl:variable name="statement-uri">urn:md5:<xsl:value-of select="concat($subject-uri,$property-uri,$object-uri)"/></xsl:variable>
+  <graphml:edge>
+    <graphml:data key='d7'><xsl:value-of select="$statement-uri"/></graphml:data>
+    <graphml:data key='d10'>
+      <y:PolyLineEdge>
+        <y:Path sx="{mim:startX}" sy="{mim:startY}" tx="{mim:endX}" ty="{mim:endY}">
+          <xsl:for-each select="tokenize(mim:path,',')">
+            <!-- TODO: Transpose should be done in ea2mim, not in the dia -->
+            <y:Point x="{1.5*xs:decimal(substring-before(.,' '))}" y="{-1.0*xs:decimal(substring-after(.,' '))}"/>
+          </xsl:for-each>
+        </y:Path>
+      </y:PolyLineEdge>
+    </graphml:data>
+  </graphml:edge>
 </xsl:template>
 
 <xsl:template match="/ROOT/rdf:RDF">
