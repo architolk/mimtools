@@ -44,9 +44,9 @@
     <graphml:data key='d10'>
       <y:PolyLineEdge>
         <y:Path sx="{mim:startX}" sy="{mim:startY}" tx="{mim:endX}" ty="{mim:endY}">
-          <xsl:for-each select="tokenize(mim:path,',')">
+          <xsl:for-each select="tokenize(substring-before(substring-after(replace(mim:path,', ',','),'('),')'),',')">
             <!-- TODO: Transpose should be done in ea2mim, not in the dia -->
-            <y:Point x="{1.5*xs:decimal(substring-before(.,' '))}" y="{-1.0*xs:decimal(substring-after(.,' '))}"/>
+            <y:Point x="{substring-before(.,' ')}" y="{substring-after(.,' ')}"/>
           </xsl:for-each>
         </y:Path>
       </y:PolyLineEdge>

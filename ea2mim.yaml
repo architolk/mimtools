@@ -1564,7 +1564,7 @@ queries:
         }
       }
       WHERE {
-        SELECT ?diagram ?object (1.5*?rleft as ?left) (-1.0*?rtop as ?top) (1.5*abs(?rleft-?rright) as ?width) (1.0*abs(?rbottom-?rtop) as ?height)
+        SELECT ?diagram ?object (1.5*?rleft as ?left) (-1.5*?rtop as ?top) (1.5*abs(?rleft-?rright) as ?width) (1.5*abs(?rbottom-?rtop) as ?height)
         WHERE {
           GRAPH <urn:input> {
             ?dia a ea:Diagram.
@@ -1585,6 +1585,7 @@ queries:
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX ea: <http://www.sparxsystems.eu/def/ea#>
       PREFIX mim: <http://modellen.mim-standaard.nl/def/mim#>
+      PREFIX f: <java:nl.architolk.rdf2rdf.>
       INSERT {
         GRAPH <urn:output> {
           ?diagram mim:visualiseert [
@@ -1593,12 +1594,12 @@ queries:
             mim:startY ?startY;
             mim:endX ?endX;
             mim:endY ?endY;
-            mim:path ?path
+            mim:path ?tpath
           ]
         }
       }
       WHERE {
-        SELECT ?diagram ?connector (1.5*?sx as ?startX) (-1.0*?sy as ?startY) (1.5*?tx as ?endX) (-1.0*?ty as ?endY) ?path
+        SELECT ?diagram ?connector (1.5*?sx as ?startX) (-1.5*?sy as ?startY) (1.5*?tx as ?endX) (-1.5*?ty as ?endY) (f:wkt_scale(?path,1.5,-1.5) as ?tpath)
         WHERE {
           GRAPH <urn:input> {
             ?dia a ea:Diagram.
