@@ -29,6 +29,7 @@
     <graphml:data key='d5'>
       <y:UMLClassNode>
         <y:Geometry height="{mim:height}" width="{mim:width}" x="{mim:left}" y="{mim:top}"/>
+        <xsl:if test="mim:fill!=''"><y:Fill color="{mim:fill}"/></xsl:if>
       </y:UMLClassNode>
     </graphml:data>
   </graphml:node>

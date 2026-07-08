@@ -1559,12 +1559,13 @@ queries:
             mim:top ?top;
             mim:left ?left;
             mim:width ?width;
-            mim:height ?height
+            mim:height ?height;
+            mim:fill ?color;
           ]
         }
       }
       WHERE {
-        SELECT ?diagram ?object (1.5*?rleft as ?left) (-1.5*?rtop as ?top) (1.5*abs(?rleft-?rright) as ?width) (1.5*abs(?rbottom-?rtop) as ?height)
+        SELECT ?diagram ?object (1.5*?rleft as ?left) (-1.5*?rtop as ?top) (1.5*abs(?rleft-?rright) as ?width) (1.5*abs(?rbottom-?rtop) as ?height) ?color
         WHERE {
           GRAPH <urn:input> {
             ?dia a ea:Diagram.
@@ -1577,6 +1578,7 @@ queries:
             ?link ea:rectLeft ?rleft.
             ?link ea:rectBottom ?rbottom.
             ?link ea:rectRight ?rright.
+            OPTIONAL {?link ea:backgroundColor ?color}
           }
         }
       }
