@@ -1,0 +1,132 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:facttype:person> a fbm:Objecttype;
+  rdfs:label "person";
+  fbm:role [
+    fbm:playedBy <urn:facttype:pname>;
+  ]
+.
+
+<urn:facttype:pname> a fbm:Valuetype;
+  rdfs:label "person's name";
+  fbm:datatype "char";
+.
+
+<urn:facttype:organisation> a fbm:Objecttype;
+  rdfs:label "organisation";
+  fbm:role [
+    fbm:playedBy <urn:facttype:oname>;
+  ]
+.
+
+<urn:facttype:oname> a fbm:Valuetype;
+  rdfs:label "organisation's name";
+.
+
+<urn:facttype:employment> a fbm:Objecttype;
+  rdfs:label "employment";
+  fbm:role <urn:role:employee>;
+  fbm:role <urn:role:employer>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:employer>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:employer>, <urn:role:employee>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:employee>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:employer>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Person] works for [Organisation]";
+      fbm:parts (<urn:role:employee> "works for" <urn:role:employer>);
+    ];
+    fbm:reading [
+      fbm:text "[Person] has employer [Organisation]";
+      fbm:parts (<urn:role:employee> "has employer" <urn:role:employer>);
+    ]
+  ];
+#  fbm:predicate [
+#    fbm:ordersRole [fbm:role <urn:role:employer>; fbm:atPosition 1];
+#    fbm:ordersRole [fbm:role <urn:role:employee>; fbm:atPosition 2];
+#    fbm:reading [
+#      rdfs:label "has employee";
+#      fbm:text "[Organisation] has employee [Person]";
+#      fbm:parts (<urn:role:employer> "has employee" <urn:role:employee>)
+#    ]
+#  ]
+.
+<urn:role:employer> a fbm:Role;
+  rdfs:label "employer";
+  fbm:playedBy <urn:facttype:organisation>
+.
+<urn:role:employee> a fbm:Role;
+  rdfs:label "employee";
+  fbm:playedBy <urn:facttype:person>
+.
+
+fbm:facttype:functionAllocation a fbm:Facttype;
+  rdfs:label "function assignment";
+  fbm:role <urn:role:position>;
+  fbm:role <urn:role:function>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:position>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:function>; fbm:atPosition 2];
+    fbm:reading [
+#      rdfs:label "with function";
+      fbm:text "[Employment] with [Function]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:position>;
+  ]
+.
+<urn:role:position> a fbm:Role;
+  fbm:playedBy <urn:facttype:employment>;
+.
+<urn:role:function> a fbm:Role;
+  fbm:playedBy <urn:facttype:function>;
+.
+
+<urn:facttype:function> a fbm:Valuetype;
+  rdfs:label "Function";
+.
+
+<urn:facttype:contract> a fbm:Objecttype;
+  rdfs:label "Contract";
+  fbm:role [
+    fbm:playedBy <urn:facttype:cnumber>;
+  ]
+.
+
+<urn:facttype:cnumber> a fbm:Valuetype;
+  rdfs:label "contract number";
+  fbm:datatype "char";
+.
+
+fbm:facttype:contractLink a fbm:Facttype;
+  rdfs:label "contract";
+  fbm:role <urn:role:employment>;
+  fbm:role <urn:role:contract>;
+  fbm:predicate [
+  fbm:ordersRole [fbm:role <urn:role:contract>; fbm:atPosition 1];
+  fbm:ordersRole [fbm:role <urn:role:employment>; fbm:atPosition 2];
+  fbm:reading [
+#      rdfs:label "with function";
+      fbm:text "[Contract] for [Employment]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:employment>, <urn:role:contract>;
+  ]
+.
+<urn:role:employment> a fbm:Role;
+  fbm:playedBy <urn:facttype:employment>;
+.
+<urn:role:contract> a fbm:Role;
+  fbm:playedBy <urn:facttype:contract>;
+.

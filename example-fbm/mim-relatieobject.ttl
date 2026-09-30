@@ -1,0 +1,110 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:facttype:function>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "Function";
+        mim:identifier  "Tfunction" .
+
+<urn:facttype:oname>  a  mim:PrimitiefDatatype;
+        rdfs:label      "organisation's name";
+        mim:identifier  "Toname" .
+
+fbm:facttype:contractLink
+        a                    mim:Relatiesoort;
+        rdfs:label           "[Contract] for [Employment]";
+        mim:bron             <urn:facttype:contract>;
+        mim:doel             <urn:facttype:employment>;
+        mim:identifier       "TcontractLink";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               mim:doel           <urn:facttype:employment>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:contract>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "[Contract] for [Employment]";
+        mim:unidirectioneel  false .
+
+<urn:role:employer>  a       mim:Relatiesoort;
+        mim:bron             <urn:facttype:employment>;
+        mim:doel             <urn:facttype:organisation>;
+        mim:identifier       "Temployer";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "employer";
+                               mim:doel           <urn:facttype:organisation>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:employment>;
+                               mim:kardinaliteit  "1..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:role:employee>  a       mim:Relatiesoort;
+        mim:bron             <urn:facttype:employment>;
+        mim:doel             <urn:facttype:person>;
+        mim:identifier       "Temployee";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "employee";
+                               mim:doel           <urn:facttype:person>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:employment>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:unidirectioneel  true .
+
+fbm:facttype:functionAllocation
+        a                  mim:Attribuutsoort;
+        rdfs:label         "function assignment";
+        mim:identifier     "TfunctionAllocation";
+        mim:kardinaliteit  "0..1";
+        mim:toelichting    "[Employment] with [Function]";
+        mim:type           <urn:facttype:function> .
+
+<urn:facttype:contract>
+        a               mim:Objecttype;
+        rdfs:label      "Contract";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "contract number";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           mim:CharacterString
+                        ];
+        mim:identifier  "Tcontract" .
+
+<urn:facttype:organisation>
+        a               mim:Objecttype;
+        rdfs:label      "organisation";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "organisation's name";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           <urn:facttype:oname>
+                        ];
+        mim:identifier  "Torganisation" .
+
+<urn:facttype:employment>
+        a                mim:Objecttype;
+        rdfs:label       "employment";
+        mim:attribuut    fbm:facttype:functionAllocation;
+        mim:identifier   "Temployment";
+        mim:toelichting  "[Person] works for [Organisation];\n[Person] has employer [Organisation]" .
+
+<urn:facttype:person>
+        a               mim:Objecttype;
+        rdfs:label      "person";
+        mim:attribuut   [ a                  mim:Attribuutsoort;
+                          rdfs:label         "person's name";
+                          mim:identifier     "T";
+                          mim:kardinaliteit  "1..1";
+                          mim:type           mim:CharacterString
+                        ];
+        mim:identifier  "Tperson" .

@@ -15,7 +15,6 @@
   <graph edgedefault="directed" id="G">
     <node id="n0" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:organisation]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -46,7 +45,6 @@
       <graph edgedefault="directed" id="n0:">
         <node id="n0::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:organisation:urn:facttype:oname]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="204.0" y="84.0"/>
@@ -68,7 +66,6 @@
     </node>
     <node id="n1" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:person]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -99,7 +96,6 @@
       <graph edgedefault="directed" id="n1:">
         <node id="n1::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:person:urn:facttype:pname]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="682.0" y="84.0"/>
@@ -121,7 +117,6 @@
     </node>
     <node id="n2" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:address]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -152,7 +147,6 @@
       <graph edgedefault="directed" id="n2:">
         <node id="n2::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:address:urn:facttype:streetName]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="1027.3333333333333" y="84.0"/>
@@ -172,7 +166,6 @@
         </node>
         <node id="n2::n1">
           <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:address:urn:facttype:city]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="1057.3333333333335" y="84.0"/>
@@ -192,7 +185,6 @@
         </node>
         <node id="n2::n2">
           <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:address:urn:facttype:houseNumber]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="997.3333333333334" y="84.0"/>
@@ -214,7 +206,6 @@
     </node>
     <node id="n3" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:position]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -245,7 +236,6 @@
       <graph edgedefault="directed" id="n3:">
         <node id="n3::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:position:urn:facttype:posid]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="442.91552734375" y="-192.0"/>
@@ -267,7 +257,6 @@
     </node>
     <node id="n4" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:assignment]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -298,7 +287,6 @@
       <graph edgedefault="directed" id="n4:">
         <node id="n4::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:position]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="442.91552734375" y="-87.0"/>
@@ -318,7 +306,6 @@
         </node>
         <node id="n4::n1">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:department]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="412.91552734375" y="-87.0"/>
@@ -338,7 +325,6 @@
         </node>
         <node id="n4::n2">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:assignee]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="60.0" x="472.91552734375" y="-87.0"/>
@@ -353,7 +339,6 @@
     </node>
     <node id="n5" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:headOf]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -384,7 +369,6 @@
       <graph edgedefault="directed" id="n5:">
         <node id="n5::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:organisation]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="428.0" y="324.0"/>
@@ -403,7 +387,6 @@
           </data>
         </node>
         <node id="n5::n1">
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="2.0" width="30.0" x="428.0" y="318.0"/>
@@ -415,7 +398,6 @@
         </node>
         <node id="n5::n2">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:head]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="43.0" x="458.0" y="324.0"/>
@@ -430,7 +412,6 @@
     </node>
     <node id="n6" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:employment]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -462,7 +443,6 @@
       <graph edgedefault="directed" id="n6:">
         <node id="n6::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:employer]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="60.0" x="389.0732421875" y="84.0"/>
@@ -474,10 +454,9 @@
           </data>
         </node>
         <node id="n6::n1">
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="2.0" width="30.0" x="419.0732421875" y="78.0"/>
+              <y:Geometry height="2.0" width="60.0" x="389.0732421875" y="78.0"/>
               <y:Fill color="#000000" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:Shape type="rectangle"/>
@@ -486,7 +465,6 @@
         </node>
         <node id="n6::n2">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:employee]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="71.15625" x="449.0732421875" y="84.0"/>
@@ -498,10 +476,9 @@
           </data>
         </node>
         <node id="n6::n3">
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="2.0" width="30.0" x="449.0732421875" y="78.0"/>
+              <y:Geometry height="2.0" width="71.15625" x="449.0732421875" y="78.0"/>
               <y:Fill color="#000000" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:Shape type="rectangle"/>
@@ -512,7 +489,6 @@
     </node>
     <node id="n7" yfiles.foldertype="group">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:livingPlace]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -543,7 +519,6 @@
       <graph edgedefault="directed" id="n7:">
         <node id="n7::n0">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:homeAddress]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="89.0" x="816.0" y="84.0"/>
@@ -556,7 +531,6 @@
         </node>
         <node id="n7::n1">
           <data key="d3" xml:space="preserve"><![CDATA[urn:role:resident]]></data>
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="30.0" width="30.0" x="786.0" y="84.0"/>
@@ -575,7 +549,6 @@
           </data>
         </node>
         <node id="n7::n2">
-          <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
               <y:Geometry height="2.0" width="30.0" x="786.0" y="78.0"/>
@@ -589,7 +562,6 @@
     </node>
     <node id="n8">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:streetName]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="1027.3333333333335" y="191.0"/>
@@ -602,7 +574,6 @@
     </node>
     <node id="n9">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:oname]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="204.0" y="200.0"/>
@@ -615,7 +586,6 @@
     </node>
     <node id="n10">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:city]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="1057.3333333333335" y="155.0"/>
@@ -628,7 +598,6 @@
     </node>
     <node id="n11">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:pname]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="682.0" y="200.0"/>
@@ -641,7 +610,6 @@
     </node>
     <node id="n12">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:posid]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="567.0" y="-192.0"/>
@@ -654,7 +622,6 @@
     </node>
     <node id="n13">
       <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:houseNumber]]></data>
-      <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="997.3333333333334" y="155.0"/>
@@ -667,7 +634,6 @@
     </node>
     <node id="n14">
       <data key="d3" xml:space="preserve"/>
-      <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
           <y:Geometry height="20.0" width="20.0" x="458.0" y="220.00000000000003"/>
@@ -681,7 +647,6 @@
     <edge id="e0" source="n6::n0" target="n0">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:employer]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:employer]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -694,7 +659,6 @@
     <edge id="e1" source="n4::n0" target="n3">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:position]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:position]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -707,7 +671,6 @@
     <edge id="e2" source="n5::n0" target="n0">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:organisation]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:organisation]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -720,7 +683,6 @@
     <edge id="e3" source="n1::n0" target="n11">
       <data key="d7" xml:space="preserve"><![CDATA[A4]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[A4]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -733,7 +695,6 @@
     <edge id="e4" source="n6::n2" target="n1">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:employee]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:employee]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -746,7 +707,6 @@
     <edge id="e5" source="n4::n1" target="n0">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:department]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:department]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -759,7 +719,6 @@
     <edge id="e6" source="n2::n0" target="n8">
       <data key="d7" xml:space="preserve"><![CDATA[A9]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[A9]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -772,7 +731,6 @@
     <edge id="e7" source="n2::n1" target="n10">
       <data key="d7" xml:space="preserve"><![CDATA[A10]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[A10]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -785,7 +743,6 @@
     <edge id="e8" source="n7::n0" target="n2">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:homeAddress]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:homeAddress]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -798,7 +755,6 @@
     <edge id="e9" source="n4::n2" target="n1">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:assignee]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:assignee]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -811,7 +767,6 @@
     <edge id="e10" source="n2::n2" target="n13">
       <data key="d7" xml:space="preserve"><![CDATA[A11]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[A11]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -824,7 +779,6 @@
     <edge id="e11" source="n0::n0" target="n9">
       <data key="d7" xml:space="preserve"><![CDATA[A7]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[A7]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -837,7 +791,6 @@
     <edge id="e12" source="n5::n2" target="n1">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:head]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:head]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -850,7 +803,6 @@
     <edge id="e13" source="n3::n0" target="n12">
       <data key="d7" xml:space="preserve"><![CDATA[A18]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[A18]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -863,7 +815,6 @@
     <edge id="e14" source="n7::n1" target="n1">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:resident]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:resident]]></data>
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -874,8 +825,7 @@
       </data>
     </edge>
     <edge id="e15" source="n5::n2" target="n14">
-      <data key="d7"/>
-      <data key="d9"/>
+      <data key="d7" xml:space="preserve"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -886,8 +836,7 @@
       </data>
     </edge>
     <edge id="e16" source="n5::n0" target="n14">
-      <data key="d7"/>
-      <data key="d9"/>
+      <data key="d7" xml:space="preserve"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -898,8 +847,7 @@
       </data>
     </edge>
     <edge id="e17" source="n14" target="n6::n2">
-      <data key="d7"/>
-      <data key="d9"/>
+      <data key="d7" xml:space="preserve"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -910,8 +858,7 @@
       </data>
     </edge>
     <edge id="e18" source="n14" target="n6::n0">
-      <data key="d7"/>
-      <data key="d9"/>
+      <data key="d7" xml:space="preserve"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
