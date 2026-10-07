@@ -839,7 +839,8 @@ queries:
         GRAPH <urn:input> {
           ?relatiesoort rdfs:seeAlso ?rel.
           ?rel a ea:Connector.
-          ?rel ea:sourceIsNavigable false
+          ?rel ea:sourceIsNavigable ?value.
+          FILTER (?value=false || ?value=0)
         }
       }
   - title: link Relatieklasse aan bron
