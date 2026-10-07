@@ -1601,7 +1601,7 @@ queries:
         }
       }
       WHERE {
-        SELECT ?diagram ?connector (1.5*?sx as ?startX) (-1.5*?sy as ?startY) (1.5*?tx as ?endX) (-1.5*?ty as ?endY) (f:wkt_scale(?path,1.5,-1.5) as ?tpath)
+        SELECT ?diagram ?connector (1.5*?sx as ?startX) (-1.5*?sy as ?startY) (1.5*?tx as ?endX) (-1.5*?ty as ?endY) (replace(replace(f:wkt_scale(replace(?path,'LINESTRING','MULTIPOINT'),1.5,-1.5),'MULTIPOINT','LINESTRING'),'\\(([^\\)]+)\\)','$1') as ?tpath) ?path
         WHERE {
           GRAPH <urn:input> {
             ?dia a ea:Diagram.
