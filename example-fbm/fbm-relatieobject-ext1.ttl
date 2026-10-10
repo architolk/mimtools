@@ -1,0 +1,235 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:facttype:persoon> a fbm:Objecttype;
+  rdfs:label "Persoon";
+  fbm:role [
+    fbm:playedBy <urn:facttype:BSN>;
+  ]
+.
+
+<urn:facttype:BSN> a fbm:Valuetype;
+  rdfs:label "BSN";
+  fbm:datatype "char";
+.
+
+<urn:facttype:persoon.voornaam> a fbm:Facttype;
+  rdfs:label "voornaam";
+  fbm:role <urn:role:persoonv>;
+  fbm:role <urn:role:voornaam>;
+  fbm:ordersRole [fbm:role <urn:role:persoonv>; fbm:atPosition 1];
+  fbm:ordersRole [fbm:role <urn:role:voornaam>; fbm:atPosition 2];
+  fbm:predicate [
+    fbm:reading [
+      fbm:text "[Persoon] heeft [voornaam]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:persoonv>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:persoonv>;
+  ]
+.
+<urn:role:persoonv> a fbm:Role;
+  fbm:playedBy <urn:facttype:persoon>;
+.
+<urn:role:voornaam> a fbm:Role;
+  fbm:playedBy <urn:facttype:voornaam>;
+.
+<urn:facttype:voornaam> a fbm:Valuetype;
+  rdfs:label "voornaam";
+  fbm:datatype "char";
+.
+
+<urn:facttype:persoon.achternaam> a fbm:Facttype;
+  rdfs:label "achternaam";
+  fbm:role <urn:role:persoona>;
+  fbm:role <urn:role:achternaam>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:persoona>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:achternaam>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Persoon] heeft [achternaam]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:persoona>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:persoona>;
+  ]
+.
+<urn:role:persoona> a fbm:Role;
+  fbm:playedBy <urn:facttype:persoon>;
+.
+<urn:role:achternaam> a fbm:Role;
+  fbm:playedBy <urn:facttype:achternaam>;
+.
+<urn:facttype:achternaam> a fbm:Valuetype;
+  rdfs:label "achternaam";
+  fbm:datatype "char";
+.
+
+<urn:facttype:organisatie> a fbm:Objecttype;
+  rdfs:label "Organisatie";
+  fbm:role [
+    fbm:playedBy <urn:facttype:RSIN>;
+  ]
+.
+
+<urn:facttype:RSIN> a fbm:Valuetype;
+  rdfs:label "RSIN";
+  fbm:datatype "char";
+.
+
+<urn:facttype:organisatie.handelsnaam> a fbm:Facttype;
+  rdfs:label "handelsnaam";
+  fbm:role <urn:role:organisatieh>;
+  fbm:role <urn:role:handelsnaam>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:organisatieh>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:handelsnaam>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Organisatie] heeft [handelsnaam]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:organisatieh>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:organisatieh>;
+  ]
+.
+<urn:role:organisatieh> a fbm:Role;
+  fbm:playedBy <urn:facttype:organisatie>;
+.
+<urn:role:handelsnaam> a fbm:Role;
+  fbm:playedBy <urn:facttype:handelsnaam>;
+.
+<urn:facttype:handelsnaam> a fbm:Valuetype;
+  rdfs:label "handelsnaam";
+  fbm:datatype "char";
+.
+
+<urn:facttype:dienstbetrekking> a fbm:Objecttype;
+  rdfs:label "dienstbetrekking";
+  fbm:role <urn:role:werknemer>;
+  fbm:role <urn:role:werkgever>;
+  fbm:predicate [
+    rdfs:label "is in dienst bij";
+    fbm:ordersRole [fbm:role <urn:role:werknemer>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:werkgever>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[werknemer] is in dienst bij [werkgever]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:werknemer>, <urn:role:werkgever>;
+  ]
+.
+<urn:role:werknemer> a fbm:Role;
+  rdfs:label "werknemer";
+  fbm:playedBy <urn:facttype:persoon>;
+.
+<urn:role:werkgever> a fbm:Role;
+  rdfs:label "werkgever";
+  fbm:playedBy <urn:facttype:organisatie>;
+.
+
+<urn:facttype:dienstbetrekking.startdatum> a fbm:Facttype;
+  rdfs:label "startdatum";
+  fbm:role <urn:role:dienstbetrekkingsd>;
+  fbm:role <urn:role:startdatum>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:dienstbetrekkingsd>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:startdatum>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Dienstbetrekking] heeft [startdatum]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:dienstbetrekkingsd>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:dienstbetrekkingsd>;
+  ]
+.
+<urn:role:dienstbetrekkingsd> a fbm:Role;
+  fbm:playedBy <urn:facttype:dienstbetrekking>;
+.
+<urn:role:startdatum> a fbm:Role;
+  fbm:playedBy <urn:facttype:startdatum>;
+.
+<urn:facttype:startdatum> a fbm:Valuetype;
+  rdfs:label "startdatum";
+  fbm:datatype "datum";
+.
+
+<urn:facttype:dienstbetrekking.einddatum> a fbm:Facttype;
+  rdfs:label "einddatum";
+  fbm:role <urn:role:dienstbetrekkinged>;
+  fbm:role <urn:role:einddatum>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:dienstbetrekkinged>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:einddatum>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Dienstbetrekking] heeft [einddatum]";
+    ];
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:dienstbetrekkinged>;
+  ]
+.
+<urn:role:dienstbetrekkinged> a fbm:Role;
+  fbm:playedBy <urn:facttype:dienstbetrekking>;
+.
+<urn:role:einddatum> a fbm:Role;
+  fbm:playedBy <urn:facttype:einddatum>;
+.
+<urn:facttype:einddatum> a fbm:Valuetype;
+  rdfs:label "einddatum";
+  fbm:datatype "datum";
+.
+
+<urn:facttype:arbeidscontract> a fbm:Objecttype;
+  rdfs:label "Arbeidscontract";
+  fbm:role <urn:role:betreftdienstbetrekking>;
+  fbm:role <urn:role:datumVastlegging>;
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:betreftdienstbetrekking>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:datumVastlegging>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "betreft [Dienstbetrekking] van [datum vastlegging]"
+    ]
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:betreftdienstbetrekking>, <urn:role:datumVastlegging>;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:betreftdienstbetrekking>
+  ]
+.
+<urn:role:betreftdienstbetrekking> a fbm:Role;
+  rdfs:label "dienstbetrekking";
+  fbm:playedBy <urn:facttype:dienstbetrekking>;
+.
+<urn:role:datumVastlegging> a fbm:Role;
+  fbm:playedBy <urn:facttype:datumVastlegging>;
+.
+<urn:facttype:datumVastlegging> a fbm:Valuetype;
+  rdfs:label "datum vastlegging";
+  fbm:datatype "datum";
+.

@@ -1,0 +1,135 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX ex: <http://example.org/dienstbetrekking#>
+
+#
+# Primitieve waardetypen
+#
+mim:CharacterString a mim:Waardetype;
+  rdfs:label "CharacterString";
+.
+mim:Date a mim:Waardetype;
+  rdfs:label "Date";
+.
+
+#
+# Persoon
+#
+ex:Persoon a mim:Objecttype;
+  rdfs:label "Persoon";
+  mim:attribuuttype ex:Persoon.BSN;
+  mim:attribuuttype ex:Persoon.achternaam;
+  mim:attribuuttype ex:Persoon.voornaam;
+  mim:referentierol ex:Dienstbetrekking.werkgever;
+  mim:identificator [
+    mim:identificatordeel ex:Persoon.BSN;
+  ]
+.
+ex:Persoon.BSN a mim:Attribuuttype;
+  rdfs:label "BSN";
+  mim:kardinaliteit "1..1";
+  mim:waardetype mim:CharacterString;
+  # mim:identificerend true; (afleidbaar)
+.
+ex:Persoon.achternaam a mim:Attribuuttype;
+  rdfs:label "achternaam";
+  mim:kardinaliteit "1..1";
+  mim:waardetype mim:CharacterString;
+.
+ex:Persoon.voornaam a mim:Attribuuttype;
+  rdfs:label "voornaam";
+  mim:kardinaliteit "1..1";
+  mim:waardetype mim:CharacterString;
+.
+
+#
+# Organisatie
+#
+ex:Organisatie a mim:Objecttype;
+  rdfs:label "Organisatie";
+  mim:attribuuttype ex:Organisatie.RSIN;
+  mim:attribuuttype ex:Organisatie.handelsnaam;
+  mim:referentierol ex:Dienstbetrekking.werknemer;
+  mim:identificator [
+    mim:identificatordeel ex:Organisatie.RSIN;
+  ]
+.
+ex:Organisatie.RSIN a mim:Attribuuttype;
+  rdfs:label "RSIN";
+  mim:kardinaliteit "1..1";
+  mim:waardetype mim:CharacterString
+  # mim:identificerend true; (Afleidbaar)
+.
+ex:Organisatie.handelsnaam a mim:Attribuuttype;
+  rdfs:label "handelsnaam";
+  mim:kardinaliteit "1..1";
+  mim:waardetype mim:CharacterString
+.
+
+#
+# Dienstbetrekking
+#
+ex:Dienstbetrekking a mim:Relatieobjecttype;
+  rdfs:label "Dienstbetrekking";
+  mim:attribuuttype ex:Dienstbetrekking.begindatum;
+  mim:attribuuttype ex:Dienstbetrekking.einddatum;
+  mim:relatierol ex:Dienstbetrekking.werkgever;
+  mim:relatierol ex:Dienstbetrekking.werknemer;
+  mim:identificator [
+    mim:identificatordeel ex:Dienstbetrekking.werkgever;
+    mim:identificatordeel ex:Dienstbetrekking.werknemer;
+  ];
+  mim:verwoording [
+    a mim:Verwoording;
+    mim:verwoording "is in dienst bij";
+    mim:bron ex:Dienstbetrekking.werknemer;
+    mim:doel ex:Dienstbetrekking.werkgever;
+  ]
+.
+ex:Dienstbetrekking.werknemer a mim:Rolinvulling;
+  rdfs:label "werknemer";
+  mim:rolinvuller ex:Persoon;
+  mim:kardinaliteit "0..*";
+.
+ex:Dienstbetrekking.werkgever a mim:Rolinvulling;
+  rdfs:label "werkgever";
+  mim:rolinvuller ex:Organisatie;
+  mim:kardinaliteit "0..*";
+.
+ex:Dienstbetrekking.begindatum a mim:Attribuuttype;
+  rdfs:label "begindatum";
+  mim:kardinaliteit "1..1";
+  mim:waardetype mim:Date;
+.
+ex:Dienstbetrekking.einddatum a mim:Attribuuttype;
+  rdfs:label "begindatum";
+  mim:kardinaliteit "0..1";
+  mim:waardetype mim:Date;
+.
+
+#
+# Arbeidscontract
+#
+ex:Arbeidscontract a mim:Objecttype;
+  rdfs:label "Arbeidscontract";
+  mim:referentierol ex:Arbeidscontract.dienstbetrekking;
+  mim:attribuuttype ex:Arbeidscontract.datumVastlegging;
+  mim:identificator [
+    mim:identificatordeel ex:Arbeidscontract.dienstbetrekking;
+    mim:identificatordeel ex:Arbeidscontract.datumVastlegging;
+  ]
+.
+ex:Arbeidscontract.dienstbetrekking a mim:Rolinvulling;
+  rdfs:label "dienstbetrekking";
+  mim:rolinvuller ex:Dienstbetrekking;
+  mim:kardinaliteit "1..1";
+.
+ex:Arbeidscontract.datumVastlegging a mim:Attribuuttype;
+  rdfs:label "datum vastlegging";
+  # mim:identificerend true; (afleidbaar)
+  mim:kardinaliteit "1..1";
+  mim:waardetype mim:Date
+.

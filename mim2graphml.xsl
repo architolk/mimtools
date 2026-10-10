@@ -62,6 +62,9 @@
   <xsl:if test="mim:kardinaliteit!='' and mim:kardinaliteit!='1..1'">
     <xsl:text> [</xsl:text><xsl:value-of select="mim:kardinaliteit"/><xsl:text>]</xsl:text>
   </xsl:if>
+  <xsl:if test="mim:identificerend='true'">
+    <xsl:text> {id}</xsl:text>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="/">
@@ -226,6 +229,9 @@
                   </xsl:choose>
                   <y:Fill color="#000000" transparent="false"/>
                   <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+                  <xsl:if test="../mim:verwoording!=''">
+                    <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="86.32421875" x="-38.162109375" xml:space="preserve" y="-22.1328125"><xsl:value-of select="../mim:verwoording"/><y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.5" nodeRatioX="0.5" nodeRatioY="-0.5" offsetX="0.0" offsetY="-4.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
+                  </xsl:if>
                   <y:Shape type="ellipse"/>
                 </y:ShapeNode>
               </data>
@@ -384,7 +390,10 @@
                     <xsl:for-each select="key('resources',../mim:relatierol/(@rdf:resource|@rdf:nodeID))[rdf:type/@rdf:resource='http://modellen.mim-standaard.nl/def/mim#RelatierolDoel']">
                       <xsl:if test="mim:naam!='' or rdfs:label!=''">
                         <xsl:call-template name="edge-label">
-                          <xsl:with-param name="label"><xsl:apply-templates select="." mode="label"/></xsl:with-param>
+                          <xsl:with-param name="label">
+                            <xsl:apply-templates select="." mode="label"/>
+                            <xsl:if test="mim:identificerend='true'"> {id}</xsl:if>
+                          </xsl:with-param>
                           <xsl:with-param name="ratio">1.0</xsl:with-param>
                           <xsl:with-param name="position">left</xsl:with-param>
                         </xsl:call-template>

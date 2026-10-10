@@ -1,0 +1,247 @@
+PREFIX ex:   <http://example.org/dienstbetrekking#>
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:md5:2ee0cf73907222d16af2e18592baadf9>
+        rdf:first  mim:Relatieobjecttype;
+        rdf:rest   () .
+
+mim:identificator__NODE
+        rdf:type     sh:NodeShape;
+        rdfs:label   "identificator";
+        sh:property  [ rdf:type    sh:PropertyShape;
+                       rdfs:label  "identificatordeel";
+                       sh:path     mim:identificatordeel
+                     ] .
+
+mim:doel  rdf:type  owl:ObjectProperty;
+        rdfs:label  "doel" .
+
+mim:bron  rdf:type  owl:ObjectProperty;
+        rdfs:label  "bron" .
+
+mim:identificatordeel
+        rdf:type    owl:ObjectProperty;
+        rdfs:label  "identificatordeel" .
+
+mim:relatierol  rdf:type  owl:ObjectProperty;
+        rdfs:label  "relatierol" .
+
+mim:identificator  rdf:type  owl:ObjectProperty;
+        rdfs:label  "identificator" .
+
+mim:attribuuttype  rdf:type  owl:ObjectProperty;
+        rdfs:label  "attribuuttype" .
+
+mim:referentierol  rdf:type  owl:ObjectProperty;
+        rdfs:label  "referentierol" .
+
+mim:waardetype  rdf:type  owl:ObjectProperty;
+        rdfs:label  "waardetype" .
+
+mim:rolinvuller  rdf:type  owl:ObjectProperty;
+        rdfs:label  "rolinvuller" .
+
+rdf:type  rdf:type  owl:ObjectProperty;
+        rdfs:label  "type" .
+
+mim:verwoording  rdf:type  rdf:Property;
+        rdfs:label  "verwoording" .
+
+mim:kardinaliteit  rdf:type  owl:DatatypeProperty;
+        rdfs:label  "kardinaliteit" .
+
+rdfs:label  rdf:type  owl:DatatypeProperty;
+        rdfs:label  "label" .
+
+mim:Relatieobjecttype
+        rdf:type        sh:NodeShape , rdfs:Class;
+        rdfs:label      "Relatieobjecttype";
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "verwoording";
+                          sh:class     mim:Verwoording;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:BlankNode;
+                          sh:path      mim:verwoording
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "identificator";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:node      mim:identificator__NODE;
+                          sh:nodeKind  sh:BlankNode;
+                          sh:path      mim:identificator
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "relatierol";
+                          sh:class     mim:Rolinvulling;
+                          sh:maxCount  2;
+                          sh:minCount  2;
+                          sh:path      mim:relatierol
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "attribuuttype";
+                          sh:class     mim:Attribuuttype;
+                          sh:maxCount  2;
+                          sh:minCount  2;
+                          sh:path      mim:attribuuttype
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "type";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      rdf:type
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "label";
+                          sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:Literal;
+                          sh:path      rdfs:label
+                        ];
+        sh:targetClass  mim:Relatieobjecttype .
+
+mim:Objecttype  rdf:type  sh:NodeShape , rdfs:Class;
+        rdfs:label      "Objecttype";
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "identificator";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:node      mim:identificator__NODE;
+                          sh:nodeKind  sh:BlankNode;
+                          sh:path      mim:identificator
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "referentierol";
+                          sh:class     mim:Rolinvulling;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      mim:referentierol
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "attribuuttype";
+                          sh:class     mim:Attribuuttype;
+                          sh:maxCount  3;
+                          sh:minCount  1;
+                          sh:path      mim:attribuuttype
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "type";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      rdf:type
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "label";
+                          sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:Literal;
+                          sh:path      rdfs:label
+                        ];
+        sh:targetClass  mim:Objecttype .
+
+mim:Rolinvulling  rdf:type  sh:NodeShape , rdfs:Class;
+        rdfs:label      "Rolinvulling";
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "label";
+                          sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:Literal;
+                          sh:path      rdfs:label
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "type";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      rdf:type
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "rolinvuller";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:node      [ sh:xone  ( mim:Objecttype mim:Relatieobjecttype )
+                                       ];
+                          sh:path      mim:rolinvuller
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "kardinaliteit";
+                          sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:Literal;
+                          sh:path      mim:kardinaliteit
+                        ];
+        sh:targetClass  mim:Rolinvulling .
+
+mim:Verwoording  rdf:type  sh:NodeShape , rdfs:Class;
+        rdfs:label      "Verwoording";
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "type";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      rdf:type
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "verwoording";
+                          sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:Literal;
+                          sh:path      mim:verwoording
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "bron";
+                          sh:class     mim:Rolinvulling;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      mim:bron
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "doel";
+                          sh:class     mim:Rolinvulling;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      mim:doel
+                        ];
+        sh:targetClass  mim:Verwoording .
+
+mim:Attribuuttype  rdf:type  sh:NodeShape , rdfs:Class;
+        rdfs:label      "Attribuuttype";
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "waardetype";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      mim:waardetype
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "type";
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:path      rdf:type
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "label";
+                          sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:Literal;
+                          sh:path      rdfs:label
+                        ];
+        sh:property     [ rdf:type     sh:PropertyShape;
+                          rdfs:label   "kardinaliteit";
+                          sh:datatype  xsd:string;
+                          sh:maxCount  1;
+                          sh:minCount  1;
+                          sh:nodeKind  sh:Literal;
+                          sh:path      mim:kardinaliteit
+                        ];
+        sh:targetClass  mim:Attribuuttype .

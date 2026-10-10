@@ -1,0 +1,124 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:role:betreftdienstbetrekking>
+        a                    mim:Relatiesoort;
+        mim:bron             <urn:facttype:arbeidscontract>;
+        mim:doel             <urn:facttype:dienstbetrekking>;
+        mim:identifier       "Tbetreftdienstbetrekking";
+        mim:kardinaliteit    "1..1";
+        mim:relatierol       [ a                   mim:RelatierolDoel;
+                               rdfs:label          "dienstbetrekking";
+                               mim:doel            <urn:facttype:dienstbetrekking>;
+                               mim:identificerend  true;
+                               mim:kardinaliteit   "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:arbeidscontract>;
+                               mim:kardinaliteit  "1..*"
+                             ];
+        mim:unidirectioneel  true .
+
+<urn:facttype:persoon.achternaam>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "achternaam";
+        mim:identifier     "Tpersoon.achternaam";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[Persoon] heeft [achternaam]";
+        mim:type           mim:CharacterString .
+
+<urn:facttype:dienstbetrekking.einddatum>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "einddatum";
+        mim:identifier     "Tdienstbetrekking.einddatum";
+        mim:kardinaliteit  "0..1";
+        mim:toelichting    "[Dienstbetrekking] heeft [einddatum]";
+        mim:type           mim:Date .
+
+<urn:facttype:dienstbetrekking.startdatum>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "startdatum";
+        mim:identifier     "Tdienstbetrekking.startdatum";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[Dienstbetrekking] heeft [startdatum]";
+        mim:type           mim:Date .
+
+<urn:facttype:persoon.voornaam>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "voornaam";
+        mim:identifier     "Tpersoon.voornaam";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[Persoon] heeft [voornaam]";
+        mim:type           mim:CharacterString .
+
+<urn:facttype:organisatie.handelsnaam>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "handelsnaam";
+        mim:identifier     "Torganisatie.handelsnaam";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[Organisatie] heeft [handelsnaam]";
+        mim:type           mim:CharacterString .
+
+<urn:role:datumVastlegging>
+        a                   mim:Attribuutsoort;
+        rdfs:label          "datum vastlegging";
+        mim:identificerend  true;
+        mim:identifier      "TdatumVastlegging";
+        mim:kardinaliteit   "1..1";
+        mim:type            mim:Date .
+
+<urn:facttype:organisatie>
+        a               mim:Objecttype;
+        rdfs:label      "Organisatie";
+        mim:attribuut   <urn:facttype:organisatie.handelsnaam>;
+        mim:attribuut   [ a                   mim:Attribuutsoort;
+                          rdfs:label          "RSIN";
+                          mim:identificerend  true;
+                          mim:identifier      "T";
+                          mim:kardinaliteit   "1..1";
+                          mim:type            mim:CharacterString
+                        ];
+        mim:identifier  "Torganisatie" .
+
+<urn:facttype:arbeidscontract>
+        a                mim:Objecttype;
+        rdfs:label       "Arbeidscontract";
+        mim:attribuut    <urn:role:datumVastlegging>;
+        mim:identifier   "Tarbeidscontract";
+        mim:toelichting  "betreft [Dienstbetrekking] van [datum vastlegging]" .
+
+<urn:facttype:persoon>
+        a               mim:Objecttype;
+        rdfs:label      "Persoon";
+        mim:attribuut   <urn:facttype:persoon.achternaam> , <urn:facttype:persoon.voornaam>;
+        mim:attribuut   [ a                   mim:Attribuutsoort;
+                          rdfs:label          "BSN";
+                          mim:identificerend  true;
+                          mim:identifier      "T";
+                          mim:kardinaliteit   "1..1";
+                          mim:type            mim:CharacterString
+                        ];
+        mim:identifier  "Tpersoon" .
+
+<urn:facttype:dienstbetrekking>
+        a                    mim:Relatieklasse;
+        rdfs:label           "dienstbetrekking";
+        mim:attribuut        <urn:facttype:dienstbetrekking.einddatum> , <urn:facttype:dienstbetrekking.startdatum>;
+        mim:bron             <urn:facttype:persoon>;
+        mim:doel             <urn:facttype:organisatie>;
+        mim:identifier       "Tdienstbetrekking";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "werkgever";
+                               mim:doel           <urn:facttype:organisatie>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "werknemer";
+                               mim:bron           <urn:facttype:persoon>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "[werknemer] is in dienst bij [werkgever]";
+        mim:unidirectioneel  false;
+        mim:verwoording      "is in dienst bij" .

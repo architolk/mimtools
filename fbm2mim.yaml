@@ -62,7 +62,36 @@ queries:
           ?im rdfs:label ?label
         }
       }
-  - title: fbm:Objecttype naar mim:Objecttype
+  - title: fbm:Objecttype naar mim:Relatieklasse bij precies 2 afhankelijke rollen
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?rk a mim:Relatieklasse.
+          ?rk mim:identifier ?id.
+          ?rk rdfs:label ?label.
+        }
+      }
+      where {
+        select ?rk ?label (concat("T",strafter(str(?rk),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            select ?rk ?label
+            where {
+              ?rk a fbm:Objecttype.
+              ?rk rdfs:label ?label.
+              ?rk fbm:role ?role.
+              ?role fbm:playedBy ?ot.
+              ?ot a fbm:Objecttype
+            }
+            group by ?rk ?label
+            having (count(?role)=2)
+          }
+        }
+      }
+  - title: fbm:Objecttype naar mim:Objecttype (behalve reeds aanwezige relatieklassen)
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
       prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
@@ -80,6 +109,11 @@ queries:
           graph <urn:input> {
             ?ot a fbm:Objecttype.
             ?ot rdfs:label ?label
+          }
+          filter not exists {
+            graph <urn:output> {
+              ?ot a mim:Relatieklasse
+            }
           }
         }
       }
@@ -142,6 +176,7 @@ queries:
           ?attr mim:identifier ?id.
           ?attr mim:kardinaliteit ?card.
           ?attr mim:type ?datatype.
+          ?attr mim:identificerend true.
           ?ot mim:attribuut ?attr.
         }
       }
@@ -156,6 +191,7 @@ queries:
               ?attr fbm:playedBy ?vt.
               ?vt a fbm:Valuetype.
               ?vt rdfs:label ?label.
+              OPTIONAL {?attr rdfs:label ?rolelabel}
               OPTIONAL {?attr fbm:optional ?optional}
             }
             {
@@ -173,7 +209,56 @@ queries:
           }
         }
       }
-  - title: mim:Attribuutsoort via facttype (alleen binair)
+  - title: mim:Attribuutsoort via facttype (alleen binair) - shortcut naar datatype als type
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?attr a mim:Attribuutsoort.
+          ?attr rdfs:label ?label.
+          ?attr mim:identifier ?id.
+          ?attr mim:kardinaliteit ?card.
+          ?attr mim:type ?dt.
+          ?ot mim:attribuut ?attr.
+        }
+      }
+      where {
+        select ?attr (if(bound(?rolelabel),?rolelabel,?vtlabel) as ?label) ?ot ?dt (concat(if(bound(?optional),if(?optional,"0",if(bound(?tc),"1","0")),if(bound(?tc),"1","0")),"..",if(bound(?uc),"1","*")) as ?card) (concat("T",strafter(str(?attr),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            ?attr a fbm:Facttype.
+            ?attr fbm:role ?role.
+            ?role fbm:playedBy ?ot.
+            OPTIONAL {?role fbm:optional ?optional}.
+            ?ot a fbm:Objecttype.
+            ?attr fbm:role ?vtrole.
+            ?vtrole fbm:playedBy ?vt.
+            ?vt a fbm:Valuetype.
+            ?vt rdfs:label ?vtlabel.
+            ?vt fbm:datatype ?dtlabel.
+            OPTIONAL {
+              ?attr fbm:constraint ?tc.
+              ?tc a fbm:MandatoryConstraint.
+              ?tc fbm:restricts ?role
+            }
+            OPTIONAL {
+              ?attr fbm:constraint ?uc.
+              ?uc a fbm:UniquenessConstraint.
+              ?uc fbm:restricts ?role
+              FILTER NOT EXISTS {?uc fbm:restricts ?vtrole}
+            }
+            FILTER NOT EXISTS {
+              ?attr fbm:predicate/fbm:ordersRole/fbm:atPosition 3
+            }
+          }
+          graph <urn:metadata> {
+            ?dt fbm:datatype ?dtlabel
+          }
+        }
+      }
+  - title: mim:Attribuutsoort via facttype (alleen binair) - valuetype als type
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
       prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
@@ -217,9 +302,14 @@ queries:
               ?attr fbm:predicate/fbm:ordersRole/fbm:atPosition 3
             }
           }
+          FILTER NOT EXISTS {
+            graph <urn:output> {
+              ?attr a mim:Attribuutsoort
+            }
+          }
         }
       }
-  - title: mim:Relatiesoort direct via objecttype rol met fbm:Objecttype
+  - title: mim:Relatiesoort direct via objecttype rol met fbm:Objecttype (en geen relatieklasse)
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
       prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
@@ -242,7 +332,8 @@ queries:
             a mim:RelatierolDoel;
             mim:kardinaliteit ?card;
             mim:doel ?doel;
-            rdfs:label ?relnaam
+            rdfs:label ?relnaam;
+            mim:identificerend true
           ]
         }
       }
@@ -275,9 +366,14 @@ queries:
               }
             }
           }
+          FILTER NOT EXISTS {
+            graph <urn:output> {
+              ?bron a mim:Relatieklasse
+            }
+          }
         }
       }
-  - title: mim:Relatiesoort via facttypes (alleen binaire relaties en relaties waarbij de andere rollen valuestypes zijn)
+  - title: mim:Relatiesoort via facttypes introduceren (alleen binaire relaties en relaties waarbij de andere rollen valuestypes zijn)
     query: >
       prefix fbm: <http://bp4mc2.org/def/fbm#>
       prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
@@ -288,6 +384,41 @@ queries:
           ?rel a mim:Relatiesoort.
           ?rel rdfs:label ?label.
           ?rel mim:identifier ?id.
+        }
+      }
+      where {
+        select ?rel (if(?predicatelabel!='',?predicatelabel,if(?reading!='',?reading,?name)) as ?label) (concat("T",strafter(str(?rel),"facttype:")) as ?id)
+        where {
+          graph <urn:input> {
+            ?rel a fbm:Facttype.
+            OPTIONAL {?rel rdfs:label ?name}
+            ?rel fbm:role ?bronrol.
+            ?rel fbm:role ?doelrol.
+            ?bronrol a fbm:Role.
+            ?doelrol a fbm:Role.
+            ?bronrol fbm:playedBy ?bron.
+            ?doelrol fbm:playedBy ?doel.
+            ?bron a fbm:Objecttype.
+            ?doel a fbm:Objecttype.
+            OPTIONAL {?rel fbm:predicate/fbm:reading/fbm:text ?reading}
+            OPTIONAL {?rel fbm:predicate/rdfs:label ?predicatelabel}
+            FILTER (?bronrol!=?doelrol)
+            FILTER NOT EXISTS {
+              ?rel fbm:role ?derderol.
+              ?derderol fbm:playedBy/rdf:type fbm:Objecttype.
+              FILTER (?derderol!=?bronrol && ?derderol!=?doelrol)
+            }
+          }
+        }
+      }
+  - title: mim:Relatiesoort en mim:Relatieklasse eigenschappen vullen
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
           ?rel mim:bron ?bron.
           ?rel mim:doel ?doel.
           ?rel mim:unidirectioneel false.
@@ -304,11 +435,13 @@ queries:
         }
       }
       where {
-        select ?rel (if(?reading!='',?reading,?name) as ?label) ?bron ?doel ?bronrollabel ?doelrollabel (concat("T",strafter(str(?rel),"facttype:")) as ?id)
+        select ?rel ?bron ?doel ?bronrollabel ?doelrollabel
         where {
+          graph <urn:output> {
+            ?rel a ?type.
+            FILTER (?type=mim:Relatieklasse || ?type=mim:Relatiesoort)
+          }
           graph <urn:input> {
-            ?rel a fbm:Facttype.
-            OPTIONAL {?rel rdfs:label ?name}
             ?rel fbm:role ?bronrol.
             ?rel fbm:role ?doelrol.
             ?bronrol a fbm:Role.
@@ -326,13 +459,7 @@ queries:
             ?dro fbm:atPosition ?doelrolorder.
             ?bron a fbm:Objecttype.
             ?doel a fbm:Objecttype.
-            OPTIONAL {?predicate fbm:reading/fbm:text ?reading}
             FILTER (?bronrolorder<?doelrolorder && ?bronrol!=?doelrol)
-            FILTER NOT EXISTS {
-              ?rel fbm:role ?derderol.
-              ?derderol fbm:playedBy/rdf:type fbm:Objecttype.
-              FILTER (?derderol!=?bronrol && ?derderol!=?doelrol)
-            }
           }
         }
       }
@@ -670,5 +797,25 @@ queries:
             ?vt fbm:datatype ?dtlabel
           }
           graph <urn:metadata> {?datatype fbm:datatype ?dtlabel}
+        }
+      }
+  - title: verwoordingen toevoegen bij relatiesoorten en relatieklassen (MIM 2.0 feature toegepast op MIM 1.2 metamodel)
+    query: >
+      prefix fbm: <http://bp4mc2.org/def/fbm#>
+      prefix mim: <http://modellen.mim-standaard.nl/def/mim#>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      insert {
+        graph <urn:output> {
+          ?rel mim:verwoording ?verwoording
+        }
+      }
+      where {
+        graph <urn:output> {
+          ?rel a ?type
+          FILTER (?type=mim:Relatiesoort || ?type=mim:Relatieklasse)
+        }
+        graph <urn:input> {
+          ?rel fbm:predicate ?pred.
+          ?pred rdfs:label ?verwoording
         }
       }
