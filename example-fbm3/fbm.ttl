@@ -1,0 +1,72 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:facttype:plaats> a fbm:Objecttype;
+  rdfs:label "Plaats";
+  fbm:role <urn:role:plaatsnaam>
+.
+<urn:role:plaatsnaam> a fbm:Role;
+  fbm:playedBy <urn:facttype:plaatsnaam>;
+.
+
+<urn:facttype:plaatsnaam> a fbm:Valuetype;
+  rdfs:label "plaatsnaam";
+.
+
+<urn:facttype:weg> a fbm:Objecttype;
+  rdfs:label "Weg";
+  fbm:role <urn:role:vanplaats>;
+  fbm:role <urn:role:naarplaats>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:vanplaats>;
+    fbm:restricts <urn:role:naarplaats>
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:vanplaats>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:naarplaats>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "weg gaat van [plaats] naar [plaats]";
+      fbm:parts ("weg gaat van" <urn:role:vanplaats> "naar" <urn:role:naarplaats>);
+    ];
+  ];
+.
+<urn:role:vanplaats> a fbm:Role;
+  rdfs:label "van";
+  fbm:playedBy <urn:facttype:plaats>;
+.
+<urn:role:naarplaats> a fbm:Role;
+  rdfs:label "naar";
+  fbm:playedBy <urn:facttype:plaats>;
+.
+
+<urn:facttype:wegheeftwegnaam> a fbm:Facttype;
+  rdfs:label "wegnaam";
+  fbm:role <urn:role:weg>;
+  fbm:role <urn:role:wegnaam>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:weg>;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:weg>;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:weg>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:wegnaam>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[weg] heeft [wegnaam]";
+      fbm:parts (<urn:role:weg> "heeft" <urn:role:wegnaam>);
+    ];
+  ];
+.
+<urn:role:weg> a fbm:Role;
+  fbm:playedBy <urn:facttype:weg>;
+.
+<urn:role:wegnaam> a fbm:Role;
+  fbm:playedBy <urn:facttype:wegnaam>
+.
+<urn:facttype:wegnaam> a fbm:Valuetype;
+  rdfs:label "wegnaam";
+.

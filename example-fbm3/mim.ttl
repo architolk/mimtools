@@ -1,0 +1,55 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:facttype:plaatsnaam>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "plaatsnaam";
+        mim:identifier  "Tplaatsnaam" .
+
+<urn:facttype:wegnaam>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "wegnaam";
+        mim:identifier  "Twegnaam" .
+
+<urn:facttype:wegheeftwegnaam>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "wegnaam";
+        mim:identifier     "Twegheeftwegnaam";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[weg] heeft [wegnaam]";
+        mim:type           <urn:facttype:wegnaam> .
+
+<urn:role:plaatsnaam>
+        a                   mim:Attribuutsoort;
+        rdfs:label          "plaatsnaam";
+        mim:identificerend  true;
+        mim:identifier      "Tplaatsnaam";
+        mim:kardinaliteit   "1..1";
+        mim:type            <urn:facttype:plaatsnaam> .
+
+<urn:facttype:plaats>
+        a               mim:Objecttype;
+        rdfs:label      "Plaats";
+        mim:attribuut   <urn:role:plaatsnaam>;
+        mim:identifier  "Tplaats" .
+
+<urn:facttype:weg>  a        mim:Relatieklasse;
+        rdfs:label           "Weg";
+        mim:attribuut        <urn:facttype:wegheeftwegnaam>;
+        mim:bron             <urn:facttype:plaats>;
+        mim:doel             <urn:facttype:plaats>;
+        mim:identifier       "Tweg";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "naar";
+                               mim:doel           <urn:facttype:plaats>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               rdfs:label         "van";
+                               mim:bron           <urn:facttype:plaats>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "weg gaat van [plaats] naar [plaats]";
+        mim:unidirectioneel  false .
