@@ -1,0 +1,36 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:role:regelnummer>
+        a                   mim:Attribuutsoort;
+        rdfs:label          "regelnummer";
+        mim:identificerend  true;
+        mim:identifier      "Tregelnummer";
+        mim:kardinaliteit   "1..1";
+        mim:type            mim:Integer .
+
+<urn:role:order>  a         mim:Attribuutsoort;
+        rdfs:label          "ordernummer";
+        mim:identificerend  true;
+        mim:identifier      "Torder";
+        mim:kardinaliteit   "1..1";
+        mim:type            mim:Integer .
+
+<urn:facttype:order>  a  mim:Objecttype;
+        rdfs:label      "Order";
+        mim:attribuut   [ a                   mim:Attribuutsoort;
+                          rdfs:label          "ordernummer";
+                          mim:identificerend  true;
+                          mim:identifier      "T";
+                          mim:kardinaliteit   "1..1";
+                          mim:type            mim:Integer
+                        ];
+        mim:identifier  "Torder" .
+
+<urn:facttype:orderregel>
+        a               mim:Objecttype;
+        rdfs:label      "Orderregel";
+        mim:attribuut   <urn:role:regelnummer> , <urn:role:order>;
+        mim:identifier  "Torderregel" .

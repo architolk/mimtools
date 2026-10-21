@@ -1,0 +1,39 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:facttype:order> a fbm:Objecttype;
+  rdfs:label "Order";
+  fbm:role [
+    fbm:playedBy <urn:facttype:ordernummer>;
+  ]
+.
+<urn:facttype:ordernummer> a fbm:Valuetype;
+  rdfs:label "ordernummer";
+  fbm:datatype "integer";
+.
+
+<urn:facttype:orderregel> a fbm:Objecttype;
+  rdfs:label "Orderregel";
+  fbm:role <urn:role:order>;
+  fbm:role <urn:role:regelnummer>;
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:order>
+  ];
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:order>, <urn:role:regelnummer>;
+  ]
+.
+<urn:role:order> a fbm:Role;
+  rdfs:label "order";
+  fbm:playedBy <urn:facttype:ordernummer>
+.
+<urn:role:regelnummer> a fbm:Role;
+  fbm:playedBy <urn:facttype:regelnummer>
+.
+
+<urn:facttype:regelnummer> a fbm:Valuetype;
+  rdfs:label "regelnummer";
+  fbm:datatype "integer";
+.
