@@ -1,0 +1,103 @@
+PREFIX fbm:  <http://bp4mc2.org/def/fbm#>
+PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<urn:facttype:GeheelGetal>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "GeheelGetal";
+        mim:identifier  "TGeheelGetal" .
+
+<urn:facttype:Valuta>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "Valuta";
+        mim:identifier  "TValuta" .
+
+<urn:facttype:Bedrijfsgrootteklasse>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "Bedrijfsgrootteklasse";
+        mim:identifier  "TBedrijfsgrootteklasse" .
+
+<urn:facttype:Identificatienummer>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "Identificatienummer";
+        mim:identifier  "TIdentificatienummer" .
+
+<urn:facttype:Benaming>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "Benaming";
+        mim:identifier  "TBenaming" .
+
+<urn:facttype:omzet>  a      mim:Relatiesoort;
+        mim:bron             <urn:facttype:Organisatie>;
+        mim:doel             <urn:facttype:Bedrag>;
+        mim:identifier       "Tomzet";
+        mim:relatierol       [ a                  mim:RelatierolDoel;
+                               rdfs:label         "omzet";
+                               mim:doel           <urn:facttype:Bedrag>;
+                               mim:kardinaliteit  "1..1"
+                             ];
+        mim:relatierol       [ a                  mim:RelatierolBron;
+                               mim:bron           <urn:facttype:Organisatie>;
+                               mim:kardinaliteit  "0..*"
+                             ];
+        mim:toelichting      "[Organisatie] kent [omzet]";
+        mim:unidirectioneel  false .
+
+<urn:facttype:handelsnaam>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "handelsnaam";
+        mim:identifier     "Thandelsnaam";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[Organisatie] staat bekend onder [handelsnaam]";
+        mim:type           <urn:facttype:Benaming> .
+
+<urn:facttype:bedrijfsgrootte>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "bedrijfsgrootte";
+        mim:identifier     "Tbedrijfsgrootte";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[Organisatie] heeft [bedrijfsgrootte]";
+        mim:type           <urn:facttype:Bedrijfsgrootteklasse> .
+
+<urn:facttype:aantalWerknemers>
+        a                  mim:Attribuutsoort;
+        rdfs:label         "aantalWerknemers";
+        mim:identifier     "TaantalWerknemers";
+        mim:kardinaliteit  "1..1";
+        mim:toelichting    "[Organisatie] heeft [aantalWerknemers] in dienst";
+        mim:type           <urn:facttype:GeheelGetal> .
+
+<urn:role:hoeveelheid>
+        a                   mim:Attribuutsoort;
+        rdfs:label          "GeheelGetal";
+        mim:identificerend  true;
+        mim:identifier      "Thoeveelheid";
+        mim:kardinaliteit   "1..1";
+        mim:type            <urn:facttype:GeheelGetal> .
+
+<urn:role:RSIN>  a          mim:Attribuutsoort;
+        rdfs:label          "Identificatienummer";
+        mim:identificerend  true;
+        mim:identifier      "TRSIN";
+        mim:kardinaliteit   "1..1";
+        mim:type            <urn:facttype:Identificatienummer> .
+
+<urn:role:valuta>  a        mim:Attribuutsoort;
+        rdfs:label          "Valuta";
+        mim:identificerend  true;
+        mim:identifier      "Tvaluta";
+        mim:kardinaliteit   "1..1";
+        mim:type            <urn:facttype:Valuta> .
+
+<urn:facttype:Organisatie>
+        a               mim:Objecttype;
+        rdfs:label      "Organisatie";
+        mim:attribuut   <urn:facttype:handelsnaam> , <urn:facttype:bedrijfsgrootte> , <urn:facttype:aantalWerknemers> , <urn:role:RSIN>;
+        mim:identifier  "TOrganisatie" .
+
+<urn:facttype:Bedrag>
+        a               mim:Objecttype;
+        rdfs:label      "Bedrag";
+        mim:attribuut   <urn:role:hoeveelheid> , <urn:role:valuta>;
+        mim:identifier  "TBedrag" .

@@ -1,0 +1,203 @@
+@prefix fbm: <http://bp4mc2.org/def/fbm#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<urn:facttype:Organisatie> a fbm:Objecttype;
+  rdfs:label "Organisatie";
+  fbm:role <urn:role:RSIN>
+.
+<urn:role:RSIN> a fbm:Role;
+  rdfs:label "RSIN";
+  fbm:playedBy <urn:facttype:Identificatienummer>;
+.
+
+<urn:facttype:Identificatienummer> a fbm:Valuetype;
+  rdfs:label "Identificatienummer";
+.
+
+<urn:facttype:aantalWerknemers> a fbm:Facttype;
+  rdfs:label "Aantal werknemers";
+  fbm:role <urn:role:Organisatie.aantalWerknemers>;
+  fbm:role <urn:role:aantalWerknemers>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:Organisatie.aantalWerknemers>;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:Organisatie.aantalWerknemers>;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:Organisatie.aantalWerknemers>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:aantalWerknemers>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Organisatie] heeft [aantalWerknemers] in dienst";
+    ];
+  ];
+.
+<urn:role:Organisatie.aantalWerknemers> a fbm:Role;
+  fbm:playedBy <urn:facttype:Organisatie>;
+.
+<urn:role:aantalWerknemers> a fbm:Role;
+  rdfs:label "aantalWerknemers";
+  fbm:playedBy <urn:facttype:GeheelGetal>;
+.
+
+<urn:facttype:GeheelGetal> a fbm:Valuetype;
+  rdfs:label "GeheelGetal";
+.
+
+<urn:facttype:handelsnaam> a fbm:Facttype;
+  rdfs:label "Handelsnaam";
+  fbm:role <urn:role:Organisatie.handelsnaam>;
+  fbm:role <urn:role:handelsnaam>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:Organisatie.handelsnaam>;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:Organisatie.handelsnaam>;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:Organisatie.handelsnaam>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:handelsnaam>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Organisatie] staat bekend onder [handelsnaam]";
+    ];
+  ];
+.
+<urn:role:Organisatie.handelsnaam> a fbm:Role;
+  fbm:playedBy <urn:facttype:Organisatie>;
+.
+<urn:role:handelsnaam> a fbm:Role;
+  rdfs:label "handelsnaam";
+  fbm:playedBy <urn:facttype:Benaming>;
+.
+
+<urn:facttype:Benaming> a fbm:Valuetype;
+  rdfs:label "Benaming";
+.
+
+<urn:facttype:bedrijfsgrootte> a fbm:Facttype;
+  rdfs:label "Bedrijfsgrootte";
+  fbm:role <urn:role:Organisatie.bedrijfsgrootte>;
+  fbm:role <urn:role:bedrijfsgrootte>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:Organisatie.bedrijfsgrootte>;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:Organisatie.bedrijfsgrootte>;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:Organisatie.bedrijfsgrootte>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:bedrijfsgrootte>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Organisatie] heeft [bedrijfsgrootte]";
+    ];
+  ];
+.
+<urn:role:Organisatie.bedrijfsgrootte> a fbm:Role;
+  fbm:playedBy <urn:facttype:Organisatie>;
+.
+<urn:role:bedrijfsgrootte> a fbm:Role;
+  rdfs:label "bedrijfsgrootte";
+  fbm:playedBy <urn:facttype:Bedrijfsgrootteklasse>;
+.
+
+<urn:facttype:Bedrijfsgrootteklasse> a fbm:Valuetype;
+  rdfs:label "Bedrijfsgrootteklasse";
+  fbm:constraint [
+    a fbm:ValueConstraint;
+    fbm:allowValue "klein", "midden", "groot"
+  ]
+.
+
+<urn:facttype:omzet> a fbm:Facttype;
+  rdfs:label "Omzet";
+  fbm:role <urn:role:Organisatie.omzet>;
+  fbm:role <urn:role:omzet>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:Organisatie.omzet>;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:Organisatie.omzet>;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:Organisatie.omzet>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:omzet>; fbm:atPosition 2];
+    fbm:reading [
+      fbm:text "[Organisatie] kent [omzet]";
+    ];
+  ];
+.
+<urn:role:Organisatie.omzet> a fbm:Role;
+  fbm:playedBy <urn:facttype:Organisatie>;
+.
+<urn:role:omzet> a fbm:Role;
+  rdfs:label "omzet";
+  fbm:playedBy <urn:facttype:Bedrag>;
+.
+
+<urn:facttype:Bedrag> a fbm:Objecttype;
+  rdfs:label "Bedrag";
+  fbm:role <urn:role:hoeveelheid>;
+  fbm:role <urn:role:valuta>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:hoeveelheid>, <urn:role:valuta>;
+  ]
+.
+<urn:role:hoeveelheid> a fbm:Role;
+  rdfs:label "hoeveelheid";
+  fbm:playedBy <urn:facttype:GeheelGetal>;
+.
+<urn:role:valuta> a fbm:Role;
+  rdfs:label "valuta";
+  fbm:playedBy <urn:facttype:Valuta>;
+.
+
+<urn:facttype:Valuta> a fbm:Valuetype;
+  rdfs:label "Valuta";
+  fbm:constraint [
+    a fbm:ValueConstraint;
+    fbm:allowValue "euro", "dollar"
+  ]
+.
+
+<urn:facttype:winst> a fbm:Facttype;
+  rdfs:label "Winst";
+  fbm:role <urn:role:Organisatie.winst>;
+  fbm:role <urn:role:winst.hoeveelheid>;
+  fbm:role <urn:role:winst.valuta>;
+  fbm:constraint [
+    a fbm:UniquenessConstraint;
+    fbm:restricts <urn:role:Organisatie.winst>;
+  ];
+  fbm:constraint [
+    a fbm:MandatoryConstraint;
+    fbm:restricts <urn:role:Organisatie.winst>;
+  ];
+  fbm:predicate [
+    fbm:ordersRole [fbm:role <urn:role:Organisatie.winst>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:winst.hoeveelheid>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:winst.valuta>; fbm:atPosition 3];
+    fbm:reading [
+      fbm:text "[Organisatie] maakt [hoeveelheid] [valuta] winst";
+    ];
+  ];
+.
+<urn:role:Organisatie.winst> a fbm:Role;
+  fbm:playedBy <urn:facttype:Organisatie>;
+.
+<urn:role:winst.hoeveelheid> a fbm:Role;
+  rdfs:label "hoeveelheid";
+  fbm:playedBy <urn:facttype:GeheelGetal>;
+.
+<urn:role:winst.valuta> a fbm:Role;
+  rdfs:label "valuta";
+  fbm:playedBy <urn:facttype:Valuta>;
+.
