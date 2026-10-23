@@ -67,17 +67,17 @@
       </graph>
     </node>
     <node id="n1" yfiles.foldertype="group">
-      <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:weg]]></data>
+      <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:route]]></data>
       <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="66.0" width="90.0" x="474.0" y="311.0"/>
+              <y:Geometry height="66.0" width="147.0" x="542.0" y="298.0"/>
               <y:Fill color="#F5F5F5" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="90.0" x="0.0" xml:space="preserve" y="-21.666015625">Weg</y:NodeLabel>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="202.890625" x="-56.4453125" xml:space="preserve" y="70.0">weg gaat van [plaats] naar [plaats]</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="147.0" x="0.0" xml:space="preserve" y="-21.666015625">Route</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="308.177734375" x="-80.5888671875" xml:space="preserve" y="70.0">route gaat van [vertrekplaats] naar [aankomstplaats]</y:NodeLabel>
               <y:Shape type="ellipse"/>
               <y:State closed="false" closedHeight="60.0" closedWidth="100.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
@@ -87,7 +87,7 @@
               <y:Geometry height="60.0" width="90.0" x="316.0" y="379.0"/>
               <y:Fill color="#F5F5F5" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="90.0" x="0.0" xml:space="preserve" y="19.1669921875">Weg</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="90.0" x="0.0" xml:space="preserve" y="19.1669921875">Route</y:NodeLabel>
               <y:Shape type="ellipse"/>
               <y:State closed="true" closedHeight="60.0" closedWidth="90.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="5" bottomF="5.0" left="5" leftF="5.0" right="5" rightF="5.0" top="5" topF="5.0"/>
@@ -98,21 +98,14 @@
       </data>
       <graph edgedefault="directed" id="n1:">
         <node id="n1::n0">
-          <data key="d3" xml:space="preserve"><![CDATA[urn:role:vanplaats]]></data>
+          <data key="d3" xml:space="preserve"><![CDATA[urn:role:vertrekplaats]]></data>
           <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="489.0" y="332.0"/>
+              <y:Geometry height="30.0" width="48.0" x="557.0" y="319.0"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
-                <y:LabelModel>
-                  <y:SmartNodeLabelModel distance="4.0"/>
-                </y:LabelModel>
-                <y:ModelParameter>
-                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-                </y:ModelParameter>
-              </y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.904296875" x="1.5478515625" xml:space="preserve" y="5.93359375">vertrek<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -121,7 +114,7 @@
           <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="2.0" width="30.0" x="489.0" y="326.0"/>
+              <y:Geometry height="2.0" width="48.0" x="557.0" y="313.0"/>
               <y:Fill color="#000000" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:Shape type="rectangle"/>
@@ -129,21 +122,14 @@
           </data>
         </node>
         <node id="n1::n2">
-          <data key="d3" xml:space="preserve"><![CDATA[urn:role:naarplaats]]></data>
+          <data key="d3" xml:space="preserve"><![CDATA[urn:role:aankomstplaats]]></data>
           <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="519.0" y="332.0"/>
+              <y:Geometry height="30.0" width="69.0" x="605.0" y="319.0"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
-                <y:LabelModel>
-                  <y:SmartNodeLabelModel distance="4.0"/>
-                </y:LabelModel>
-                <y:ModelParameter>
-                  <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-                </y:ModelParameter>
-              </y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="60.89453125" x="4.052734375" xml:space="preserve" y="5.93359375">aankomst<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -152,7 +138,7 @@
           <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="2.0" width="30.0" x="519.0" y="326.0"/>
+              <y:Geometry height="2.0" width="69.0" x="605.0" y="313.0"/>
               <y:Fill color="#000000" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:Shape type="rectangle"/>
@@ -162,17 +148,17 @@
       </graph>
     </node>
     <node id="n2" yfiles.foldertype="group">
-      <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:wegheeftwegnaam]]></data>
+      <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:routeheeftroutenaam]]></data>
       <data key="d4"/>
       <data key="d5">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="46.0" width="70.0" x="672.0" y="318.0"/>
+              <y:Geometry height="46.0" width="70.0" x="595.0" y="444.0"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="73.14794921875" x="-1.573974609375" xml:space="preserve" y="-21.666015625">wegnaam</y:NodeLabel>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="135.654296875" x="-32.8271484375" xml:space="preserve" y="50.0">[weg] heeft [wegnaam]</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="82.50830078125" x="-6.254150390625" xml:space="preserve" y="-21.666015625">routenaam</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sides" modelPosition="s" textColor="#000000" verticalTextPosition="bottom" visible="true" width="150.630859375" x="-40.3154296875" xml:space="preserve" y="50.0">[route] heeft [routenaam]</y:NodeLabel>
               <y:Shape type="rectangle"/>
               <y:State closed="false" closedHeight="60.0" closedWidth="100.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="5" bottomF="5.0" left="5" leftF="5.0" right="5" rightF="5.0" top="5" topF="5.0"/>
@@ -182,7 +168,7 @@
               <y:Geometry height="60.0" width="90.0" x="316.0" y="379.0"/>
               <y:Fill hasColor="false" transparent="false"/>
               <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="90.0" x="0.0" xml:space="preserve" y="19.1669921875">wegnaam</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="node_width" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="21.666015625" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="90.0" x="0.0" xml:space="preserve" y="19.1669921875">routenaam</y:NodeLabel>
               <y:Shape type="rectangle"/>
               <y:State closed="true" closedHeight="60.0" closedWidth="90.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="5" bottomF="5.0" left="5" leftF="5.0" right="5" rightF="5.0" top="5" topF="5.0"/>
@@ -193,11 +179,11 @@
       </data>
       <graph edgedefault="directed" id="n2:">
         <node id="n2::n0">
-          <data key="d3" xml:space="preserve"><![CDATA[urn:role:wegnaam]]></data>
+          <data key="d3" xml:space="preserve"><![CDATA[urn:role:route]]></data>
           <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="707.0" y="329.0"/>
+              <y:Geometry height="30.0" width="30.0" x="600.0" y="455.0"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
@@ -213,11 +199,22 @@
           </data>
         </node>
         <node id="n2::n1">
-          <data key="d3" xml:space="preserve"><![CDATA[urn:role:weg]]></data>
           <data key="d4"/>
           <data key="d5">
             <y:ShapeNode>
-              <y:Geometry height="30.0" width="30.0" x="677.0" y="329.0"/>
+              <y:Geometry height="2.0" width="30.0" x="600.0" y="449.0"/>
+              <y:Fill color="#000000" transparent="false"/>
+              <y:BorderStyle color="#000000" type="line" width="1.0"/>
+              <y:Shape type="rectangle"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="n2::n2">
+          <data key="d3" xml:space="preserve"><![CDATA[urn:role:routenaam]]></data>
+          <data key="d4"/>
+          <data key="d5">
+            <y:ShapeNode>
+              <y:Geometry height="30.0" width="30.0" x="630.0" y="455.0"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="4.0" x="13.0" y="13.0">
@@ -232,28 +229,17 @@
             </y:ShapeNode>
           </data>
         </node>
-        <node id="n2::n2">
-          <data key="d4"/>
-          <data key="d5">
-            <y:ShapeNode>
-              <y:Geometry height="2.0" width="30.0" x="677.0" y="323.0"/>
-              <y:Fill color="#000000" transparent="false"/>
-              <y:BorderStyle color="#000000" type="line" width="1.0"/>
-              <y:Shape type="rectangle"/>
-            </y:ShapeNode>
-          </data>
-        </node>
       </graph>
     </node>
     <node id="n3">
-      <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:wegnaam]]></data>
+      <data key="d3" xml:space="preserve"><![CDATA[urn:facttype:routenaam]]></data>
       <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="77.0" x="827.0" y="329.0"/>
+          <y:Geometry height="30.0" width="77.0" x="770.0" y="455.0"/>
           <y:Fill color="#F5F5F5" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="dashed" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="59.318359375" x="8.8408203125" xml:space="preserve" y="5.93359375">wegnaam<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="66.806640625" x="5.0966796875" xml:space="preserve" y="5.93359375">routenaam<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:Shape type="ellipse"/>
         </y:ShapeNode>
       </data>
@@ -263,7 +249,7 @@
       <data key="d4"/>
       <data key="d5">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="77.0" x="509.0" y="183.0"/>
+          <y:Geometry height="30.0" width="77.0" x="214.0" y="183.0"/>
           <y:Fill color="#F5F5F5" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="dashed" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="70.78515625" x="3.107421875" xml:space="preserve" y="5.93359375">plaatsnaam<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -271,24 +257,22 @@
         </y:ShapeNode>
       </data>
     </node>
-    <edge id="e0" source="n1::n0" target="n0">
-      <data key="d7" xml:space="preserve"><![CDATA[urn:role:vanplaats]]></data>
-      <data key="d8" xml:space="preserve"><![CDATA[urn:role:vanplaats]]></data>
+    <edge id="e0" source="n2::n0" target="n1">
+      <data key="d7" xml:space="preserve"><![CDATA[urn:role:route]]></data>
+      <data key="d8" xml:space="preserve"><![CDATA[urn:role:route]]></data>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="432.0" y="347.0"/>
-          </y:Path>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="none"/>
+          <y:Arrows source="none" target="circle"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e1" source="n2::n0" target="n3">
-      <data key="d7" xml:space="preserve"><![CDATA[urn:role:wegnaam]]></data>
-      <data key="d8" xml:space="preserve"><![CDATA[urn:role:wegnaam]]></data>
+    <edge id="e1" source="n2::n2" target="n3">
+      <data key="d7" xml:space="preserve"><![CDATA[urn:role:routenaam]]></data>
+      <data key="d8" xml:space="preserve"><![CDATA[urn:role:routenaam]]></data>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
@@ -299,7 +283,22 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e2" source="n0::n0" target="n4">
+    <edge id="e2" source="n1::n0" target="n0">
+      <data key="d7" xml:space="preserve"><![CDATA[urn:role:vertrekplaats]]></data>
+      <data key="d8" xml:space="preserve"><![CDATA[urn:role:vertrekplaats]]></data>
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="432.0" y="334.0"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e3" source="n0::n0" target="n4">
       <data key="d7" xml:space="preserve"><![CDATA[urn:role:plaatsnaam]]></data>
       <data key="d8" xml:space="preserve"><![CDATA[urn:role:plaatsnaam]]></data>
       <data key="d9"/>
@@ -312,30 +311,17 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e3" source="n1::n2" target="n0">
-      <data key="d7" xml:space="preserve"><![CDATA[urn:role:naarplaats]]></data>
-      <data key="d8" xml:space="preserve"><![CDATA[urn:role:naarplaats]]></data>
+    <edge id="e4" source="n1::n2" target="n0">
+      <data key="d7" xml:space="preserve"><![CDATA[urn:role:aankomstplaats]]></data>
+      <data key="d8" xml:space="preserve"><![CDATA[urn:role:aankomstplaats]]></data>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="534.0" y="246.5"/>
+            <y:Point x="639.5" y="198.0"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e4" source="n2::n1" target="n1">
-      <data key="d7" xml:space="preserve"><![CDATA[urn:role:weg]]></data>
-      <data key="d8" xml:space="preserve"><![CDATA[urn:role:weg]]></data>
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="circle"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>

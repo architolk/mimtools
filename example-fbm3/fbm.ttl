@@ -13,60 +13,60 @@
   rdfs:label "plaatsnaam";
 .
 
-<urn:facttype:weg> a fbm:Objecttype;
-  rdfs:label "Weg";
-  fbm:role <urn:role:vanplaats>;
-  fbm:role <urn:role:naarplaats>;
+<urn:facttype:route> a fbm:Objecttype;
+  rdfs:label "Route";
+  fbm:role <urn:role:vertrekplaats>;
+  fbm:role <urn:role:aankomstplaats>;
   fbm:constraint [
     a fbm:UniquenessConstraint;
-    fbm:restricts <urn:role:vanplaats>;
-    fbm:restricts <urn:role:naarplaats>
+    fbm:restricts <urn:role:vertrekplaats>;
+    fbm:restricts <urn:role:aankomstplaats>
   ];
   fbm:predicate [
-    fbm:ordersRole [fbm:role <urn:role:vanplaats>; fbm:atPosition 1];
-    fbm:ordersRole [fbm:role <urn:role:naarplaats>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:vertrekplaats>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:aankomstplaats>; fbm:atPosition 2];
     fbm:reading [
-      fbm:text "weg gaat van [plaats] naar [plaats]";
-      fbm:parts ("weg gaat van" <urn:role:vanplaats> "naar" <urn:role:naarplaats>);
+      fbm:text "route gaat van [vertrekplaats] naar [aankomstplaats]";
+      fbm:parts ("route gaat van" <urn:role:vertrekplaats> "naar" <urn:role:aankomstplaats>);
     ];
   ];
 .
-<urn:role:vanplaats> a fbm:Role;
-  rdfs:label "van";
+<urn:role:vertrekplaats> a fbm:Role;
+  rdfs:label "vertrek";
   fbm:playedBy <urn:facttype:plaats>;
 .
-<urn:role:naarplaats> a fbm:Role;
-  rdfs:label "naar";
+<urn:role:aankomstplaats> a fbm:Role;
+  rdfs:label "aankomst";
   fbm:playedBy <urn:facttype:plaats>;
 .
 
-<urn:facttype:wegheeftwegnaam> a fbm:Facttype;
-  rdfs:label "wegnaam";
-  fbm:role <urn:role:weg>;
-  fbm:role <urn:role:wegnaam>;
+<urn:facttype:routeheeftroutenaam> a fbm:Facttype;
+  rdfs:label "routenaam";
+  fbm:role <urn:role:route>;
+  fbm:role <urn:role:routenaam>;
   fbm:constraint [
     a fbm:UniquenessConstraint;
-    fbm:restricts <urn:role:weg>;
+    fbm:restricts <urn:role:route>;
   ];
   fbm:constraint [
     a fbm:MandatoryConstraint;
-    fbm:restricts <urn:role:weg>;
+    fbm:restricts <urn:role:route>;
   ];
   fbm:predicate [
-    fbm:ordersRole [fbm:role <urn:role:weg>; fbm:atPosition 1];
-    fbm:ordersRole [fbm:role <urn:role:wegnaam>; fbm:atPosition 2];
+    fbm:ordersRole [fbm:role <urn:role:route>; fbm:atPosition 1];
+    fbm:ordersRole [fbm:role <urn:role:routenaam>; fbm:atPosition 2];
     fbm:reading [
-      fbm:text "[weg] heeft [wegnaam]";
-      fbm:parts (<urn:role:weg> "heeft" <urn:role:wegnaam>);
+      fbm:text "[route] heeft [routenaam]";
+      fbm:parts (<urn:role:route> "heeft" <urn:role:routenaam>);
     ];
   ];
 .
-<urn:role:weg> a fbm:Role;
-  fbm:playedBy <urn:facttype:weg>;
+<urn:role:route> a fbm:Role;
+  fbm:playedBy <urn:facttype:route>;
 .
-<urn:role:wegnaam> a fbm:Role;
-  fbm:playedBy <urn:facttype:wegnaam>
+<urn:role:routenaam> a fbm:Role;
+  fbm:playedBy <urn:facttype:routenaam>
 .
-<urn:facttype:wegnaam> a fbm:Valuetype;
-  rdfs:label "wegnaam";
+<urn:facttype:routenaam> a fbm:Valuetype;
+  rdfs:label "routenaam";
 .

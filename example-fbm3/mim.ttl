@@ -3,23 +3,23 @@ PREFIX mim:  <http://modellen.mim-standaard.nl/def/mim#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
+<urn:facttype:routenaam>
+        a               mim:PrimitiefDatatype;
+        rdfs:label      "routenaam";
+        mim:identifier  "Troutenaam" .
+
 <urn:facttype:plaatsnaam>
         a               mim:PrimitiefDatatype;
         rdfs:label      "plaatsnaam";
         mim:identifier  "Tplaatsnaam" .
 
-<urn:facttype:wegnaam>
-        a               mim:PrimitiefDatatype;
-        rdfs:label      "wegnaam";
-        mim:identifier  "Twegnaam" .
-
-<urn:facttype:wegheeftwegnaam>
+<urn:facttype:routeheeftroutenaam>
         a                  mim:Attribuutsoort;
-        rdfs:label         "wegnaam";
-        mim:identifier     "Twegheeftwegnaam";
+        rdfs:label         "routenaam";
+        mim:identifier     "Trouteheeftroutenaam";
         mim:kardinaliteit  "1..1";
-        mim:toelichting    "[weg] heeft [wegnaam]";
-        mim:type           <urn:facttype:wegnaam> .
+        mim:toelichting    "[route] heeft [routenaam]";
+        mim:type           <urn:facttype:routenaam> .
 
 <urn:role:plaatsnaam>
         a                   mim:Attribuutsoort;
@@ -35,21 +35,21 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
         mim:attribuut   <urn:role:plaatsnaam>;
         mim:identifier  "Tplaats" .
 
-<urn:facttype:weg>  a        mim:Relatieklasse;
-        rdfs:label           "Weg";
-        mim:attribuut        <urn:facttype:wegheeftwegnaam>;
+<urn:facttype:route>  a      mim:Relatieklasse;
+        rdfs:label           "Route";
+        mim:attribuut        <urn:facttype:routeheeftroutenaam>;
         mim:bron             <urn:facttype:plaats>;
         mim:doel             <urn:facttype:plaats>;
-        mim:identifier       "Tweg";
+        mim:identifier       "Troute";
         mim:relatierol       [ a                  mim:RelatierolDoel;
-                               rdfs:label         "naar";
+                               rdfs:label         "aankomst";
                                mim:doel           <urn:facttype:plaats>;
                                mim:kardinaliteit  "0..*"
                              ];
         mim:relatierol       [ a                  mim:RelatierolBron;
-                               rdfs:label         "van";
+                               rdfs:label         "vertrek";
                                mim:bron           <urn:facttype:plaats>;
                                mim:kardinaliteit  "0..*"
                              ];
-        mim:toelichting      "weg gaat van [plaats] naar [plaats]";
+        mim:toelichting      "route gaat van [vertrekplaats] naar [aankomstplaats]";
         mim:unidirectioneel  false .
