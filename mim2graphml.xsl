@@ -239,7 +239,7 @@
             <edge source="{../@rdf:about}_HELPER" target="{../@rdf:about}">
         			<data key="d10">
         				<y:PolyLineEdge>
-                  <y:LineStyle color="#000000" type="line" width="1.0"/>
+                  <y:LineStyle color="#000000" type="dashed" width="1.0"/>
         					<y:Arrows source="none" target="none"/>
                 </y:PolyLineEdge>
               </data>
